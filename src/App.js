@@ -3,6 +3,7 @@ import './App.css';
 
 import Dashboard from './Pages/Dashboard';
 import NotFound from './Pages/NotFound';
+import Register from './Pages/Register';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route element={ <PrivateRoute /> }>
             <Route path="/home-admin" element={<Home />} />
           </Route> */}
+          <Route path="register" element={<Register/>}/>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

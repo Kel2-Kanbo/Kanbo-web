@@ -6,7 +6,10 @@ module.exports = {
       primary: {
         blue: "#4C35E0",
         white: "#FFFFFF",
-      }
+      },
+      error: {
+        red: "#FF3030",
+      },
     }
   },
   plugins: [],
