@@ -7,6 +7,7 @@ import styled from "@emotion/styled";
 import Logo from "../../Components/Logo";
 import background from "../../Assets/BgRegisterAdmin.png";
 import Button from "../../Components/Button";
+import FormInput from "../../Components/FormInput";
 
 export default function Register() {
 	const [isPaswordShown, setIsPasswordShown] = useState(false);
@@ -135,7 +136,7 @@ export default function Register() {
           ))
         }
 				
-				<button className="show-password -mt-12 h-8 lg:-mr-64 md:-mr-32 sm:-mr-24" onClick={_handleClickPassword}>
+				<button className="show-password -mt-12 h-8 lg:-mr-72 md:-mr-32 sm:-mr-56" onClick={_handleClickPassword}>
 					{isPaswordShown ? <AiFillEyeInvisible /> : <AiFillEye />}
 				</button>
         <span className="text-black">{error}</span>
@@ -167,11 +168,12 @@ const RegisterInput = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 10px;
-  width: 40%;
+  width: 30%;
   border: 1px solid black;
   border-radius: 10px;
   align-items: center;
-  padding: 10px;
+  padding: 24px;
+  margin-top: 36px;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -183,11 +185,9 @@ const RegisterInput = styled.div`
     width: 100%;
     margin-left: -15px;
   }
-`;
 
-const FormInput = styled.input`
-	width: 60%;
-	border: 2px solid black;
-	border-radius: 8px;
-	padding: 10px;
-`
+  @media (max-width: 768px) {
+	width: 50%;
+	margin-top: 5%;
+  }
+`;
