@@ -1,0 +1,36 @@
+{
+  "complex": [
+    {
+      "id": 16,
+      "complexName": "namaamam",
+      "complexAddress": "ddididdi",
+      "city": "City 2",
+      "district": "District 2",
+      "building": "9"
+    },
+    {
+      "id": 94,
+      "complexName": "nama",
+      "complexAddress": "alamt",
+      "city": "City 2",
+      "district": "District 1",
+      "building": "7"
+    },
+    {
+      "id": 26,
+      "complexName": "nama",
+      "complexAddress": "alat",
+      "city": "City 1",
+      "district": "District 2",
+      "building": "3"
+    },
+    {
+      "id": 95,
+      "complexName": "kekek",
+      "complexAddress": "sksksk",
+      "city": "City 2",
+      "district": "District 1",
+      "building": "3"
+    }
+  ]
+}

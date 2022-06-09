@@ -10,6 +10,14 @@ module.exports = {
       error: {
         red: "#FF3030",
       },
+      secondary: {
+        blue: "#EDEAFF",
+      },
+      textColor: {
+        black: "#1F1F1F",
+        white: "#FFFFFF",
+        blackThin: "#5C5C5C",
+      },
     }
   },
   plugins: [],
