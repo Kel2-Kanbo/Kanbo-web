@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import EditComplex from "../EditComplex";
 
 export default function TableComplex(props) {
-  const { complex, removeComplex, updateComplex } = props;
+  const { room, removeRoom } = props;
   const [showModalEdit, setShowModalEdit] = useState(false);
   const _handleCloseModalEdit = () => {
     setShowModalEdit(false);
@@ -27,31 +26,37 @@ export default function TableComplex(props) {
                       scope="col"
                       class="text-sm font-medium text-textColor-black px-6 py-4 text-left"
                     >
-                      Complex Name
+                      Picture
                     </th>
                     <th
                       scope="col"
                       class="text-sm font-medium text-textColor-black px-6 py-4 text-left"
                     >
-                      Address
+                      Room Name
                     </th>
                     <th
                       scope="col"
                       class="text-sm font-medium text-textColor-black px-6 py-4 text-left"
                     >
-                      City
+                      Floor
                     </th>
                     <th
                       scope="col"
                       class="text-sm font-medium text-textColor-black px-6 py-4 text-left"
                     >
-                      District
+                      Room Item
                     </th>
                     <th
                       scope="col"
                       class="text-sm font-medium text-textColor-black px-6 py-4 text-left"
                     >
-                      Building
+                      Rate per day
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-sm font-medium text-textColor-black px-6 py-4 text-left"
+                    >
+                      Status
                     </th>
                     <th
                       scope="col"
@@ -61,37 +66,33 @@ export default function TableComplex(props) {
                     </th>
                   </tr>
                 </thead>
-                <tbody >
-                  {complex?.map((complex) => (
-                    <tr class="bg-secondary-blue items-center">
+                <tbody>
+                  {room?.map((room) => (
+                    <tr class="bg-secondary-blue">
                       <td class="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
-                        {complex.complexName}
+                        <img src={room.picture} alt="room" width='32px'/>
                       </td>
                       <td class="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
-                        {complex.complexAddress}
+                        {room.roomName}
                       </td>
                       <td class="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
-                        {complex.city}
+                        {room.floor}
                       </td>
                       <td class="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
-                        {complex.district}
+                        {room.roomItem}
                       </td>
                       <td class="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
-                        {complex.building}
+                        {room.roomPrice}
                       </td>
-                      <td class="flex items-center justify-around px-6 py-4 whitespace-nowrap">
-                        <button onClick={() => removeComplex(complex.id)}>
+                      <td class="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
+                        {room.status}
+                      </td>
+                      <td class="flex justify-around px-6 py-4 whitespace-nowrap">
+                        <button onClick={() => removeRoom(room.id)}> 
                           <RiDeleteBin5Line />
                         </button>
-                        <button onClick={() => updateComplex(complex)}>
-                          <FiEdit onClick={_handleOpenModalEdit} />
-                          {showModalEdit ? (
-                            <EditComplex
-                              _handleCloseModalEdit={_handleCloseModalEdit}
-                              complex={complex}
-                              updateComplex={() => updateComplex(complex)}
-                            />
-                          ) : null}
+                        <button>
+                          <FiEdit/>
                         </button>
                       </td>
                     </tr>

@@ -16,5 +16,25 @@
       "district": "District 2",
       "building": "90"
     }
+  ],
+  "room": [
+    {
+      "id": 2,
+      "picture": "https://source.unsplash.com/random",
+      "roomName": "Room 2",
+      "floor": "Lt 2",
+      "roomItem": "TV",
+      "roomPrice": "Rp. 1.000.000",
+      "status": "Available"
+    },
+    {
+      "id": 3,
+      "picture": "https://source.unsplash.com/random",
+      "roomName": "Room 3",
+      "floor": "Lt 3",
+      "roomItem": "TV",
+      "roomPrice": "Rp. 1.000.000",
+      "status": "Available"
+    }
   ]
 }
