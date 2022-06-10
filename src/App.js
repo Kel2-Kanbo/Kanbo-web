@@ -3,6 +3,7 @@ import './App.css';
 
 import Dashboard from './Pages/Dashboard';
 import NotFound from './Pages/NotFound';
+import Login from './Pages/Login';
 
 function App() {
   return (
@@ -11,8 +12,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          {/* <Route exact path="/login" element={<Login />} />
-          <Route element={ <PrivateRoute /> }>
+          <Route rxact path="/login" element={<Login />} />
+          {/* <Route element={ <PrivateRoute /> }>
             <Route path="/home-admin" element={<Home />} />
           </Route> */}
           <Route path="*" element={<NotFound />} />
