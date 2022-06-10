@@ -7,8 +7,8 @@ import TableComplex from "../../Components/TableComplex";
 
 export default function Complex() {
   const [showModal, setShowModal] = useState(false);
-  // const [complex, setComplex] = useState([]);
-  const [complex, setComplex] = useState(null);
+  const [complex, setComplex] = useState([]);
+  // const [complex, setComplex] = useState(null);
   console.log(complex);
 
   const _handleOpenModal = () => {
@@ -34,9 +34,10 @@ export default function Complex() {
   };
 
   //remove complex
-  const removeComplex = async (complex) => {
+  const removeComplex = async (data) => {
     console.log(complex);
     const id = complex;
+    console.log(id);
     const response = await api.delete(`/complex/${id}`);
     alert("Complex removed successfully");
     console.log(response.data);
@@ -48,14 +49,19 @@ export default function Complex() {
 
   //update complex
   const updateComplex = async (data) => {
-    const id = complex._id;
-    const response = await api.put(`/complex/${id}`, data);
+    console.log(data)
+    console.log(data.id)    
+    const response = await api.put(`/complex/${data.id}`, data);
+    const {id, complexName, complexAddress, city, district, building} = response.data;
+    console.log(response.data);
+    setComplex(complex.map((data) => {
+      return data.id === id ? { ...response.data } : data;
+    }))
     if (response.data) {
       const allComplex = await getComplex();
       setComplex(allComplex);
-      setShowModal(false);
     }
-  };
+  }
 
   useEffect(() => {
     const getAllComplex = async () => {

@@ -4,18 +4,26 @@ import React, { useState } from "react";
 import FormInput from "../FormInput";
 
 export default function EditComplex(props) {
-  const {_handleCloseModalEdit, complex, updateComplex} = props
-
-  const [data, setData] = useState({
-    complexName: complex.complexName,
-    complexAddress: complex.complexAddress,
-    city: complex.city,
-    district: complex.district,
-    building: complex.building,
-  })
-  console.log(data)
-  
+  const { _handleCloseModalEdit, complex, updateComplex } = props;
   const [msg, setMsg] = useState("");
+  
+  console.log(complex);
+
+  // const _handleEditComplex = (e) => {
+  //   e.preventDefault();
+  //   const { complexName, complexAddress, city, district, building } = complex
+  //   const complex = {
+  //     complexName: complexName.value,
+  //     complexAddress: complexAddress.value,
+  //     city: city.value,
+  //     district: district.value,
+  //     building: building.value,
+  //   };
+  //   props.updateComplex(complex);
+  //   setMsg("Complex updated successfully");
+  //   _handleCloseModalEdit();
+  // }
+
 
   const [inputs, setInputs] = useState([
     {
@@ -62,45 +70,6 @@ export default function EditComplex(props) {
     },
   ]);
 
-  const _handleChange = (value, index) => {
-    setInputs(
-      inputs.map((input) => {
-        if (input.id === index) {
-          return {
-            ...input,
-            value,
-          };
-        }
-        return input;
-      })
-    );
-
-    setData({
-      ...data,
-      [inputs[index].name]: value,
-    });
-  };
-
-  const _handleEditComplex = () => {
-    const complex = {
-      complexName: inputs[0].value,
-      complexAddress: inputs[1].value,
-      city: inputs[2].value,
-      district: inputs[3].value,
-      building: inputs[4].value,
-    };
-    updateComplex(complex);
-    setMsg("Complex updated successfully");
-    setData({
-      complexName: "",
-      complexAddress: "",
-      city: "",
-      district: "",
-      building: "",
-    });
-    _handleCloseModalEdit();
-  };
-
   return (
     <>
       <CreateWrap>
@@ -114,14 +83,12 @@ export default function EditComplex(props) {
                 {...input}
                 value={input.value}
                 type={input.type}
-                onChange={(e) => _handleChange(e.target.value, inputIdx)}
               />
             </>
           ) : (
             <>
               <SelectWrap
                 type={input.type}
-                onChange={(e) => _handleChange(e.target.value, inputIdx)}
               >
                 <option value="">{input.placeholder}</option>
                 {input.options.map((option, optionIdx) => (
@@ -145,7 +112,7 @@ export default function EditComplex(props) {
           <button
             className="bg-primary-blue font-bold uppercase text-sm px-6 py-3 rounded shadow mr-1 mb-1"
             type="button"
-            onClick={_handleEditComplex}
+            // onClick={_handleEditComplex}
           >
             Submit
           </button>

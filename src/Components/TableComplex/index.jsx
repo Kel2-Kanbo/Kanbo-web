@@ -1,17 +1,18 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import {FiEdit} from "react-icons/fi";
+import { FiEdit } from "react-icons/fi";
 import EditComplex from "../EditComplex";
 
 export default function TableComplex(props) {
-  const {complex, removeComplex, updateComplex} = props
-  const [showModalEdit, setShowModalEdit] = useState(false)
+  const { complex, removeComplex, updateComplex } = props;
+  const [showModalEdit, setShowModalEdit] = useState(false);
   const _handleCloseModalEdit = () => {
-    setShowModalEdit(false)
-  }
+    setShowModalEdit(false);
+  };
   const _handleOpenModalEdit = () => {
-    setShowModalEdit(true)
-  }
+    setShowModalEdit(true);
+  };
 
   return (
     <div>
@@ -22,12 +23,6 @@ export default function TableComplex(props) {
               <table class="min-w-full">
                 <thead class="bg-white">
                   <tr>
-                    <th
-                      scope="col"
-                      class="text-sm font-medium text-textColor-black px-6 py-4 text-left"
-                    >
-                      No
-                    </th>
                     <th
                       scope="col"
                       class="text-sm font-medium text-textColor-black px-6 py-4 text-left"
@@ -69,9 +64,6 @@ export default function TableComplex(props) {
                 <tbody>
                   {complex?.map((complex) => (
                     <tr class="bg-secondary-blue">
-                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-textColor-blackThin">
-                        {complex.id}
-                      </td>
                       <td class="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
                         {complex.complexName}
                       </td>
@@ -91,12 +83,16 @@ export default function TableComplex(props) {
                         <button onClick={() => removeComplex(complex.id)}>
                           <RiDeleteBin5Line />
                         </button>
-                        <button onClick={_handleOpenModalEdit}>
-                          <FiEdit />
+                        <button onClick={() => updateComplex(complex)}>
+                          <FiEdit onClick={_handleOpenModalEdit} />
+                          {showModalEdit ? (
+                            <EditComplex
+                              _handleCloseModalEdit={_handleCloseModalEdit}
+                              complex={complex}
+                              updateComplex={() => updateComplex(complex)}
+                            />
+                          ) : null}
                         </button>
-                        {showModalEdit ? (
-                          <EditComplex _handleCloseModalEdit={_handleCloseModalEdit} complex={complex} updateComplex={updateComplex}/>
-                        ): null}
                       </td>
                     </tr>
                   ))}
