@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { RiDeleteBin5Line } from "react-icons/ri";
-import { FiEdit } from "react-icons/fi";
-import EditComplex from "../EditComplex";
 
-export default function TableComplex(props) {
-  const { room, removeRoom } = props;
+import ButtonIconDelete from "../ButtonIconDelete";
+import ButtonIconEdit from "../ButtonIconEdit";
+import EditRoom from "../EditRoom";
+
+export default function TableRoom(props) {
+  const { room, removeRoom, updateRoom } = props;
   const [showModalEdit, setShowModalEdit] = useState(false);
   const _handleCloseModalEdit = () => {
     setShowModalEdit(false);
@@ -12,6 +13,8 @@ export default function TableComplex(props) {
   const _handleOpenModalEdit = () => {
     setShowModalEdit(true);
   };
+
+  let angka = 0;
 
   return (
     <div>
@@ -22,6 +25,12 @@ export default function TableComplex(props) {
               <table className="min-w-full">
                 <thead className="bg-white">
                   <tr>
+                    <th
+                      scope="col"
+                      className="text-sm font-medium text-textColor-black px-6 py-4 text-left"
+                    >
+                      No
+                    </th>
                     <th
                       scope="col"
                       className="text-sm font-medium text-textColor-black px-6 py-4 text-left"
@@ -70,6 +79,9 @@ export default function TableComplex(props) {
                   {room?.map((room) => (
                     <tr className="bg-secondary-blue">
                       <td className="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
+                        {(angka += 1)}
+                      </td>
+                      <td className="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
                         <img src={room.picture} alt="room" width="72px" />
                       </td>
                       <td className="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
@@ -100,14 +112,22 @@ export default function TableComplex(props) {
                         )}
                       </td>
                       <td className="flex justify-around whitespace-nowrap">
-                        <button
-                          onClick={() => removeRoom(room.id)}
+                        <button onClick={_handleOpenModalEdit}      
                           className="px-2 py-4"
                         >
-                          <RiDeleteBin5Line />
+                          <ButtonIconEdit onClick={() => updateRoom(room)}/>
+                          {showModalEdit ? (
+                            <EditRoom
+                              _handleCloseModalEdit={_handleCloseModalEdit}
+                              room={room}
+                              updateRoom={() => updateRoom(room)}
+                            />
+                          ) : null}
                         </button>
-                        <button className="px-2 py-4">
-                          <FiEdit />
+                        <button
+                          onClick={() => removeRoom(room.id)}
+                          className="px-2 py-4">
+                          <ButtonIconDelete />
                         </button>
                       </td>
                     </tr>
