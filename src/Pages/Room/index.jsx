@@ -1,16 +1,18 @@
 import React from 'react'
-import NavBar from '../../Components/Navbar';
-import Sidebar from '../../Components/Sidebar';
+import Sidebar from '../../Components/Sidebar'
+import Navbar from '../../Components/Navbar'
 
-function Dashboard() {
+import { Link } from 'react-router-dom'
+
+function index() {
   return (
     <div className=' flex'>
         <Sidebar/>
-          <NavBar/>
+          <Navbar/>
           <div className='h-screen flex-1 '>
             <div className='bg-secondary-softblue'>
-              <div className="px-6 py-12 lg:my-12 md:px-12 text-primary-gray text-center lg:text-left">
-                <h1 className='text-2xl'>Dashboard</h1>
+              <div className="px-6 py-12 lg:my-12 md:px-12  text-primary-gray text-center lg:text-left">
+                <h1 className='text-2xl'>Room</h1>
                 <div className="container mx-auto xl:px-10">
                   <div className="grid lg:grid-cols-2 gap-12 flex items-center">
                     <div className="mt-12 lg:mt-0">
@@ -52,4 +54,4 @@ function Dashboard() {
   )
 }
 
-export default Dashboard;
+export default index
