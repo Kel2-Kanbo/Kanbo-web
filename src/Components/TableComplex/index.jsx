@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import EditComplex from "../EditComplex";
+import ButtonIconDelete from "../ButtonIconDelete";
+import ButtonIconEdit from "../ButtonIconEdit";
 
 export default function TableComplex(props) {
   const { complex, removeComplex, updateComplex } = props;
@@ -14,6 +16,8 @@ export default function TableComplex(props) {
     setShowModalEdit(true);
   };
 
+  let angka = 0;
+
   return (
     <div>
       <div class="flex flex-col">
@@ -23,6 +27,12 @@ export default function TableComplex(props) {
               <table class="min-w-full">
                 <thead class="bg-white">
                   <tr>
+                  <th
+                      scope="col"
+                      class="text-sm font-medium text-textColor-black px-6 py-4 text-left"
+                    >
+                      No
+                    </th>
                     <th
                       scope="col"
                       class="text-sm font-medium text-textColor-black px-6 py-4 text-left"
@@ -55,7 +65,7 @@ export default function TableComplex(props) {
                     </th>
                     <th
                       scope="col"
-                      class="text-sm font-medium text-textColor-black px-6 py-4 text-left"
+                      class="text-sm font-medium text-textColor-black px-6 py-4 text-center"
                     >
                       Actions
                     </th>
@@ -63,7 +73,12 @@ export default function TableComplex(props) {
                 </thead>
                 <tbody >
                   {complex?.map((complex) => (
-                    <tr class="bg-secondary-blue items-center">
+                    <tr class="bg-secondary-blue">
+                      <td class="px-6 py-4 whitespace-no-wrap">
+                        {
+                          angka = angka + 1
+                        }
+                      </td>
                       <td class="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
                         {complex.complexName}
                       </td>
@@ -79,12 +94,9 @@ export default function TableComplex(props) {
                       <td class="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
                         {complex.building}
                       </td>
-                      <td class="flex items-center justify-around px-6 py-4 whitespace-nowrap">
-                        <button onClick={() => removeComplex(complex.id)}>
-                          <RiDeleteBin5Line />
-                        </button>
+                      <td class="flex justify-center gap-8 px-6 py-4 whitespace-nowrap">
                         <button onClick={() => updateComplex(complex)}>
-                          <FiEdit onClick={_handleOpenModalEdit} />
+                          <ButtonIconEdit onClick={_handleOpenModalEdit} />
                           {showModalEdit ? (
                             <EditComplex
                               _handleCloseModalEdit={_handleCloseModalEdit}
@@ -92,6 +104,9 @@ export default function TableComplex(props) {
                               updateComplex={() => updateComplex(complex)}
                             />
                           ) : null}
+                        </button>
+                        <button onClick={() => removeComplex(complex.id)}>
+                          <ButtonIconDelete/>
                         </button>
                       </td>
                     </tr>
