@@ -6,6 +6,7 @@ import Complex from './Pages/Complex';
 import Dashboard from './Pages/Dashboard';
 import NotFound from './Pages/NotFound';
 import Register from './Pages/Register';
+import Room from './Pages/Room';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/register" element={<Register/>}/>
           <Route path="/create-building" element={<CreateBuilding/>}/>
           <Route path="/complex" element={<Complex/>}/>
+          <Route path="/room" element={<Room/>}/>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
