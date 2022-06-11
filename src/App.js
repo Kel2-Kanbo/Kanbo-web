@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 
+import CreateBuilding from './Components/CreateBuilding';
 import Dashboard from './Pages/Dashboard';
 import NotFound from './Pages/NotFound';
 import Register from './Pages/Register';
@@ -17,6 +18,7 @@ function App() {
             <Route path="/home-admin" element={<Home />} />
           </Route> */}
           <Route path="register" element={<Register/>}/>
+          <Route path="/create-building" element={<CreateBuilding/>}/>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

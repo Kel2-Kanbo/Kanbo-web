@@ -15,139 +15,152 @@ export default function Register() {
 		setIsPasswordShown(!isPaswordShown);
 	};
 
-	const [data, setData] = useState({
-		name: '',
-		email: '',
-		username: '',
-		password: '',
-		role: 'admin',
-	});
 	const [msg, setMsg] = useState("");
-  const navigate = useNavigate();
-
-	const errorData = {
-		password: '',
-	}
-	const RegexPassword = /(?=^.{8,}$)/;
-  const [error, setError] = useState(errorData.password);
+	const navigate = useNavigate();
+	// const [error, setError] = useState({
+	// 	name: 'name cant be empty',
+	// 	username: 'username cant contain special characters',
+	// 	email: 'email must be valid',
+	// 	password: 'Password must be at least 8 characters',
+	// });
 	const [inputs, setInputs] = useState([
 		{
 			id: 0,
-			type : 'text',
+			name: "name",
+			type: 'text',
 			placeholder: 'Name',
 			value: '',
+			regex: /^$|\s+/,
+			err: 'name cant be empty',
+			isValid: false,
 		},
 		{
 			id: 1,
-			type : 'email',
+			name: "email",
+			type: 'email',
 			placeholder: 'Email',
 			value: '',
+			regex: /(?=^.{8,}$)/,
+			err: ''
 		},
 		{
 			id: 2,
-			type : 'text',
+			name: "username",
+			type: 'text',
 			placeholder: 'Username',
 			value: '',
+			regex: /(?=^.{8,}$)/,
+			err: ''
 		},
 		{
 			id: 3,
+			name: "password",
 			type: 'password',
 			placeholder: 'Password',
 			value: '',
+			regex: /(?=^.{8,}$)/,
+			err: ''
 		}
 	])
 
 	const _handleChange = (value, index) => {
-		if(index === 3) {
-			if(!RegexPassword.test(value)){
-				setError("Password must be at least 8 characters");
-			} else{
-				setError("")
-			}
-		}
+		// value baru
 		const newInputs = { ...inputs[index], value };
-		console.log(newInputs);
+		// value lama
 		const newInputsArr = [...inputs];
+		// add to value baru
 		newInputsArr[index] = newInputs;
+
+		// if (inputs[0].regex.test(value)) {
+		// 	// value baru
+		// 	const newTest = { ...inputs[index], isValid: true };
+		// 	// value lama
+		// 	const newArr = [...inputs];
+		// 	// add to value baru
+		// 	newArr[index] = newTest;
+		// }
+
+		// setInput di state
 		setInputs(newInputsArr);
-
-		setData({
-			...data,
-			[inputs[index].id]: value
-		});
-		console.log(data);
 	}
-
+	console.log(inputs);
 
 	const _handleRegister = async (e) => {
-		if(data.name && data.email && data.username && data.password && data.role){
-			if (error === "") {
-				try {
-					await Axios.post("http://localhost:3000/register", {
-						name: data.name,
-						email: data.email,
-						username: data.username,
-						password: data.password,
-						role: data.role,
-					})
-					alert(`Register "${data.name}" Success`);
-					navigate("/login")
-				} catch (error) {
-					if(error.response) {
-						setMsg(error.response.data.msg)
-					}   
+		if (inputs[0].value && inputs[1].value && inputs[2].value && inputs[3].value) {
+			// if (error === "") {
+			try {
+				// await Axios.post("http://localhost:3000/register", {
+				// 	name: inputs[0].value,
+				// 	email: inputs[1].value,
+				// 	username: inputs[2].value,
+				// 	password: inputs[3].value,
+				// 	role: 'admin',
+				// });
+				alert(`Register "${inputs[0].value}" Success`);
+				navigate("/login")
+			} catch (error) {
+				if (error.response) {
+					setMsg(error.response.data.msg)
 				}
 			}
+			// }
 			e.preventDefault();
-			console.log(data);
-			setData({	
-				name: '',
-				email: '',
-				username: '',
-				password: '',
-				role: 'admin',
-			});
-		}	else {
+		} else {
 			setMsg("Please fill all field")
 		}
 	}
 
 	const backgroundImage = {
-    backgroundImage: `url(${background})`,
-    backgroundSize: "100% 100%",
-  };
+		backgroundImage: `url(${background})`,
+		backgroundSize: "100% 100%",
+	};
 
 	return (
 		<RegisterWrap style={backgroundImage}>
-			<Logo/>
+			<Logo />
 			<RegisterInput onSubmit={_handleRegister}>
 				<h1 className="text-2xl font-bold">REGISTER</h1>
 				<h4 className="text-left">Create Your Account</h4>
-				<p className="has-text-centered text-error-red">{msg}</p>	
+				<p className="has-text-centered text-error-red">{msg}</p>
 				{
-          inputs.map((input, inputIdx) => (
-            <FormInput
-              key={inputIdx}
-              {...input}
-              value={input.value}
-							type={input.type === 'password' ? isPaswordShown ? 'text' : 'password' : input.type}
-              onChange={(e) => _handleChange(e.target.value, inputIdx)}
-              />
-          ))
-        }
-				
+					inputs.map((input, inputIdx) => {
+						return (
+							<>
+								<FormInput
+									key={inputIdx}
+									{...input}
+									value={input.value}
+									type={input.type === 'password' ? isPaswordShown ? 'text' : 'password' : input.type}
+									onChange={(e) => _handleChange(e.target.value, inputIdx)}
+								/>
+								{/* <span className="text-black">{input.err}</span> */}
+							</>
+						)
+					})
+				}
+
 				<button className="show-password -mt-12 h-8 lg:-mr-72 md:-mr-32 sm:-mr-56" onClick={_handleClickPassword}>
 					{isPaswordShown ? <AiFillEyeInvisible /> : <AiFillEye />}
 				</button>
-        <span className="text-black">{error}</span>
-				
+				{/* {
+					error.name && <span className="text-black">{error.name}</span>
+				}
+				{
+					error.username && <span className="text-black">{error.username}</span>
+				}
+				{
+					error.email && <span className="text-black">{error.email}</span>
+				}
+				{
+					error.password && <span className="text-black">{error.password}</span>
+				} */}
 				<Button onClick={_handleRegister}>Register</Button>
 				<h4>
-          Have an account?{" "}
-          <Link to="/login" className="font-bold text-primary-blue">
-            Login
-          </Link>
-        </h4>
+					Have an account?{" "}
+					<Link to="/login" className="font-bold text-primary-blue">
+						Login
+					</Link>
+				</h4>
 			</RegisterInput>
 		</RegisterWrap>
 	)
