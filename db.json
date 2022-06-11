@@ -1,20 +1,20 @@
 {
   "complex": [
     {
-      "id": 41,
-      "complexName": "mamamamamam",
-      "complexAddress": "akakakakak",
-      "city": "City 2",
-      "district": "District 1",
-      "building": "12"
-    },
-    {
-      "id": 31,
-      "complexName": "nama",
-      "complexAddress": "alamat",
+      "id": 42,
+      "complexName": "yova",
+      "complexAddress": "anjelina",
       "city": "City 1",
       "district": "District 2",
       "building": "90"
+    },
+    {
+      "id": "a797df8e-4b6c-4fb2-9280-a0c725d4e8f7",
+      "complexName": "anjel",
+      "complexAddress": "lina",
+      "city": "City 2",
+      "district": "District 2",
+      "building": "8"
     }
   ]
 }
