@@ -1,0 +1,44 @@
+{
+  "complex": [
+    {
+      "id": 42,
+      "complexName": "yova",
+      "complexAddress": "anjelina",
+      "city": "City 1",
+      "district": "District 2",
+      "building": "90"
+    },
+    {
+      "id": "a797df8e-4b6c-4fb2-9280-a0c725d4e8f7",
+      "complexName": "anjel",
+      "complexAddress": "lina",
+      "city": "City 2",
+      "district": "District 2",
+      "building": "8"
+    }
+  ],
+  "room": [
+    {
+      "id": 3,
+      "picture": "https://source.unsplash.com/random",
+      "roomName": "Room 3",
+      "floor": "Lt 3",
+      "roomItem": [
+        {
+          "id": 1,
+          "itemName": "TV",
+          "quantity": 2,
+          "desc": "description"
+        },
+        {
+          "id": 2,
+          "itemName": "AC",
+          "quantity": 1,
+          "desc": "description"
+        }
+      ],
+      "roomPrice": "Rp. 1.000.000",
+      "status": false
+    }
+  ]
+}

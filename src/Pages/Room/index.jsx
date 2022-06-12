@@ -92,6 +92,7 @@ export default function Room() {
       <div className="flex justify-end">
         <div className="w-auto p-8">
           <Button type="button" style={{backgroundColor: "blue", color: "white"}} onClick={_handleOpenModal}>
+
             Create Room
           </Button>
         </div>
