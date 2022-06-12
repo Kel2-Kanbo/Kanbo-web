@@ -3,6 +3,8 @@ import api from "../../API/Complex";
 
 import Button from "../../Components/Button";
 import TableRoom from "../../Components/TableRoom";
+import Sidebar from '../../Components/Sidebar'
+import Navbar from '../../Components/Navbar'
 
 export default function Room() {
   const [showModal, setShowModal] = useState(false);
@@ -67,7 +69,10 @@ export default function Room() {
   }, []);
 
   return (
-    <div className="bg-secondary-blue h-screen">
+        <div className=' flex'>
+        <Sidebar/>
+          <Navbar/>
+    <div className="bg-secondary-blue h-screen flex-1 ">
       <h1 className="text-3xl p-4">Room</h1>
       <h4 className="text-sm pl-4">Manage room</h4>
       <div className="flex justify-end">
@@ -87,5 +92,7 @@ export default function Room() {
         <TableRoom room={room} removeRoom={removeRoom} />
       </div>
     </div>
+    </div>
+
   );
 }

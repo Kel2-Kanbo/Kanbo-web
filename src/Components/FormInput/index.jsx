@@ -5,6 +5,7 @@ const FormInput = styled.input`
     border: 2px solid black;
     border-radius: 8px;
     padding: 10px;
+    margin: 5px;
 `
 
 export default FormInput;

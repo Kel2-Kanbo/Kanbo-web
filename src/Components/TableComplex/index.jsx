@@ -14,9 +14,7 @@ export default function TableComplex(props) {
   }
   const _handleCloseModalEdit = () => {
     setShowModalEdit(false);
-  }
-
-
+  
   
   let angka = 0;
 

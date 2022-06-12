@@ -3,18 +3,24 @@ import './App.css';
 
 import CreateBuilding from './Components/CreateBuilding';
 import Complex from './Pages/Complex';
+import Login from './Pages/Login';
 import Dashboard from './Pages/Dashboard';
+import Complex from './Pages/Complex';
+import Room from './Pages/Room';
 import NotFound from './Pages/NotFound';
 import Register from './Pages/Register';
 import Room from './Pages/Room';
 
-function App() {
+const App = () => {
   return (
-    <div>
+    <div className='bg-secondary-softblue'>
     {/* <div className="App"> */}
       <Router>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/dashboard-admin" element={<Dashboard />} />
+          <Route path="/complex" element={<Complex/>} />
+          <Route path="/room" element={<Room />}/>
           {/* <Route exact path="/login" element={<Login />} />
           <Route element={ <PrivateRoute /> }>
             <Route path="/home-admin" element={<Home />} />

@@ -8,7 +8,7 @@ import SelectWrap from "../SelectWrap";
 export default function EditComplex(props) {
   const { handleClose, complex, updateComplex } = props;
   const [msg, setMsg] = useState("");
-  
+
   const [inputs, setInputs] = useState([
     {
       id: 0,

@@ -3,6 +3,8 @@ import api from "../../API/Complex";
 
 import Button from "../../Components/Button";
 import CreateComplex from "../../Components/CreateComplex";
+import Navbar from "../../Components/Navbar";
+import Sidebar from "../../Components/Sidebar";
 import TableComplex from "../../Components/TableComplex";
 
 export default function Complex() {
@@ -69,15 +71,33 @@ export default function Complex() {
   }, []);
 
   return (
-    <div className="bg-secondary-blue h-screen">
+    <div className="flex">
+        <Sidebar/>
+          <Navbar/>
+    <div className="bg-secondary-blue h-screen flex-1 ">
       <h1 className="text-3xl p-4">COMPLEX</h1>
       <h4 className="text-sm pl-4">Manage complex</h4>
       <div className="flex justify-end">
-        <div className="w-auto p-8">
-          <Button type="button" onClick={_handleOpenModal}>
-            Create Complex
-          </Button>
-        </div>
+                    <div className="w-auto p-8">
+                    <Button type="button" className="px-6
+                                                        py-2.5
+                                                        bg-primary-blue
+                                                        text-primary-white font-medium
+                                                        text-xs
+                                                        leading-tight
+                                                        uppercase
+                                                        rounded
+                                                        shadow-md
+                                                        hover:bg-blue-700 hover:shadow-lg
+                                                        focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+                                                        active:bg-blue-800 active:shadow-lg
+                                                        transition
+                                                        duration-150
+                                                        ease-in-out" 
+                                                        onClick={_handleOpenModal}>
+                        Create Complex
+                    </Button>
+                    </div>
         {showModal ? (
           <CreateComplex
             handleClose={_handleCloseModal}
