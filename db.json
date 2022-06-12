@@ -24,5 +24,45 @@
       "district": "District 1",
       "building": "5"
     }
+  ],
+  "room": [
+    {
+      "id": 2,
+      "picture": "https://source.unsplash.com/random",
+      "roomName": "Room 2",
+      "floor": "Lt 2",
+      "roomItem": [
+        {
+          "id": 1,
+          "itemName": "TV",
+          "quantity": 2,
+          "desc": "description" 
+        }
+      ],
+      "roomPrice": "Rp. 1.000.000",
+      "status": true
+    },
+    {
+      "id": 3,
+      "picture": "https://source.unsplash.com/random",
+      "roomName": "Room 3",
+      "floor": "Lt 3",
+      "roomItem": [
+        {
+          "id": 1,
+          "itemName": "TV",
+          "quantity": 2,
+          "desc": "description" 
+        },
+        {
+          "id": 2,
+          "itemName": "AC",
+          "quantity": 1,
+          "desc": "description"
+        }
+      ],
+      "roomPrice": "Rp. 1.000.000",
+      "status": false
+    }
   ]
 }

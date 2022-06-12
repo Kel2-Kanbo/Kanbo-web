@@ -71,7 +71,7 @@ export default function TableComplex(props) {
                     </th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody >
                   {complex?.map((complex) => (
                     <tr class="bg-secondary-blue">
                       <td class="px-6 py-4 whitespace-no-wrap">
