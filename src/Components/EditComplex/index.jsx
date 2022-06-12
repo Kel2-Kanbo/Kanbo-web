@@ -1,29 +1,13 @@
-import styled from "@emotion/styled";
 import React, { useState } from "react";
 
 import FormInput from "../FormInput";
+import FormWrap from "../FormWrap";
+import Button from "../Button";
+import SelectWrap from "../SelectWrap";
 
 export default function EditComplex(props) {
-  const { _handleCloseModalEdit, complex, updateComplex } = props;
+  const { handleClose, complex, updateComplex } = props;
   const [msg, setMsg] = useState("");
-  
-  console.log(complex);
-
-  // const _handleEditComplex = (e) => {
-  //   e.preventDefault();
-  //   const { complexName, complexAddress, city, district, building } = complex
-  //   const complex = {
-  //     complexName: complexName.value,
-  //     complexAddress: complexAddress.value,
-  //     city: city.value,
-  //     district: district.value,
-  //     building: building.value,
-  //   };
-  //   props.updateComplex(complex);
-  //   setMsg("Complex updated successfully");
-  //   _handleCloseModalEdit();
-  // }
-
 
   const [inputs, setInputs] = useState([
     {
@@ -31,7 +15,7 @@ export default function EditComplex(props) {
       name: "complexName",
       type: "text",
       placeholder: "Complex Name",
-      value: "",
+      value: complex.complexName,
       required: true,
     },
     {
@@ -39,7 +23,7 @@ export default function EditComplex(props) {
       name: "complexAddress",
       type: "text",
       placeholder: "Complex Address",
-      value: "",
+      value: complex.complexAddress,
       required: true,
     },
     {
@@ -48,7 +32,7 @@ export default function EditComplex(props) {
       type: "select",
       placeholder: "City",
       options: ["City 1", "City 2", "City 3"],
-      value: "",
+      value: complex.city,
       required: true,
     },
     {
@@ -57,7 +41,7 @@ export default function EditComplex(props) {
       type: "select",
       placeholder: "District",
       options: ["District 1", "District 2", "District 3"],
-      value: "",
+      value: complex.district,
       required: true,
     },
     {
@@ -65,14 +49,54 @@ export default function EditComplex(props) {
       name: "building",
       type: "number",
       placeholder: "Building",
-      value: "",
+      value: complex.building,
       required: true,
     },
   ]);
 
+  const _handleClose = () => {
+    handleClose();
+  }
+
+  const _handleEditComplex = (e) => {
+    e.preventDefault();
+    if (
+      inputs[0].value &&
+      inputs[1].value &&
+      inputs[2].value &&
+      inputs[3].value &&
+      inputs[4].value
+    ) {
+      updateComplex({
+        id: complex.id,
+        complexName: inputs[0].value,
+        complexAddress: inputs[1].value,
+        city: inputs[2].value,
+        district: inputs[3].value,
+        building: inputs[4].value,
+      });
+      alert("Complex has been updated");
+      _handleClose();
+    } else {
+      setMsg("Please fill all fields");
+    }
+  };
+
+  const _handleChange = (e) => {
+    const { name, value } = e.target;
+    setInputs((prevInputs) => {
+      return prevInputs.map((input) => {
+        if (input.name === name) {
+          input.value = value;
+        }
+        return input;
+      });
+    });
+  };
+
   return (
     <>
-      <CreateWrap>
+      <FormWrap>
         <h3 className="text-2xl text-center font-bold">Edit Complex</h3>
         <p className="has-text-centered text-error-red">{msg}</p>
         {inputs.map((input, inputIdx) =>
@@ -83,12 +107,18 @@ export default function EditComplex(props) {
                 {...input}
                 value={input.value}
                 type={input.type}
+                name={input.name}
+                placeholder={input.placeholder}
+                onChange={_handleChange}
               />
             </>
           ) : (
             <>
               <SelectWrap
                 type={input.type}
+                name={input.name}
+                placeholder={input.placeholder}
+                onChange={_handleChange}
               >
                 <option value="">{input.placeholder}</option>
                 {input.options.map((option, optionIdx) => (
@@ -101,54 +131,18 @@ export default function EditComplex(props) {
           )
         )}
 
-        <div className="flex justify-between w-full text-primary-white">
+        <div className="flex gap-4 justify-between w-full text-primary-white">
           <button
-            className="font-bold bg-error-red uppercase px-6 py-3 text-sm rounded shadow mr-1 mb-1"
-            type="button"
-            onClick={_handleCloseModalEdit}
+            className="font-bold text-textColor-black uppercase px-6 py-3 text-sm shadow mr-1 mb-1"
+            onClick={_handleClose}
           >
             Close
           </button>
-          <button
-            className="bg-primary-blue font-bold uppercase text-sm px-6 py-3 rounded shadow mr-1 mb-1"
-            type="button"
-            // onClick={_handleEditComplex}
-          >
-            Submit
-          </button>
+          <Button onClick={_handleEditComplex} type="button">
+            Update Complex
+          </Button>
         </div>
-      </CreateWrap>
+      </FormWrap>
     </>
   );
 }
-
-const SelectWrap = styled.select`
-  width: 100%;
-  border: 2px solid black;
-  border-radius: 8px;
-  padding: 10px;
-`;
-
-const CreateWrap = styled.div`
-  background-color: #fff;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
-  row-gap: 20px;
-  border: 1px solid black;
-  border-radius: 10px;
-  align-items: center;
-  padding: 24px;
-  width: 40%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  .textarea {
-    width: 100%;
-    height: 100%;
-    border: 2px solid black;
-    border-radius: 8px;
-    padding: 10px;
-  }
-`;

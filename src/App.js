@@ -1,11 +1,15 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 
+import CreateBuilding from './Components/CreateBuilding';
+import Complex from './Pages/Complex';
 import Login from './Pages/Login';
 import Dashboard from './Pages/Dashboard';
 import Complex from './Pages/Complex';
 import Room from './Pages/Room';
 import NotFound from './Pages/NotFound';
+import Register from './Pages/Register';
+import Room from './Pages/Room';
 
 const App = () => {
   return (
@@ -21,6 +25,10 @@ const App = () => {
           <Route element={ <PrivateRoute /> }>
             <Route path="/home-admin" element={<Home />} />
           </Route> */}
+          <Route path="/register" element={<Register/>}/>
+          <Route path="/create-building" element={<CreateBuilding/>}/>
+          <Route path="/complex" element={<Complex/>}/>
+          <Route path="/room" element={<Room/>}/>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

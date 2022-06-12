@@ -1,8 +1,10 @@
-import styled from "@emotion/styled";
-import colors from "../../Utils/styles/colors";
 import React, { useState } from "react";
+import {v4 as uuidv4} from 'uuid';
 
 import FormInput from "../FormInput";
+import SelectWrap from "../SelectWrap";
+import FormWrap from "../FormWrap";
+import Button from "../Button";
 
 export default function CreateComplex(props) {
   const {handleClose, addComplex} = props
@@ -80,37 +82,122 @@ export default function CreateComplex(props) {
     });
   };
 
-  const _handleCreateComplex = () => {
-    if (data.complexAddress && data.complexName && data.city && data.district) {
+  const _handleCreateComplex = (e) => {
+    if (inputs[0].value &&  inputs[1].value && inputs[2].value && inputs[3].value && inputs[4].value)  {
       addComplex({
-        id: Math.floor(Math.random() * 100),
-        complexName: data.complexName,
-        complexAddress: data.complexAddress,
-        city: data.city,
-        district: data.district,
-        building: data.building,
-      })
-
-      setData({
-        complexName: "",
-        complexAddress: "",
-        city: "",
-        district: "",
-        building: "",
-      });    
+        id: uuidv4(),
+        complexName: inputs[0].value,
+        complexAddress: inputs[1].value,
+        city: inputs[2].value,
+        district: inputs[3].value,
+        building: inputs[4].value,        
+      })  
       alert("Complex Created");
-      handleClose();
+      e.preventDefault();
 
+      setInputs([
+        {
+          id: 0,
+          name: "complexName",
+          type: "text",
+          placeholder: "Complex Name",
+          value: "",
+          required: true,
+        },
+        {
+          id: 1,
+          name: "complexAddress",
+          type: "text",
+          placeholder: "Complex Address",
+          value: "",
+          required: true,
+        },
+        {
+          id: 2,
+          name: "city",
+          type: "select",
+          placeholder: "City",
+          options: ["City 1", "City 2", "City 3"],
+          value: "",
+          required: true,
+        },
+        {
+          id: 3,
+          name: "district",
+          type: "select",
+          placeholder: "District",
+          options: ["District 1", "District 2", "District 3"],
+          value: "",
+          required: true,
+        },
+        {
+          id: 4,
+          name: "building",
+          type: "number",
+          placeholder: "Building",
+          value: "",
+          required: true,
+        },
+      ])
+      handleClose();
     } else {
       setMsg("Please fill out all fields");
     }
   }
 
+  const _handleClose = () => {
+    handleClose();
+    setInputs([
+      {
+        id: 0,
+        name: "complexName",
+        type: "text",
+        placeholder: "Complex Name",
+        value: "",
+        required: true,
+      },
+      {
+        id: 1,
+        name: "complexAddress",
+        type: "text",
+        placeholder: "Complex Address",
+        value: "",
+        required: true,
+      },
+      {
+        id: 2,
+        name: "city",
+        type: "select",
+        placeholder: "City",
+        options: ["City 1", "City 2", "City 3"],
+        value: "",
+        required: true,
+      },
+      {
+        id: 3,
+        name: "district",
+        type: "select",
+        placeholder: "District",
+        options: ["District 1", "District 2", "District 3"],
+        value: "",
+        required: true,
+      },
+      {
+        id: 4,
+        name: "building",
+        type: "number",
+        placeholder: "Building",
+        value: "",
+        required: true,
+      },
+    ])
+  }
+
   return (
     <>
-      <CreateWrap onSubmit={_handleCreateComplex}>
+      <FormWrap onSubmit={_handleCreateComplex}>
         <h3 className="text-2xl text-center font-bold">Create Complex</h3>
-        <p className="has-text-centered text-secondary-red">{msg}</p>
+        <p className="has-text-centered text-error-red">{msg}</p>
         {inputs.map((input, inputIdx) =>
           input.type !== "select" ? (
             <>
@@ -139,48 +226,22 @@ export default function CreateComplex(props) {
           )
         )}
 
-        <div className="flex justify-between w-full text-primary-white">
+        <div className="flex gap-4 justify-between w-full text-primary-white">
           <button
-            className="font-bold bg-secondary-red uppercase px-6 py-3 text-sm rounded shadow mr-1 mb-1"
+            className="font-bold text-textColor-black uppercase px-6 py-3 text-sm shadow mr-1 mb-1"
             type="button"
-            onClick={handleClose}
+            onClick={_handleClose}
           >
             Close
           </button>
-          <button
-            className="bg-primary-blue2 font-bold uppercase text-sm px-6 py-3 rounded shadow mr-1 mb-1"
+          <Button
             type="button"
             onClick={_handleCreateComplex}
           >
-            Submit
-          </button>
+            Add Complex
+          </Button>
         </div>
-      </CreateWrap>
+      </FormWrap>
     </>
   );
 }
-
-const SelectWrap = styled.select`
-  width: 100%;
-//   border: 2px solid black;
-  border-radius: 8px;
-  padding: 10px;
-`;
-
-const CreateWrap = styled.div`
-  background-color: ${colors.primary.white};
-  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
-  row-gap: 20px;
-  border: 1px solid white;
-  border-radius: 10px;
-  align-items: center;
-  padding: 24px;
-  width: 40%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  
-`;
