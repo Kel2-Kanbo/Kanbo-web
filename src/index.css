@@ -28,15 +28,19 @@ main{
   width: 100%;
   padding: 20px;
 }
+th,td{
+  padding: 8px 12px;
+  /* border: 1px solid #000; */
+}
 
-.sidebar{
+/* .sidebar{
   background: #FFFFFF;
   color: #4C35E0;
   height: 100vh;
   width: 200px;
   border-top-right-radius: 2rem;
   transition: all 0.5s;
-}
+} */
 .top_section{
   display: flex;
   align-items:center;

@@ -16,46 +16,46 @@ export default function TableComplex(props) {
 
   return (
     <div>
-      <div class="flex flex-col">
+      <div className="flex flex-col">
         <div>
-          <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-            <div class="overflow-hidden">
-              <table class="min-w-full">
-                <thead class="bg-white">
+          <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+            <div className="overflow-hidden">
+              <table className="min-w-full">
+                <thead className="bg-white">
                   <tr>
                     <th
                       scope="col"
-                      class="text-sm font-medium text-textColor-black px-6 py-4 text-left"
+                      className="text-sm font-medium text-textColor-black px-6 py-4 text-left"
                     >
                       Complex Name
                     </th>
                     <th
                       scope="col"
-                      class="text-sm font-medium text-textColor-black px-6 py-4 text-left"
+                      className="text-sm font-medium text-textColor-black px-6 py-4 text-left"
                     >
                       Address
                     </th>
                     <th
                       scope="col"
-                      class="text-sm font-medium text-textColor-black px-6 py-4 text-left"
+                      className="text-sm font-medium text-textColor-black px-6 py-4 text-left"
                     >
                       City
                     </th>
                     <th
                       scope="col"
-                      class="text-sm font-medium text-textColor-black px-6 py-4 text-left"
+                      className="text-sm font-medium text-textColor-black px-6 py-4 text-left"
                     >
                       District
                     </th>
                     <th
                       scope="col"
-                      class="text-sm font-medium text-textColor-black px-6 py-4 text-left"
+                      className="text-sm font-medium text-textColor-black px-6 py-4 text-left"
                     >
                       Building
                     </th>
                     <th
                       scope="col"
-                      class="text-sm font-medium text-textColor-black px-6 py-4 text-left"
+                      className="text-sm font-medium text-textColor-black px-6 py-4 text-left"
                     >
                       Actions
                     </th>
@@ -63,23 +63,23 @@ export default function TableComplex(props) {
                 </thead>
                 <tbody>
                   {complex?.map((complex) => (
-                    <tr class="bg-secondary-blue">
-                      <td class="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
+                    <tr className="bg-secondary-blue">
+                      <td className="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
                         {complex.complexName}
                       </td>
-                      <td class="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
+                      <td className="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
                         {complex.complexAddress}
                       </td>
-                      <td class="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
+                      <td className="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
                         {complex.city}
                       </td>
-                      <td class="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
+                      <td className="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
                         {complex.district}
                       </td>
-                      <td class="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
+                      <td className="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
                         {complex.building}
                       </td>
-                      <td class="flex justify-around px-6 py-4 whitespace-nowrap">
+                      <td className="flex justify-around px-6 py-4 whitespace-nowrap">
                         <button onClick={() => removeComplex(complex.id)}>
                           <RiDeleteBin5Line />
                         </button>
