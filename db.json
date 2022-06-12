@@ -15,6 +15,14 @@
       "city": "City 2",
       "district": "District 2",
       "building": "8"
+    },
+    {
+      "id": "92aa1956-bbaf-4a7d-93a6-e878a7696155",
+      "complexName": "nama",
+      "complexAddress": "alamat",
+      "city": "City 2",
+      "district": "District 1",
+      "building": "5"
     }
   ]
 }
