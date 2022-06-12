@@ -18,11 +18,11 @@
     },
     {
       "id": "92aa1956-bbaf-4a7d-93a6-e878a7696155",
-      "complexName": "nama",
-      "complexAddress": "alamat",
-      "city": "City 2",
-      "district": "District 1",
-      "building": "5"
+      "complexName": "naaa",
+      "complexAddress": "anjel",
+      "city": "City 1",
+      "district": "District 2",
+      "building": "8"
     }
   ],
   "room": [
@@ -36,7 +36,7 @@
           "id": 1,
           "itemName": "TV",
           "quantity": 2,
-          "desc": "description" 
+          "desc": "description"
         }
       ],
       "roomPrice": "Rp. 1.000.000",
@@ -52,7 +52,7 @@
           "id": 1,
           "itemName": "TV",
           "quantity": 2,
-          "desc": "description" 
+          "desc": "description"
         },
         {
           "id": 2,

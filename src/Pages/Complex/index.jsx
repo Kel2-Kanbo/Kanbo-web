@@ -43,10 +43,10 @@ export default function Complex() {
 
   //update complex
   const updateComplex = async (data) => {
-    console.log(data)
+    console.log(data) 
     console.log(data.id)    
     const response = await api.put(`/complex/${data.id}`, data);
-    const {id, complexName, complexAddress, city, district, building} = response.data;
+    const {id} = response.data;
     console.log(response.data);
     setComplex(complex.map((data) => {
       return data.id === id ? { ...response.data } : data;
@@ -54,6 +54,7 @@ export default function Complex() {
     if (response.data) {
       const allComplex = await getComplex();
       setComplex(allComplex);
+      setShowModal(false);
     }
   }
 
@@ -87,6 +88,7 @@ export default function Complex() {
       <div className="bg-primary-white items-center m-4">
         <TableComplex
           complex={complex}
+          handleClose={_handleCloseModal}
           removeComplex={removeComplex}
           updateComplex={updateComplex}
         />
