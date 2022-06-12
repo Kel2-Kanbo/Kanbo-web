@@ -5,11 +5,9 @@ import CreateBuilding from './Components/CreateBuilding';
 import Complex from './Pages/Complex';
 import Login from './Pages/Login';
 import Dashboard from './Pages/Dashboard';
-import Complex from './Pages/Complex';
 import Room from './Pages/Room';
 import NotFound from './Pages/NotFound';
 import Register from './Pages/Register';
-import Room from './Pages/Room';
 
 const App = () => {
   return (

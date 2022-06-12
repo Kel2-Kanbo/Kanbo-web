@@ -45,20 +45,22 @@ export default function Complex() {
 
   //update complex
   const updateComplex = async (data) => {
-    console.log(data) 
-    console.log(data.id)    
+    console.log(data);
+    console.log(data.id);
     const response = await api.put(`/complex/${data.id}`, data);
-    const {id} = response.data;
+    const { id } = response.data;
     console.log(response.data);
-    setComplex(complex.map((data) => {
-      return data.id === id ? { ...response.data } : data;
-    }))
+    setComplex(
+      complex.map((data) => {
+        return data.id === id ? { ...response.data } : data;
+      })
+    );
     if (response.data) {
       const allComplex = await getComplex();
       setComplex(allComplex);
       setShowModal(false);
     }
-  }
+  };
 
   useEffect(() => {
     const getAllComplex = async () => {
@@ -72,46 +74,36 @@ export default function Complex() {
 
   return (
     <div className="flex">
-        <Sidebar/>
-          <Navbar/>
-    <div className="bg-secondary-blue h-screen flex-1 ">
-      <h1 className="text-3xl p-4">COMPLEX</h1>
-      <h4 className="text-sm pl-4">Manage complex</h4>
-      <div className="flex justify-end">
-                    <div className="w-auto p-8">
-                    <Button type="button" className="px-6
-                                                        py-2.5
-                                                        bg-primary-blue
-                                                        text-primary-white font-medium
-                                                        text-xs
-                                                        leading-tight
-                                                        uppercase
-                                                        rounded
-                                                        shadow-md
-                                                        hover:bg-blue-700 hover:shadow-lg
-                                                        focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-                                                        active:bg-blue-800 active:shadow-lg
-                                                        transition
-                                                        duration-150
-                                                        ease-in-out" 
-                                                        onClick={_handleOpenModal}>
-                        Create Complex
-                    </Button>
-                    </div>
-        {showModal ? (
-          <CreateComplex
+      <Sidebar />
+      <Navbar />
+      <div className="bg-secondary-blue h-screen flex-1 ">
+        <h1 className="text-3xl p-4">COMPLEX</h1>
+        <h4 className="text-sm pl-4">Manage complex</h4>
+        <div className="flex justify-end">
+          <div className="w-auto p-8">
+            <Button
+              type="button"
+              className="px-6 py-2.5 bg-primary-blue text-primary-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+              onClick={_handleOpenModal}
+            >
+              Create Complex
+            </Button>
+          </div>
+          {showModal ? (
+            <CreateComplex
+              handleClose={_handleCloseModal}
+              addComplex={addComplex}
+            />
+          ) : null}
+        </div>
+        <div className="bg-primary-white items-center m-4">
+          <TableComplex
+            complex={complex}
             handleClose={_handleCloseModal}
-            addComplex={addComplex}
+            removeComplex={removeComplex}
+            updateComplex={updateComplex}
           />
-        ) : null}
-      </div>
-      <div className="bg-primary-white items-center m-4">
-        <TableComplex
-          complex={complex}
-          handleClose={_handleCloseModal}
-          removeComplex={removeComplex}
-          updateComplex={updateComplex}
-        />
+        </div>
       </div>
     </div>
   );
