@@ -11,9 +11,6 @@ export default function EditRoom(props) {
 
   console.log(room);
 
-  const _handleClose = () => {
-    _handleCloseModalEdit();
-  }
 
   const [inputs, setInputs] = useState([
     {

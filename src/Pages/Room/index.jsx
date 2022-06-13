@@ -4,6 +4,8 @@ import api from "../../API/Complex";
 import Button from "../../Components/Button";
 import CreateRoom from "../../Components/CreateRoom";
 import TableRoom from "../../Components/TableRoom";
+import Sidebar from '../../Components/Sidebar'
+import Navbar from '../../Components/Navbar'
 
 export default function Room() {
   const [showModal, setShowModal] = useState(false);
@@ -81,32 +83,44 @@ export default function Room() {
   }, []);
 
   return (
-    <div className="bg-secondary-blue h-screen">
-      <h1 className="text-3xl p-4">Room</h1>
-      <div className="text-sm">
-        <select className="bg-secondary-blue text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
-          <option value="" className="bg-secondary-blue text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">Sort by</option>
-        </select>
+    <div className='flex h-screen bg-secondary-softblue'>
+
+      <div className='basis-1/6 bg-primary-white'>
+        <Sidebar />
       </div>
+      <div className="basis-5/6">
+        <Navbar />
+        <div className='px-4 py-4'>
+          <h1 className="text-3xl font-bold mb-4">Room</h1>
 
-      <div className="flex justify-end">
-        <div className="w-auto p-8">
-          <Button type="button" style={{ backgroundColor: "blue", color: "white" }} onClick={_handleOpenModal}>
+          <div className="flex items-center justify-between mb-6">
+            <div className="text-sm">
+              <select className="text-textColor-blackThin whitespace-nowrap px-4 py-3 rounded border bg-primary-white">
+                <option value="">Select Building</option>
+                <option value="">Building 1</option>
+                <option value="">Building 2</option>
+              </select>
+            </div>
+            <div className="w-auto">
+              <Button type="button" style={{ backgroundColor: "blue", color: "white" }} onClick={_handleOpenModal}>
 
-            Create Room
-          </Button>
+                Create Room
+              </Button>
+            </div>
+            {showModal ? (
+              <CreateRoom handleClose={_handleCloseModal} addRoom={addRoom} />
+            ) : null}
+          </div>
+          <div className="bg-primary-white items-center">
+            <TableRoom
+              room={room}
+              removeRoom={removeRoom}
+              updateRoom={updateRoom}
+            />
+          </div>
         </div>
-        {showModal ? (
-          <CreateRoom handleClose={_handleCloseModal} addRoom={addRoom} />
-        ) : null}
-      </div>
-      <div className="bg-primary-white items-center m-4">
-        <TableRoom
-          room={room}
-          removeRoom={removeRoom}
-          updateRoom={updateRoom}
-        />
       </div>
     </div>
+
   );
 }

@@ -7,7 +7,7 @@ import { useState } from "react";
 import React from 'react';
 // import { toBePartiallyChecked } from "@testing-library/jest-dom/dist/matchers";
 
-export default function CreateRoom() {
+export default function CreateRoom({ handleClose, addRoom }) {
 
   const [showRoom, setShowRoom] = useState(false);
 
@@ -229,7 +229,7 @@ export default function CreateRoom() {
               color: "white",
             }}
             type="button"
-            onClick={() => setShowRoom(false)}
+            onClick={handleClose}
           >
             Cancel
           </Button>

@@ -12,5 +12,4 @@ const colors = {
         "red": "#FF3030",
     }
 }
-
 export default colors;

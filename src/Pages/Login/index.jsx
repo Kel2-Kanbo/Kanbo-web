@@ -93,14 +93,16 @@ export default function Login() {
                                     key={inputIdx}
                                 >
                                     <FormInput
-                                        className='p-3 peer'
+                                        className='peer'
                                         {...input}
                                         value={input.value}
                                         type={input.type === 'password' ? isPasswordShown ? 'text' : 'password' : input.type}
                                         required
                                         onChange={(e) => handleChange(e.target.value, inputIdx)}
                                     />
-                                    <p className='my-2 invisible peer-invalid:visible text-primary-red text-sm'>{input.err}</p>
+                                    <p className='my-2 invisible peer-invalid:visible text-primary-red text-sm'>
+                                        {/* {input.err} */}
+                                    </p>
                                 </div>
                             ))
                         }

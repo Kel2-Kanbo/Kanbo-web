@@ -16,21 +16,21 @@ module.exports = {
         gray2: "#888686",
         gray3: "#D7D7D7",
       },
-      secondary: {
-        softblue: "#EDEAFF",
-        green: "#B7FFAB",
-        mossgreen: "#C7F4F2",
-        orange: "#FFEC42",
-        yellow: "#FFEEC3",
-        white1: "#FDFEFF",
-        white2: "#F4F4F4",
-      },
       error: {
         red: "#FF3030",
         pink: "#FFB6B6",
       },
       success: {
         green: "#D6FFC8",
+      },
+      secondary: {
+        blue: "#EDEAFF",
+        yellow: "#FFEC42",
+        red: "#FF3030",
+        softblue: "#EDEAFF",
+        orange: "#FFCA42",
+        white1: "#FDFEFF",
+        white2: "#F4F4F4",
       },
       textColor: {
         black: "#1F1F1F",

@@ -5,10 +5,11 @@ import CreateBuilding from './Components/CreateBuilding';
 import Login from './Pages/Login';
 import Complex from './Pages/Complex';
 import Dashboard from './Pages/Dashboard';
+import Room from './Pages/Room';
 import NotFound from './Pages/NotFound';
 import CreateUpdateRoom from './Pages/CreateUpdateRoom';
 import Register from './Pages/Register';
-import Room from './Pages/Room';
+import Building from './Pages/Building';
 
 const App = () => {
   return (
@@ -17,13 +18,13 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/createRoom" element={<CreateUpdateRoom />} />
-
-          <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/create-building" element={<CreateBuilding />} />
           <Route path="/complex" element={<Complex />} />
+          <Route path="/building" element={<Building />} />
           <Route path="/room" element={<Room />} />
+          <Route path="/createRoom" element={<CreateUpdateRoom />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/create-building" element={<CreateBuilding />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

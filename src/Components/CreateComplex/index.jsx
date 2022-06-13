@@ -140,7 +140,6 @@ export default function CreateComplex(props) {
         },
       ])
       handleClose();
-
     } else {
       setMsg("Please fill out all fields");
     }
