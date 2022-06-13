@@ -23,6 +23,14 @@
       "city": "City 2",
       "district": "District 2",
       "building": "8"
+    },
+    {
+      "id": "3b5efbbf-f91b-4d78-945b-c6bf79f514a4",
+      "complexName": "satu",
+      "complexAddress": "dua",
+      "city": "City 1",
+      "district": "District 2",
+      "building": "1"
     }
   ],
   "room": [
