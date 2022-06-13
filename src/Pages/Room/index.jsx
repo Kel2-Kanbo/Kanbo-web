@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import api from "../../API/Complex";
 
 import Button from "../../Components/Button";
+import CreateRoom from "../../Components/CreateRoom";
 import TableRoom from "../../Components/TableRoom";
 import Sidebar from '../../Components/Sidebar'
 import Navbar from '../../Components/Navbar'
@@ -18,45 +19,58 @@ export default function Room() {
     setShowModal(false);
   };
 
-  //get complex data from the server
+  const [building, setBuilding] = useState([
+    {
+      id: 0,
+      name: "",
+      type: "select",
+      placeholder: "Building",
+      options: [],
+      value: "",
+    }
+  ]);
+
+  //get room data from the server
   const getRoom = async () => {
     const response = await api.get("/room");
     return response.data;
   };
 
-  //add complex
-  //   const addComplex = async (data) => {
-  //     const response = await api.post("/complex", data);
-  //     if (response.data) {
-  //       setComplex([...complex, response.data]);
-  //       setShowModal(false);
-  //     }
-  //   };
+  //add room
+  const addRoom = async (data) => {
+    const response = await api.post("/room", data);
+    if (response.data) {
+      setRoom([...room, response.data]);
+      setShowModal(false);
+    }
+  };
 
-  //remove complex
+  //remove room
   const removeRoom = async (id) => {
     const response = await api.delete(`/room/${id}`);
     if (response.data) {
-      alert("Delete success");
+      alert("Delete room success");
       setRoom(room.filter((item) => item.id !== id));
     }
-  }
+  };
 
-  //update complex
-  //   const updateComplex = async (data) => {
-  //     console.log(data)
-  //     console.log(data.id)
-  //     const response = await api.put(`/complex/${data.id}`, data);
-  //     const {id, complexName, complexAddress, city, district, building} = response.data;
-  //     console.log(response.data);
-  //     setComplex(complex.map((data) => {
-  //       return data.id === id ? { ...response.data } : data;
-  //     }))
-  //     if (response.data) {
-  //       const allComplex = await getComplex();
-  //       setComplex(allComplex);
-  //     }
-  //   }
+  //update room
+  const updateRoom = async (data) => {
+    console.log(data);
+    console.log(data.id);
+    const response = await api.put(`/room/${data.id}`, data);
+    const { id } = response.data;
+    console.log(response.data);
+    setRoom(
+      room.map((data) => {
+        return data.id === id ? { ...response.data } : data;
+      })
+    );
+    if (response.data) {
+      const allRoom = await getRoom();
+      setRoom(allRoom);
+    }
+  };
 
   useEffect(() => {
     const getAllRoom = async () => {
@@ -69,29 +83,43 @@ export default function Room() {
   }, []);
 
   return (
-        <div className=' flex'>
-        <Sidebar/>
-          <Navbar/>
-    <div className="bg-secondary-blue h-screen flex-1 ">
-      <h1 className="text-3xl p-4">Room</h1>
-      <h4 className="text-sm pl-4">Manage room</h4>
-      <div className="flex justify-end">
-        <div className="w-auto p-8">
-          <Button type="button" onClick={_handleOpenModal}>
-            Create Room
-          </Button>
+    <div className='flex h-screen bg-secondary-softblue'>
+
+      <div className='basis-1/6 bg-primary-white'>
+        <Sidebar />
+      </div>
+      <div className="basis-5/6">
+        <Navbar />
+        <div className='px-4 py-4'>
+          <h1 className="text-3xl font-bold mb-4">Room</h1>
+
+          <div className="flex items-center justify-between mb-6">
+            <div className="text-sm">
+              <select className="text-textColor-blackThin whitespace-nowrap px-4 py-3 rounded border bg-primary-white">
+                <option value="">Select Building</option>
+                <option value="">Building 1</option>
+                <option value="">Building 2</option>
+              </select>
+            </div>
+            <div className="w-auto">
+              <Button type="button" style={{ backgroundColor: "blue", color: "white" }} onClick={_handleOpenModal}>
+
+                Create Room
+              </Button>
+            </div>
+            {showModal ? (
+              <CreateRoom handleClose={_handleCloseModal} addRoom={addRoom} />
+            ) : null}
+          </div>
+          <div className="bg-primary-white items-center">
+            <TableRoom
+              room={room}
+              removeRoom={removeRoom}
+              updateRoom={updateRoom}
+            />
+          </div>
         </div>
-        {/* {showModal ? (
-          <CreateComplex
-            handleClose={_handleCloseModal}
-            addComplex={addComplex}
-          />
-        ) : null} */}
       </div>
-      <div className="bg-primary-white items-center m-4">
-        <TableRoom room={room} removeRoom={removeRoom} />
-      </div>
-    </div>
     </div>
 
   );

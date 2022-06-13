@@ -71,7 +71,7 @@ export default function CreateBuilding() {
   };
 
   const _handleCreateBuilding = async (e) => {
-    if(data.officeAddress && data.officeName && data.officeComplex && data.description){
+    if (data.officeAddress && data.officeName && data.officeComplex && data.description) {
       try {
         await Axios.post("http://localhost:3000/api/buildings", {
           address: data.officeAddress,
@@ -81,7 +81,7 @@ export default function CreateBuilding() {
         });
         alert("Building Created");
       } catch (error) {
-        if(error.response) {
+        if (error.response) {
           setMsg(error.response.data.msg);
         }
       }
@@ -102,9 +102,8 @@ export default function CreateBuilding() {
   return (
     <>
       <button
-        className={`mr-1 mb-1 ${
-          showModal ? "opacity-50" : " opacity-100"
-        } `}
+        className={`mr-1 mb-1 ${showModal ? "opacity-50" : " opacity-100"
+          } `}
         type="button"
         onClick={() => setShowModal(true)}
       >
@@ -116,7 +115,7 @@ export default function CreateBuilding() {
             <h3 className="text-2xl text-center font-bold">
               Create Building
             </h3>
-				    <p className="has-text-centered text-error-red">{msg}</p>	
+            <p className="has-text-centered text-error-red">{msg}</p>
             {inputs.map((input, inputIdx) =>
               input.type !== "select" && input.type !== "textarea" ? (
                 <>
@@ -144,7 +143,7 @@ export default function CreateBuilding() {
                 </>
               ) : input.type === "textarea" ? (
                 <>
-                  <textarea 
+                  <textarea
                     className="textarea"
                     key={inputIdx}
                     value={input.value}
@@ -201,7 +200,6 @@ const CreateWrap = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-
   .textarea{
     width: 100%;
     height: 100%;

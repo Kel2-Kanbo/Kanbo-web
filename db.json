@@ -28,7 +28,7 @@
   "room": [
     {
       "id": 2,
-      "picture": "https://source.unsplash.com/random",
+      "picture": "https://images.unsplash.com/photo-1544457070-4cd773b4d71e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=930&q=80",
       "roomName": "Room 2",
       "floor": "Lt 2",
       "roomItem": [
@@ -37,15 +37,71 @@
           "itemName": "TV",
           "quantity": 2,
           "desc": "description"
+        },
+        {
+          "id": 2,
+          "itemName": "AC",
+          "quantity": 2,
+          "desc": "description"
         }
       ],
-      "roomPrice": "Rp. 1.000.000",
+      "roomPrice": "Rp. 800.000",
       "status": true
     },
     {
       "id": 3,
-      "picture": "https://source.unsplash.com/random",
+      "picture": "https://images.unsplash.com/photo-1581541234269-03d5d8576c0e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=846&q=80",
       "roomName": "Room 3",
+      "floor": "Lt 2",
+      "roomItem": [
+        {
+          "id": 1,
+          "itemName": "TV",
+          "quantity": 2,
+          "desc": "description"
+        },
+        {
+          "id": 2,
+          "itemName": "AC",
+          "quantity": 2,
+          "desc": "description"
+        }
+      ],
+      "roomPrice": "Rp. 1.200.000",
+      "status": false
+    },
+    {
+      "id": 4,
+      "picture": "https://images.unsplash.com/photo-1596900749995-57cec6ddb861?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8b2ZmaWNlJTIwcm9vbXxlbnwwfDJ8MHx8&auto=format&fit=crop&w=600&q=60",
+      "roomName": "Room 4",
+      "floor": "Lt 3",
+      "roomItem": [
+        {
+          "id": 1,
+          "itemName": "TV",
+          "quantity": 2,
+          "desc": "description"
+        },
+        {
+          "id": 2,
+          "itemName": "Whiteboard",
+          "quantity": 2,
+          "desc": "description"
+        },
+        {
+          "id": 3,
+          "itemName": "AC",
+          "quantity": 2,
+          "desc": "description"
+        }
+      ],
+      "roomPrice": "Rp. 1.500.000",
+      "status": true
+    },
+    {
+      "id": 5,
+      "picture": "https://images.unsplash.com/photo-1616593918824-4fef16054381?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
+      "roomName": "Room 5",
       "floor": "Lt 3",
       "roomItem": [
         {
@@ -57,7 +113,7 @@
         {
           "id": 2,
           "itemName": "AC",
-          "quantity": 1,
+          "quantity": 2,
           "desc": "description"
         }
       ],

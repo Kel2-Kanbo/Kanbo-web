@@ -8,6 +8,70 @@ import SelectWrap from "../SelectWrap";
 export default function EditComplex(props) {
   const { handleClose, complex, updateComplex } = props;
   const [msg, setMsg] = useState("");
+  console.log(complex);
+
+  // const _handleEditComplex = (e) => {
+  //   e.preventDefault();
+  //   const { complexName, complexAddress, city, district, building } = complex
+  //   const complex = {
+  //     complexName: complexName.value,
+  //     complexAddress: complexAddress.value,
+  //     city: city.value,
+  //     district: district.value,
+  //     building: building.value,
+  //   };
+  //   props.updateComplex(complex);
+  //   setMsg("Complex updated successfully");
+  //   _handleCloseModalEdit();
+  // }
+
+  const _handleClose = () => {
+    handleClose();
+    setInputs([
+      {
+        id: 0,
+        name: "complexName",
+        type: "text",
+        placeholder: "Complex Name",
+        value: "",
+        required: true,
+      },
+      {
+        id: 1,
+        name: "complexAddress",
+        type: "text",
+        placeholder: "Complex Address",
+        value: "",
+        required: true,
+      },
+      {
+        id: 2,
+        name: "city",
+        type: "select",
+        placeholder: "City",
+        options: ["City 1", "City 2", "City 3"],
+        value: "",
+        required: true,
+      },
+      {
+        id: 3,
+        name: "district",
+        type: "select",
+        placeholder: "District",
+        options: ["District 1", "District 2", "District 3"],
+        value: "",
+        required: true,
+      },
+      {
+        id: 4,
+        name: "building",
+        type: "number",
+        placeholder: "Building",
+        value: "",
+        required: true,
+      },
+    ]);
+  }
 
   const [inputs, setInputs] = useState([
     {
@@ -53,10 +117,6 @@ export default function EditComplex(props) {
       required: true,
     },
   ]);
-
-  const _handleClose = () => {
-    handleClose();
-  }
 
   const _handleEditComplex = (e) => {
     e.preventDefault();
@@ -129,7 +189,8 @@ export default function EditComplex(props) {
               </SelectWrap>
             </>
           )
-        )}
+        )
+        }
 
         <div className="flex gap-4 justify-between w-full text-primary-white">
           <button
@@ -142,7 +203,7 @@ export default function EditComplex(props) {
             Update Complex
           </Button>
         </div>
-      </FormWrap>
+      </FormWrap >
     </>
   );
 }

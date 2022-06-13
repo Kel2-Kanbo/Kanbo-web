@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 import FormInput from "../FormInput";
 import SelectWrap from "../SelectWrap";
@@ -7,14 +7,14 @@ import FormWrap from "../FormWrap";
 import Button from "../Button";
 
 export default function CreateComplex(props) {
-  const {handleClose, addComplex} = props
+  const { handleClose, addComplex } = props
 
   const [data, setData] = useState({
     complexName: "",
     complexAddress: "",
     city: "",
     district: "",
-    building: "",    
+    building: "",
   });
   const [msg, setMsg] = useState("");
 
@@ -83,15 +83,15 @@ export default function CreateComplex(props) {
   };
 
   const _handleCreateComplex = (e) => {
-    if (inputs[0].value &&  inputs[1].value && inputs[2].value && inputs[3].value && inputs[4].value)  {
+    if (inputs[0].value && inputs[1].value && inputs[2].value && inputs[3].value && inputs[4].value) {
       addComplex({
         id: uuidv4(),
         complexName: inputs[0].value,
         complexAddress: inputs[1].value,
         city: inputs[2].value,
         district: inputs[3].value,
-        building: inputs[4].value,        
-      })  
+        building: inputs[4].value,
+      })
       alert("Complex Created");
       e.preventDefault();
 
