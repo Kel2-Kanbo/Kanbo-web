@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { menuItem, SidebarData } from '../SidebarData';
-import Logo from '../Logo'
+import Logo from '../LogoCerah'
 import { FaBars } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 
