@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { menuItem, SidebarData } from '../SidebarData';
-import Logo from '../LogoCerah'
+import Logo from '../Logo'
 import { FaBars } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 
 
 const Sidebar = () => {
-    const[isOpen , setIsOpen] = useState(false);
+    const[isOpen , setIsOpen] = useState(true);
     const toggle = () => setIsOpen (!isOpen);
     
     return (

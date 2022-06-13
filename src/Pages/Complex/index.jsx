@@ -1,3 +1,130 @@
+// import React, { useState, useEffect } from "react";
+// import api from "../../API/Complex";
+
+// import Button from "../../Components/Button";
+// import CreateComplex from "../../Components/CreateComplex";
+// import Navbar from "../../Components/Navbar";
+// import Sidebar from "../../Components/Sidebar";
+// import TableComplex from "../../Components/TableComplex";
+
+// export default function Complex() {
+//   const [showModal, setShowModal] = useState(false);
+//   const [complex, setComplex] = useState([]);
+//   // const [complex, setComplex] = useState(null);
+//   console.log(complex);
+
+//   const _handleOpenModal = () => {
+//     setShowModal(true);
+//   };
+//   const _handleCloseModal = () => {
+//     setShowModal(false);
+//   };
+
+//   //get complex data from the server
+//   const getComplex = async () => {
+//     const response = await api.get("/complex");
+//     return response.data;
+//   };
+
+//   //add complex
+//   const addComplex = async (data) => {
+//     const response = await api.post("/complex", data);
+//     if (response.data) {
+//       setComplex([...complex, response.data]);
+//       setShowModal(false);
+//     }
+//   };
+
+//   //remove complex
+//   const removeComplex = async (data) => {
+//     console.log(complex);
+//     const id = complex;
+//     console.log(id);
+//     const response = await api.delete(`/complex/${id}`);
+//     alert("Complex removed successfully");
+//     console.log(response.data);
+//     if (response.data) {
+//       const allComplex = await getComplex();
+//       setComplex(allComplex);
+//     }
+//   };
+
+//   //update complex
+//   const updateComplex = async (data) => {
+//     console.log(data)
+//     console.log(data.id)    
+//     const response = await api.put(`/complex/${data.id}`, data);
+//     const {id, complexName, complexAddress, city, district, building} = response.data;
+//     console.log(response.data);
+//     setComplex(complex.map((data) => {
+//       return data.id === id ? { ...response.data } : data;
+//     }))
+//     if (response.data) {
+//       const allComplex = await getComplex();
+//       setComplex(allComplex);
+//     }
+//   }
+
+//   useEffect(() => {
+//     const getAllComplex = async () => {
+//       const allComplex = await getComplex();
+//       if (allComplex) {
+//         setComplex(allComplex);
+//       }
+//     };
+//     getAllComplex();
+//   }, []);
+
+//   return (
+//     <div className="flex">
+//         <Sidebar/>
+//           <Navbar/>
+//         <div className=" bg-secondary-blue h-screen flex-1 ">
+//             <div className="px-6 py-12 lg:my-12 md:px-12">
+//                 <h1 className="text-2xl">Complex</h1>
+//                 <h4 className="text-sm pl-4">Manage complex</h4>
+//                 <div className="flex justify-end">
+//                     <div className="w-auto p-8">
+//                     <Button type="button" className="px-6
+//                                                         py-2.5
+//                                                         bg-primary-blue
+//                                                         text-primary-white font-medium
+//                                                         text-xs
+//                                                         leading-tight
+//                                                         uppercase
+//                                                         rounded
+//                                                         shadow-md
+//                                                         hover:bg-blue-700 hover:shadow-lg
+//                                                         focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+//                                                         active:bg-blue-800 active:shadow-lg
+//                                                         transition
+//                                                         duration-150
+//                                                         ease-in-out" 
+//                                                         onClick={_handleOpenModal}>
+//                         Create Complex
+//                     </Button>
+//                     </div>
+//                     {showModal ? (
+//                     <CreateComplex
+//                         handleClose={_handleCloseModal}
+//                         addComplex={addComplex}
+//                     />
+//                     ) : null}
+//                 </div>
+//                 <div className="bg-primary-white items-center m-4">
+//                     <TableComplex
+//                     complex={complex}
+//                     removeComplex={removeComplex}
+//                     updateComplex={updateComplex}
+//                     />
+//                 </div>
+//             </div>
+//         </div>
+//     </div>
+    
+//   );
+// }
+
 import React, { useState, useEffect } from "react";
 import api from "../../API/Complex";
 
@@ -7,10 +134,9 @@ import Navbar from "../../Components/Navbar";
 import Sidebar from "../../Components/Sidebar";
 import TableComplex from "../../Components/TableComplex";
 
-export default function Complex() {
+const Complex = () => {
   const [showModal, setShowModal] = useState(false);
   const [complex, setComplex] = useState([]);
-  // const [complex, setComplex] = useState(null);
   console.log(complex);
 
   const _handleOpenModal = () => {
@@ -36,34 +162,32 @@ export default function Complex() {
   };
 
   //remove complex
-  const removeComplex = async (data) => {
-    console.log(complex);
-    const id = complex;
-    console.log(id);
+  const removeComplex = async (id) => {
     const response = await api.delete(`/complex/${id}`);
-    alert("Complex removed successfully");
-    console.log(response.data);
     if (response.data) {
-      const allComplex = await getComplex();
-      setComplex(allComplex);
+      alert("Complex has been deleted");
+      setComplex(complex.filter((item) => item.id !== id));
     }
   };
 
   //update complex
   const updateComplex = async (data) => {
-    console.log(data)
-    console.log(data.id)    
+    console.log(data);
+    console.log(data.id);
     const response = await api.put(`/complex/${data.id}`, data);
-    const {id, complexName, complexAddress, city, district, building} = response.data;
+    const { id } = response.data;
     console.log(response.data);
-    setComplex(complex.map((data) => {
-      return data.id === id ? { ...response.data } : data;
-    }))
+    setComplex(
+      complex.map((data) => {
+        return data.id === id ? { ...response.data } : data;
+      })
+    );
     if (response.data) {
       const allComplex = await getComplex();
       setComplex(allComplex);
+      setShowModal(false);
     }
-  }
+  };
 
   useEffect(() => {
     const getAllComplex = async () => {
@@ -76,51 +200,37 @@ export default function Complex() {
   }, []);
 
   return (
-    <div className="flex">
-        <Sidebar/>
-          <Navbar/>
-        <div className=" bg-secondary-blue h-screen flex-1 ">
-            <div className="px-6 py-12 lg:my-12 md:px-12">
-                <h1 className="text-2xl">Complex</h1>
-                <h4 className="text-sm pl-4">Manage complex</h4>
-                <div className="flex justify-end">
-                    <div className="w-auto p-8">
-                    <Button type="button" className="px-6
-                                                        py-2.5
-                                                        bg-primary-blue
-                                                        text-primary-white font-medium
-                                                        text-xs
-                                                        leading-tight
-                                                        uppercase
-                                                        rounded
-                                                        shadow-md
-                                                        hover:bg-blue-700 hover:shadow-lg
-                                                        focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-                                                        active:bg-blue-800 active:shadow-lg
-                                                        transition
-                                                        duration-150
-                                                        ease-in-out" 
-                                                        onClick={_handleOpenModal}>
-                        Create Complex
-                    </Button>
-                    </div>
-                    {showModal ? (
-                    <CreateComplex
-                        handleClose={_handleCloseModal}
-                        addComplex={addComplex}
-                    />
-                    ) : null}
-                </div>
-                <div className="bg-primary-white items-center m-4">
-                    <TableComplex
-                    complex={complex}
-                    removeComplex={removeComplex}
-                    updateComplex={updateComplex}
-                    />
-                </div>
+    <div className='flex h-screen bg-secondary-softblue'>
+        <Sidebar />
+        <Navbar />
+      <div className='basis-5/6'>
+        <div className="px-4 py-4 mt-20">
+          <h1 className="text-3xl font-bold mb-1">Complex</h1>
+          <h4 className="text-md text-primary-gray">Manage complex</h4>
+          <div className="flex justify-end">
+            <div className="w-auto">
+              <Button type="button" className="bg-primary-blue text-primary-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                onClick={_handleOpenModal}>
+                Create Complex
+              </Button>
             </div>
+            {showModal ? (
+              < CreateComplex
+                handleClose={_handleCloseModal}
+                addComplex={addComplex}
+              />
+            ) : null}
+          </div>
+          <div className="bg-primary-white items-center rounded mt-4">
+            <TableComplex
+              complex={complex}
+              removeComplex={removeComplex}
+              updateComplex={updateComplex}
+            />
+          </div>
         </div>
-    </div>
-    
-  );
+      </div>
+    </div >
+  )
 }
+export default Complex;
