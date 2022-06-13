@@ -6,7 +6,11 @@ module.exports = {
       primary: {
         blue: "#4C35E0",
         blue2: "rgb(37 99 235);",
+        green: "#6EB762",
+        mossgreen: "#4BAAA5",
+        orange: "#FFCA42",
         white: "#FFFFFF",
+        red: "#FF3030",
         black: "#1F1F1F",
         gray: "#5C5C5C",
         gray2: "#888686",

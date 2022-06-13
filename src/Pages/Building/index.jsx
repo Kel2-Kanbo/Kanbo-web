@@ -7,7 +7,7 @@ import Navbar from "../../Components/Navbar";
 import Sidebar from "../../Components/Sidebar";
 import TableComplex from "../../Components/TableComplex";
 
-const Complex = () => {
+const Building = () => {
   const [showModal, setShowModal] = useState(false);
   const [complex, setComplex] = useState([]);
   console.log(complex);
@@ -80,8 +80,8 @@ const Complex = () => {
       <div className='basis-5/6'>
         <Navbar />
         <div className="px-4 py-4">
-          <h1 className="text-3xl font-bold mb-1">Complex</h1>
-          <h4 className="text-md text-primary-gray">Manage complex</h4>
+          <h1 className="text-3xl font-bold mb-1">Building</h1>
+          <h4 className="text-md text-primary-gray">Manage Building</h4>
           <div className="flex justify-end">
             <div className="w-auto">
               <Button type="button" className="bg-primary-blue text-primary-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
@@ -108,4 +108,4 @@ const Complex = () => {
     </div >
   )
 }
-export default Complex;
+export default Building;
