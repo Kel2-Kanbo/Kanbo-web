@@ -55,10 +55,10 @@ th,td{
   margin-left: 50px;
 }
 .link{
-  display: flex;
-  color: #4C35E0;
-  padding: 10px 15px;
-  gap: 15px;
+  /* display: flex; */
+  /* color: #4C35E0; */
+  /* padding: 10px 15px; */
+  /* gap: 15px; */
   transition: all 0.5s;
 }
 .link:hover{
@@ -76,6 +76,7 @@ th,td{
 }
 .icon, .link_text{
   font-size: 20px;
+  /* color: #000; */
 }
 /* End of Sidebar*/
 

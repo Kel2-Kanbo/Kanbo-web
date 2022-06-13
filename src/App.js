@@ -4,8 +4,8 @@ import './App.css';
 import CreateBuilding from './Components/CreateBuilding';
 
 import Login from './Pages/Login';
-import Dashboard from './Pages/Dashboard';
 import Complex from './Pages/Complex';
+import Dashboard from './Pages/Dashboard';
 import Room from './Pages/Room';
 import NotFound from './Pages/NotFound';
 import CreateUpdateRoom from './Pages/CreateUpdateRoom';
