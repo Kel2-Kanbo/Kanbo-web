@@ -32,9 +32,6 @@ module.exports = {
       success: {
         green: "#D6FFC8",
       },
-      secondary: {
-        blue: "#EDEAFF",
-      },
       textColor: {
         black: "#1F1F1F",
         white: "#FFFFFF",

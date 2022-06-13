@@ -96,7 +96,8 @@ export default function Login() {
                                         className='p-3 peer'
                                         {...input}
                                         value={input.value}
-                                        type={input.type === 'password' ? isPasswordShown ? 'text' : 'password' : input.typr}
+                                        type={input.type === 'password' ? isPasswordShown ? 'text' : 'password' : input.type}
+                                        required
                                         onChange={(e) => handleChange(e.target.value, inputIdx)}
                                     />
                                     <p className='my-2 invisible peer-invalid:visible text-primary-red text-sm'>{input.err}</p>

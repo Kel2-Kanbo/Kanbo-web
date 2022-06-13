@@ -121,48 +121,46 @@ export default function EditComplex(props) {
 
   return (
     <>
-      <CreateWrap>
-        <FormWrap>
-          <h3 className="text-2xl text-center font-bold">Edit Complex</h3>
-          <p className="has-text-centered text-error-red">{msg}</p>
-          {inputs.map((input, inputIdx) =>
-            input.type !== "select" ? (
-              <>
-                <FormInput
-                  key={inputIdx}
-                  {...input}
-                  value={input.value}
-                  type={input.type}
-                />
-              </>
-            ) : (
-              <>
-                <SelectWrap type={input.type}>
-                  <option value="">{input.placeholder}</option>
-                  {input.options.map((option, optionIdx) => (
-                    <option key={optionIdx} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </SelectWrap>
-              </>
-            )
-          )}
+      <FormWrap>
+        <h3 className="text-2xl text-center font-bold">Edit Complex</h3>
+        <p className="has-text-centered text-error-red">{msg}</p>
+        {inputs.map((input, inputIdx) =>
+          input.type !== "select" ? (
+            <>
+              <FormInput
+                key={inputIdx}
+                {...input}
+                value={input.value}
+                type={input.type}
+              />
+            </>
+          ) : (
+            <>
+              <SelectWrap type={input.type}>
+                <option value="">{input.placeholder}</option>
+                {input.options.map((option, optionIdx) => (
+                  <option key={optionIdx} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </SelectWrap>
+            </>
+          )
+        )}
 
-          <div className="flex gap-4 justify-between w-full text-primary-white">
-            <button
-              className="font-bold text-textColor-black uppercase px-6 py-3 text-sm shadow mr-1 mb-1"
-              type="button"
-              onClick={_handleClose}
-            >
-              Close
-            </button>
-            <Button type="button">
-              Update Complex
-            </Button>
-          </div>
-        </FormWrap>
-      </CreateWrap>
+        <div className="flex gap-4 justify-between w-full text-primary-white">
+          <button
+            className="font-bold text-textColor-black uppercase px-6 py-3 text-sm shadow mr-1 mb-1"
+            type="button"
+            onClick={_handleClose}
+          >
+            Close
+          </button>
+          <Button type="button">
+            Update Complex
+          </Button>
+        </div>
+      </FormWrap>
     </>
   );
 }
