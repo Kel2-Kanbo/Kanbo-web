@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import colors from "../../Utils/Styles/colors"
+import colors from "../../Utils/styles/colors";
 
 const Button = styled.button`
     background-color: ${colors.primary.blue};

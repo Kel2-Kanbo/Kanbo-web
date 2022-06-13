@@ -1,14 +1,16 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./App.css";
 
-import Dashboard from './Pages/Dashboard';
-import NotFound from './Pages/NotFound';
-import Room from './Pages/Room';
+import CreateBuilding from "./Components/CreateBuilding";
+import Complex from "./Pages/Complex";
+import Dashboard from "./Pages/Dashboard";
+import NotFound from "./Pages/NotFound";
+import Room from "./Pages/Room";
 
 function App() {
   return (
     <div>
-    {/* <div className="App"> */}
+      {/* <div className="App"> */}
       <Router>
         <Routes>
           <Route path="/" element={<Dashboard />} />
@@ -16,12 +18,12 @@ function App() {
           <Route element={ <PrivateRoute /> }>
             <Route path="/home-admin" element={<Home />} />
           </Route> */}
-          <Route path="/room" element={<Room/>}/>
+          <Route path="/room" element={<Room />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
+      {/* </div> */}
     </div>
   );
 }
-
 export default App;

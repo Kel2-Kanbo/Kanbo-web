@@ -100,11 +100,7 @@ export default function CreateRoom(props) {
         return input;
       })
     );
-    setData({
-      ...data,
-      [inputs[index].name]: value,
-    });
-  };
+  }
 
   const handleChangeRoomItem = (value, index) => {
     setInputsRoomItem(
