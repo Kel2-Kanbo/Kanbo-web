@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import Button from "../Button";
 import FormInput from "../FormInput";
+import FormRoomItem from "../FormRoomItem";
 import FormWrap from "../FormWrap";
 
 export default function CreateRoom(props) {
@@ -18,6 +19,7 @@ export default function CreateRoom(props) {
         {
           itemName: "",
           quantity: "",
+          descItem: "",
         },
       ],
       roomPrice: "",
@@ -86,6 +88,13 @@ export default function CreateRoom(props) {
       placeholder: "Quantity",
       value: "",
     },
+    {
+      id: 2,
+      name: "descItem",
+      type: "textarea",
+      placeholder: "Description",
+      value: "",
+    },
   ]);
 
   const handleChange = (value, index) => {
@@ -100,7 +109,7 @@ export default function CreateRoom(props) {
         return input;
       })
     );
-  }
+  };
 
   const handleChangeRoomItem = (value, index) => {
     setInputsRoomItem(
@@ -128,6 +137,7 @@ export default function CreateRoom(props) {
           id: uuidv4(),
           itemName: inputsRoomItem[0].value,
           quantity: inputsRoomItem[1].value,
+          descItem: inputsRoomItem[2].value,
         },
       });
       alert("Room Item Added");
@@ -145,6 +155,13 @@ export default function CreateRoom(props) {
           name: "quantity",
           type: "number",
           placeholder: "Quantity",
+          value: "",
+        },
+        {
+          id: 2,
+          name: "descItem",
+          type: "textarea",
+          placeholder: "Description",
           value: "",
         },
       ]);
@@ -271,7 +288,7 @@ export default function CreateRoom(props) {
       },
       {
         id: 2,
-        name: "description",
+        name: "descItem",
         type: "textarea",
         placeholder: "Description",
         value: "",
@@ -289,7 +306,7 @@ export default function CreateRoom(props) {
         <p className="has-text-centered text-error-red">{msg}</p>
 
         {inputs.map((input, inputIdx) =>
-          input.type !== "radio" ? (
+          input.name !== "roomPrice" ? (
             <FormInput
               key={inputIdx}
               {...input}
@@ -298,24 +315,35 @@ export default function CreateRoom(props) {
               onChange={(e) => handleChange(e.target.value, inputIdx)}
             />
           ) : (
-            ""
+            <div className="flex gap-2 items-center w-full">
+              <FormInput
+                key={inputIdx}
+                {...input}
+                value={input.value}
+                type={input.type}
+                onChange={(e) => handleChange(e.target.value, inputIdx)}
+              />
+              <p className="text-md text-gray-600">
+                /Days</p>
+            </div>
           )
         )}
 
         <h3 className="text-2xl text-center font-bold">Room Item</h3>
-
-        {inputsRoomItem.map((input, inputIdx) => (
-          <FormInput
-            key={inputIdx}
-            {...input}
-            value={input.value}
-            type={input.type}
-            onChange={(e) => handleChangeRoomItem(e.target.value, inputIdx)}
-          />
-        ))}
-        <Button onClick={handleAddRoomItem} type="submit" className="mt-4">
-          Add Room Item
-        </Button>
+        <div className="flex">
+          {inputsRoomItem.map((input, inputIdx) => (
+            <FormRoomItem
+              key={inputIdx}
+              {...input}
+              value={input.value}
+              type={input.type}
+              onChange={(e) => handleChangeRoomItem(e.target.value, inputIdx)}
+            />
+          ))}
+        </div>
+          <Button onClick={handleAddRoomItem} type="submit" className="mt-4">
+            Add Room Item
+          </Button>
         <div>
           {data.roomitem === undefined ? (
             <p className="has-text-centered text-error-red">No Room Item</p>
