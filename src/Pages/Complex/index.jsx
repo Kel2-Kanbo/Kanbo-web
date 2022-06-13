@@ -36,16 +36,11 @@ export default function Complex() {
   };
 
   //remove complex
-  const removeComplex = async (data) => {
-    console.log(complex);
-    const id = complex;
-    console.log(id);
+  const removeComplex = async (id) => {
     const response = await api.delete(`/complex/${id}`);
-    alert("Complex removed successfully");
-    console.log(response.data);
     if (response.data) {
-      const allComplex = await getComplex();
-      setComplex(allComplex);
+      alert("Complex has been deleted");
+      setComplex(complex.filter((item) => item.id !== id));
     }
   };
 

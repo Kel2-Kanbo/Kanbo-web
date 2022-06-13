@@ -25,6 +25,24 @@ module.exports = {
         white1: "#FDFEFF",
         white2: "#F4F4F4",
       },
+      error: {
+        red: "#FF3030",
+        pink: "#FFB6B6",
+      },
+      success: {
+        green: "#D6FFC8",
+      },
+      secondary: {
+        blue: "#EDEAFF",
+      },
+      textColor: {
+        black: "#1F1F1F",
+        white: "#FFFFFF",
+        blackThin: "#5C5C5C",
+        red: "#FF3030",
+        pink: "#FFB6B6",
+        green: "#53D425"
+      },
     }
   },
   plugins: [],
