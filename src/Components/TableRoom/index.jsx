@@ -91,7 +91,7 @@ export default function TableRoom(props) {
                         {room.floor}
                       </td>
                       <td className="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
-                        {room.roomItem.map((item) => (
+                        {room.roomitem.map((item) => (
                           <li className="list-none inline m-1">
                             {item.itemName}
                           </li>

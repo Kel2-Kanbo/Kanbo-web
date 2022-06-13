@@ -43,6 +43,14 @@ export default function Room() {
     }
   };
 
+  //add room item
+  const addRoomItem = async (data) => {
+    const response = await api.post("/room/roomitem", data);
+    if (response.data) {
+      setRoom([...room.roomitem, response.data]);
+    }
+  }
+
   //remove room
   const removeRoom = async (id) => {
     const response = await api.delete(`/room/${id}`);
@@ -85,18 +93,18 @@ export default function Room() {
       <h1 className="text-3xl p-4">Room</h1>
       <div className="text-sm">
         <select className="bg-secondary-blue text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
-          <option value="" className="bg-secondary-blue text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">Sort by</option>
+          <option value="" className="bg-secondary-blue text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">Building A</option>
         </select>
        </div>
 
       <div className="flex justify-end">
         <div className="w-auto p-8">
-          <Button type="button" style={{backgroundColor: "blue", color: "white"}} onClick={_handleOpenModal}>
+          <Button type="button" onClick={_handleOpenModal}>
             Create Room
           </Button>
         </div>
         {showModal ? (
-          <CreateRoom handleClose={_handleCloseModal} addRoom={addRoom} />
+          <CreateRoom handleClose={_handleCloseModal} addRoom={addRoom} addRoomItem={addRoomItem} />
         ) : null}
       </div>
       <div className="bg-primary-white items-center m-4">
