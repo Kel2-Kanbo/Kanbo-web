@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import api from "../../API/Complex";
 
 import Button from "../../Components/Button";
-import CreateComplex from "../../Components/CreateComplex";
+import CreateBuilding from "../../Components/CreateBuilding";
 import Navbar from "../../Components/Navbar";
 import Sidebar from "../../Components/Sidebar";
-import TableComplex from "../../Components/TableComplex";
+import TableBuilding from "../../Components/TableBuilding";
 
 const Building = () => {
   const [showModal, setShowModal] = useState(false);
-  const [complex, setComplex] = useState([]);
-  console.log(complex);
+  const [building, setBuilding] = useState([]);
+  console.log(building);
 
   const _handleOpenModal = () => {
     setShowModal(true);
@@ -20,28 +20,28 @@ const Building = () => {
   };
 
   //get complex data from the server
-  const getComplex = async () => {
-    const response = await api.get("/complex");
+  const getBuilding = async () => {
+    const response = await api.get("/building");
     return response.data;
   };
 
   //add complex
-  const addComplex = async (data) => {
-    const response = await api.post("/complex", data);
-    if (response.data) {
-      setComplex([...complex, response.data]);
-      setShowModal(false);
-    }
-  };
+  // const addComplex = async (data) => {
+  //   const response = await api.post("/complex", data);
+  //   if (response.data) {
+  //     setBuilding([...complex, response.data]);
+  //     setShowModal(false);
+  //   }
+  // };
 
   //remove complex
-  const removeComplex = async (id) => {
-    const response = await api.delete(`/complex/${id}`);
-    if (response.data) {
-      alert("Complex has been deleted");
-      setComplex(complex.filter((item) => item.id !== id));
-    }
-  };
+  // const removeComplex = async (id) => {
+  //   const response = await api.delete(`/complex/${id}`);
+  //   if (response.data) {
+  //     alert("Complex has been deleted");
+  //     setBuilding(complex.filter((item) => item.id !== id));
+  //   }
+  // };
 
   //update complex
   const updateComplex = async (data) => {
@@ -50,26 +50,26 @@ const Building = () => {
     const response = await api.put(`/complex/${data.id}`, data);
     const { id } = response.data;
     console.log(response.data);
-    setComplex(
-      complex.map((data) => {
+    setBuilding(
+      building.map((data) => {
         return data.id === id ? { ...response.data } : data;
       })
     );
     if (response.data) {
-      const allComplex = await getComplex();
-      setComplex(allComplex);
+      const allBuilding = await getBuilding();
+      setBuilding(allBuilding);
       setShowModal(false);
     }
   };
 
   useEffect(() => {
-    const getAllComplex = async () => {
-      const allComplex = await getComplex();
-      if (allComplex) {
-        setComplex(allComplex);
+    const getAllBuilding = async () => {
+      const allBuilding = await getBuilding();
+      if (allBuilding) {
+        setBuilding(allBuilding);
       }
     };
-    getAllComplex();
+    getAllBuilding();
   }, []);
 
   return (
@@ -86,20 +86,20 @@ const Building = () => {
             <div className="w-auto">
               <Button type="button" className="bg-primary-blue text-primary-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                 onClick={_handleOpenModal}>
-                Create Complex
+                Create Building
               </Button>
             </div>
             {showModal ? (
-              <CreateComplex
+              <CreateBuilding
                 handleClose={_handleCloseModal}
-                addComplex={addComplex}
+              // addComplex={addComplex}
               />
             ) : null}
           </div>
           <div className="bg-primary-white items-center rounded mt-4">
-            <TableComplex
-              complex={complex}
-              removeComplex={removeComplex}
+            <TableBuilding
+              building={building}
+              // removeComplex={removeComplex}
               updateComplex={updateComplex}
             />
           </div>

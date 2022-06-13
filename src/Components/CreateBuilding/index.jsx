@@ -4,15 +4,16 @@ import React, { useState } from "react";
 
 import FormInput from '../FormInput'
 
-export default function CreateBuilding() {
-  const [showModal, setShowModal] = useState(false);
-
+export default function CreateBuilding({ handleClose }) {
   const [data, setData] = useState({
     officeName: "",
     officeAddress: "",
     officeComplex: "",
     description: "",
   });
+  const handleCloseModal = () => {
+    handleClose()
+  }
   const [msg, setMsg] = useState("")
 
   const [inputs, setInputs] = useState([
@@ -93,88 +94,74 @@ export default function CreateBuilding() {
         officeComplex: "",
         description: "",
       })
-      setShowModal(false);
+      handleClose();
     } else {
       setMsg("Please fill out all fields");
     }
   };
 
   return (
-    <>
-      <button
-        className={`mr-1 mb-1 ${showModal ? "opacity-50" : " opacity-100"
-          } `}
-        type="button"
-        onClick={() => setShowModal(true)}
-      >
+    <CreateWrap onSubmit={_handleCreateBuilding}>
+      <h3 className="text-2xl text-center font-bold">
         Create Building
-      </button>
-      {showModal ? (
-        <>
-          <CreateWrap onSubmit={_handleCreateBuilding}>
-            <h3 className="text-2xl text-center font-bold">
-              Create Building
-            </h3>
-            <p className="has-text-centered text-error-red">{msg}</p>
-            {inputs.map((input, inputIdx) =>
-              input.type !== "select" && input.type !== "textarea" ? (
-                <>
-                  <FormInput
-                    key={inputIdx}
-                    {...input}
-                    value={input.value}
-                    type={input.type}
-                    onChange={(e) => _handleChange(e.target.value, inputIdx)}
-                  />
-                </>
-              ) : input.type === "select" ? (
-                <>
-                  <SelectWrap
-                    type={input.type}
-                    onChange={(e) => _handleChange(e.target.value, inputIdx)}
-                  >
-                    <option value="">Complex</option>
-                    {input.options.map((option, optionIdx) => (
-                      <option key={optionIdx} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </SelectWrap>
-                </>
-              ) : input.type === "textarea" ? (
-                <>
-                  <textarea
-                    className="textarea"
-                    key={inputIdx}
-                    value={input.value}
-                    type={input.type}
-                    onChange={(e) => _handleChange(e.target.value, inputIdx)}></textarea>
-                </>
-              ) : (
-                ""
-              )
-            )}
+      </h3>
+      <p className="has-text-centered text-error-red">{msg}</p>
+      {inputs.map((input, inputIdx) =>
+        input.type !== "select" && input.type !== "textarea" ? (
+          <>
+            <FormInput
+              key={inputIdx}
+              {...input}
+              value={input.value}
+              type={input.type}
+              onChange={(e) => _handleChange(e.target.value, inputIdx)}
+            />
+          </>
+        ) : input.type === "select" ? (
+          <>
+            <SelectWrap
+              type={input.type}
+              onChange={(e) => _handleChange(e.target.value, inputIdx)}
+            >
+              <option value="">Complex</option>
+              {input.options.map((option, optionIdx) => (
+                <option key={optionIdx} value={option}>
+                  {option}
+                </option>
+              ))}
+            </SelectWrap>
+          </>
+        ) : input.type === "textarea" ? (
+          <>
+            <textarea
+              className="textarea"
+              key={inputIdx}
+              value={input.value}
+              type={input.type}
+              onChange={(e) => _handleChange(e.target.value, inputIdx)}></textarea>
+          </>
+        ) : (
+          ""
+        )
+      )}
 
-            <div className="flex justify-between w-full text-primary-white">
-              <button
-                className="font-bold bg-error-red uppercase px-6 py-3 text-sm rounded shadow mr-1 mb-1"
-                type="button"
-                onClick={() => setShowModal(false)}
-              >
-                Close
-              </button>
-              <button
-                className="bg-primary-blue font-bold uppercase text-sm px-6 py-3 rounded shadow mr-1 mb-1"
-                type="button"
-                onClick={_handleCreateBuilding}
-              >
-                Submit
-              </button>
-            </div>
-          </CreateWrap>
-        </>
-      ) : null}
-    </>
+      <div className="flex justify-between w-full text-primary-white">
+        <button
+          className="font-bold bg-error-red uppercase px-6 py-3 text-sm rounded shadow mr-1 mb-1"
+          type="button"
+          onClick={handleCloseModal}
+        >
+          Close
+        </button>
+        <button
+          className="bg-primary-blue font-bold uppercase text-sm px-6 py-3 rounded shadow mr-1 mb-1"
+          type="button"
+          onClick={_handleCreateBuilding}
+        >
+          Submit
+        </button>
+      </div>
+    </CreateWrap>
   );
 }
 

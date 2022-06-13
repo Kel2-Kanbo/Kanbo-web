@@ -105,28 +105,35 @@
       ],
       "roomPrice": "Rp. 1.500.000",
       "status": true
+    }
+  ],
+  "building": [
+    {
+      "id": 1,
+      "picture": "https://images.unsplash.com/photo-1544457070-4cd773b4d71e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=930&q=80",
+      "buildingName": "Building 2",
+      "complexName": "Complex 2",
+      "address": "Street Fighter",
+      "jmlRoom": "12",
+      "desc": "Lorem"
     },
     {
-      "id": 5,
-      "picture": "https://images.unsplash.com/photo-1616593918824-4fef16054381?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
-      "roomName": "Room 5",
-      "floor": "Lt 3",
-      "roomItem": [
-        {
-          "id": 1,
-          "itemName": "TV",
-          "quantity": 2,
-          "desc": "description"
-        },
-        {
-          "id": 2,
-          "itemName": "AC",
-          "quantity": 2,
-          "desc": "description"
-        }
-      ],
-      "roomPrice": "Rp. 1.000.000",
-      "status": false
+      "id": 2,
+      "picture": "https://images.unsplash.com/photo-1544457070-4cd773b4d71e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=930&q=80",
+      "buildingName": "Building 2",
+      "complexName": "Complex 2",
+      "address": "Street Fighter",
+      "jmlRoom": "5",
+      "desc": "Lorem"
+    },
+    {
+      "id": 3,
+      "picture": "https://images.unsplash.com/photo-1544457070-4cd773b4d71e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=930&q=80",
+      "buildingName": "Building 2",
+      "complexName": "Complex 2",
+      "address": "Street Fighter",
+      "jmlRoom": "8",
+      "desc": "Lorem"
     }
   ]
 }

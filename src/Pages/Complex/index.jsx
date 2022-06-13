@@ -10,7 +10,7 @@ import TableComplex from "../../Components/TableComplex";
 const Complex = () => {
   const [showModal, setShowModal] = useState(false);
   const [complex, setComplex] = useState([]);
-  console.log(complex);
+  // console.log(complex);
 
   const _handleOpenModal = () => {
     setShowModal(true);

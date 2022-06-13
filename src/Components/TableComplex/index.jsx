@@ -6,7 +6,7 @@ import ButtonIconEdit from "../ButtonIconEdit";
 
 export default function TableComplex(props) {
   const { complex, removeComplex, updateComplex } = props;
-  console.log(complex)
+  // console.log(complex)
   const [showModalEdit, setShowModalEdit] = useState(false);
 
   const _handleOpenModalEdit = () => {
@@ -71,8 +71,8 @@ export default function TableComplex(props) {
                 </tr >
               </thead >
               <tbody>
-                {complex?.map((complex) => (
-                  <tr className="odd:bg-secondary-softblue text-primary-gray">
+                {complex?.map((complex, complexIdx) => (
+                  <tr key={complexIdx} className="odd:bg-secondary-softblue text-primary-gray">
                     <td className="px-6 py-4 whitespace-no-wrap">
                       {(angka = angka + 1)}
                     </td>
@@ -96,13 +96,6 @@ export default function TableComplex(props) {
                         <ButtonIconEdit
                           onClick={() => updateComplex(complex)}
                         />
-                        {showModalEdit ? (
-                          <EditComplex
-                            handleClose={_handleCloseModalEdit}
-                            updateComplex={updateComplex}
-                            complex={complex}
-                          />
-                        ) : null}
                       </button>
                       <button onClick={() => removeComplex(complex.id)}>
                         <ButtonIconDelete />
@@ -112,6 +105,13 @@ export default function TableComplex(props) {
                 ))}
               </tbody>
             </table >
+            {showModalEdit ? (
+              <EditComplex
+                handleClose={_handleCloseModalEdit}
+                updateComplex={updateComplex}
+                complex={complex}
+              />
+            ) : null}
           </div >
         </div >
       </div >

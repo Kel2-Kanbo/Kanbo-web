@@ -8,7 +8,7 @@ import SelectWrap from "../SelectWrap";
 export default function EditComplex(props) {
   const { handleClose, complex, updateComplex } = props;
   const [msg, setMsg] = useState("");
-  console.log(complex);
+  // console.log(complex);
 
   // const _handleEditComplex = (e) => {
   //   e.preventDefault();
@@ -175,6 +175,7 @@ export default function EditComplex(props) {
           ) : (
             <>
               <SelectWrap
+                key={inputIdx}
                 type={input.type}
                 name={input.name}
                 placeholder={input.placeholder}
