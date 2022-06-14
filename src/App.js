@@ -1,5 +1,5 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./App.css";
 
 import CreateBuilding from './Components/CreateBuilding';
 
@@ -12,7 +12,7 @@ import CreateUpdateRoom from './Pages/CreateUpdateRoom';
 import Register from './Pages/Register';
 import Building from './Pages/Building';
 
-const App = () => {
+function App() {
   return (
     <div className='bg-secondary-softblue'>
     {/* <div className="App"> */}
@@ -34,8 +34,8 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
+      {/* </div> */}
     </div>
   );
 }
-
 export default App;

@@ -1,26 +1,34 @@
-import styled from "@emotion/styled";
-import Axios from "axios";
-import FormInput from "../FormInput";
-import Button from "../Button";
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
-import React from 'react';
-// import { toBePartiallyChecked } from "@testing-library/jest-dom/dist/matchers";
+import Button from "../Button";
+import FormInput from "../FormInput";
+import FormRoomItem from "../FormRoomItem";
+import FormWrap from "../FormWrap";
 
-export default function CreateRoom({ handleClose, addRoom }) {
+export default function CreateRoom(props) {
+  const { addRoom, handleClose, addRoomItem } = props;
 
-  const [showRoom, setShowRoom] = useState(false);
+  const [data, setData] = useState([
+    {
+      picture: "",
+      roomName: "",
+      floor: "",
+      description: "",
+      roomitem: [
+        {
+          itemName: "",
+          quantity: "",
+          descItem: "",
+        },
+      ],
+      roomPrice: "",
+      status: false,
+    },
+  ]);
 
-  const [data, setData] = useState({
-    roomName: "",
-    floor: "",
-    roomitem: "",
-    quantity: "",
-    description: "",
-    price: "",
-  });
-
-  const [msg, setMsg] = useState("")
+  console.log(data);
+  const [msg, setMsg] = useState("");
 
   const [inputs, setInputs] = useState([
     {
@@ -29,6 +37,7 @@ export default function CreateRoom({ handleClose, addRoom }) {
       type: "text",
       placeholder: "Room Name",
       value: "",
+      required: true,
     },
     {
       id: 1,
@@ -36,6 +45,31 @@ export default function CreateRoom({ handleClose, addRoom }) {
       type: "text",
       placeholder: "Floor",
       value: "",
+      required: true,
+    },
+    {
+      id: 2,
+      name: "description",
+      type: "textarea",
+      placeholder: "Description",
+      value: "",
+      required: true,
+    },
+    {
+      id: 3,
+      name: "roomPrice",
+      type: "text",
+      placeholder: "Room Price",
+      value: "",
+      required: true,
+    },
+    {
+      id: 4,
+      name: "picture",
+      type: "text",
+      placeholder: "Picture",
+      value: "",
+      required: true,
     },
   ]);
 
@@ -50,30 +84,20 @@ export default function CreateRoom({ handleClose, addRoom }) {
     {
       id: 1,
       name: "quantity",
-      type: "text",
+      type: "number",
       placeholder: "Quantity",
       value: "",
     },
     {
       id: 2,
-      name: "Description",
+      name: "descItem",
       type: "textarea",
       placeholder: "Description",
       value: "",
     },
-  ])
+  ]);
 
-  const [inputs2, setInputs2] = useState([
-    {
-      id: 0,
-      name: "price",
-      type: "number",
-      placeholder: "Price",
-      value: "",
-    }
-  ])
-
-  const handleChangeInputs = (value, index) => {
+  const handleChange = (value, index) => {
     setInputs(
       inputs.map((input) => {
         if (input.id === index) {
@@ -85,13 +109,9 @@ export default function CreateRoom({ handleClose, addRoom }) {
         return input;
       })
     );
-    setData({
-      ...data,
-      [inputs[index].name]: value,
-    });
   };
 
-  const handleChangeInputsRoomItem = (value, index) => {
+  const handleChangeRoomItem = (value, index) => {
     setInputsRoomItem(
       inputsRoomItem.map((input) => {
         if (input.id === index) {
@@ -104,181 +124,254 @@ export default function CreateRoom({ handleClose, addRoom }) {
       })
     );
     setData({
-      ...data,
+      ...data.roomitem[index],
       [inputsRoomItem[index].name]: value,
     });
   };
 
-  const handleChangeInputs2 = (value, index) => {
-    setInputs2(
-      inputs2.map((input) => {
-        if (input.id === index) {
-          return {
-            ...input,
-            value,
-          };
-        }
-        return input;
-      })
-    );
-    setData({
-      ...data,
-      [inputs2[index].name]: value,
-    });
+  const handleAddRoomItem = (e) => {
+    if (inputsRoomItem[0].value && inputsRoomItem[1].value) {
+      addRoomItem({
+        ...data,
+        roomitem: {
+          id: uuidv4(),
+          itemName: inputsRoomItem[0].value,
+          quantity: inputsRoomItem[1].value,
+          descItem: inputsRoomItem[2].value,
+        },
+      });
+      alert("Room Item Added");
+      e.preventDefault();
+      setInputsRoomItem([
+        {
+          id: 0,
+          name: "roomItem",
+          type: "text",
+          placeholder: "Room Item",
+          value: "",
+        },
+        {
+          id: 1,
+          name: "quantity",
+          type: "number",
+          placeholder: "Quantity",
+          value: "",
+        },
+        {
+          id: 2,
+          name: "descItem",
+          type: "textarea",
+          placeholder: "Description",
+          value: "",
+        },
+      ]);
+    }
   };
 
-  const handleCreateRoom = async (e) => {
-    if (data.roomName && data.floor && data.roomItem && data.quantity && data.description && data.price) {
-      try {
-        await Axios.post("http://localhost:3000/api/buildings", {
-          roomName: data.roomName,
-          floor: data.floor,
-          roomItem: data.roomItem,
-          quantity: data.quantity,
-          description: data.description,
-          price: data.price,
-        });
-        alert("Room Created");
-      } catch (error) {
-        if (error.response) {
-          setMsg(error.response.data.msg);
-        }
-      }
+  const handleAddRoom = (e) => {
+    if (
+      inputs[0].value &&
+      inputs[1].value &&
+      inputs[2].value &&
+      inputs[3].value &&
+      inputs[4].value
+    ) {
+      addRoom({
+        id: uuidv4(),
+        roomName: inputs[0].value,
+        floor: inputs[1].value,
+        description: inputs[2].value,
+        roomPrice: inputs[3].value,
+        picture: inputs[4].value,
+        roomitem: data.roomitem,
+      });
+      alert("Room Added");
       e.preventDefault();
 
-      setData({
-        roomName: "",
-        floor: "",
-        roomitem: "",
-        quantity: "",
-        description: "",
-        price: "",
-      })
-      setShowRoom(false);
+      setInputs([
+        {
+          id: 0,
+          name: "roomName",
+          type: "text",
+          placeholder: "Room Name",
+          value: "",
+        },
+        {
+          id: 1,
+          name: "floor",
+          type: "text",
+          placeholder: "Floor",
+          value: "",
+        },
+        {
+          id: 2,
+          name: "description",
+          type: "textarea",
+          placeholder: "Description",
+          value: "",
+        },
+        {
+          id: 3,
+          name: "roomPrice",
+          type: "text",
+          placeholder: "Room Price",
+          value: "",
+        },
+        {
+          id: 4,
+          name: "picture",
+          type: "text",
+          placeholder: "Picture",
+          value: "",
+        },
+      ]);
+
+      handleClose();
     } else {
-      setMsg("Please fill out all fields");
+      setMsg("Please fill all the fields");
     }
+  };
+
+  const _handleClose = () => {
+    handleClose();
+    setInputs([
+      {
+        id: 0,
+        name: "roomName",
+        type: "text",
+        placeholder: "Room Name",
+        value: "",
+      },
+      {
+        id: 1,
+        name: "floor",
+        type: "text",
+        placeholder: "Floor",
+        value: "",
+      },
+      {
+        id: 2,
+        name: "description",
+        type: "textarea",
+        placeholder: "Description",
+        value: "",
+      },
+      {
+        id: 3,
+        name: "roomPrice",
+        type: "text",
+        placeholder: "Room Price",
+        value: "",
+      },
+      {
+        id: 4,
+        name: "picture",
+        type: "text",
+        placeholder: "Picture",
+        value: "",
+      },
+    ]);
+    setInputsRoomItem([
+      {
+        id: 0,
+        name: "roomItem",
+        type: "text",
+        placeholder: "Room Item",
+        value: "",
+      },
+      {
+        id: 1,
+        name: "quantity",
+        type: "number",
+        placeholder: "Quantity",
+        value: "",
+      },
+      {
+        id: 2,
+        name: "descItem",
+        type: "textarea",
+        placeholder: "Description",
+        value: "",
+      },
+    ]);
   };
 
   return (
     <>
-      <CreateRoomWrap>
+      <FormWrap
+        className="modal fade fixed top-0 left-0 hidden w-full h-4/5 outline-none overflow-x-hidden overflow-y-auto"
+        onSubmit={handleAddRoom}
+      >
+        <h3 className="text-2xl text-center font-bold">Create Room</h3>
+        <p className="has-text-centered text-error-red">{msg}</p>
 
-        <h1><b>Create Room</b></h1>
+        {inputs.map((input, inputIdx) =>
+          input.name !== "roomPrice" ? (
+            <FormInput
+              key={inputIdx}
+              {...input}
+              value={input.value}
+              type={input.type}
+              onChange={(e) => handleChange(e.target.value, inputIdx)}
+            />
+          ) : (
+            <div className="flex gap-2 items-center w-full">
+              <FormInput
+                key={inputIdx}
+                {...input}
+                value={input.value}
+                type={input.type}
+                onChange={(e) => handleChange(e.target.value, inputIdx)}
+              />
+              <p className="text-md text-gray-600">
+                /Days</p>
+            </div>
+          )
+        )}
 
-        {inputs.map((input, inputIdx) => (
-          <FormInput
-            key={inputIdx}
-            {...input}
-            value={input.value}
-            type={input.type}
-            onChange={(e) => handleChangeInputs(e.target.value, inputIdx)}
-          />
-        ))
-        }
-
-        <p className="self-auto md:self-start">Room Item</p>
-
-        <div className="self-auto md:self-start">
+        <h3 className="text-2xl text-center font-bold">Room Item</h3>
+        <div className="flex">
           {inputsRoomItem.map((input, inputIdx) => (
             <FormRoomItem
               key={inputIdx}
               {...input}
               value={input.value}
               type={input.type}
-              onChange={(e) => handleChangeInputsRoomItem(e.target.value, inputIdx)}
+              onChange={(e) => handleChangeRoomItem(e.target.value, inputIdx)}
             />
           ))}
         </div>
-
-        <Button
-          style={{
-            backgroundColor: "blue",
-            color: "white",
-          }}>
-          Add Room Item
-        </Button>
-
-        <div className="flex justify-between">
-          {inputs2.map((input, inputIdx) => (
-            <div style={{
-              textAlign: "start",
-            }}>
-              <FormInputHarga
-                style={{
-                  width: 430,
-                }}
-                key={inputIdx}
-                {...input}
-                value={input.value}
-                type={input.type}
-                onChange={(e) => handleChangeInputs2(e.target.value, inputIdx)}
-              />
-              <span>  /Day</span>
-            </div>
-          )
+          <Button onClick={handleAddRoomItem} type="submit" className="mt-4">
+            Add Room Item
+          </Button>
+        <div>
+          {data.roomitem === undefined ? (
+            <p className="has-text-centered text-error-red">No Room Item</p>
+          ) : (
+            <ul className="list-disc ml-4">
+              {data.roomitem.map((item, itemIdx) => (
+                <li key={itemIdx}>
+                  {item.itemName} - {item.quantity}
+                </li>
+              ))}
+            </ul>
           )}
-
         </div>
 
-        <div>
-          <Button
-            style={{
-              marginRight: 250,
-              backgroundColor: "red",
-              color: "white",
-            }}
+        <div className="flex gap-4 justify-between w-full">
+          <button
+            className="font-bold text-textColor-black uppercase px-6 py-3 text-sm shadow mr-1 mb-1"
             type="button"
-            onClick={handleClose}
+            onClick={_handleClose}
           >
-            Cancel
-          </Button>
-
-          <Button
-            style={{
-              backgroundColor: "blue",
-              color: "white",
-            }}
-            type="button"
-            onClick={handleCreateRoom}
-          >
+            Close
+          </button>
+          <Button type="button" onClick={handleAddRoom}>
             Add Room
           </Button>
         </div>
-
-      </CreateRoomWrap>
+      </FormWrap>
     </>
   );
 }
 
-const CreateRoomWrap = styled.div`
-  background-color: #fff;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
-  row-gap: 20px;
-  border: 1px solid black;
-  border-radius: 10px;
-  align-items: center;
-  padding: 24px;
-  width: 40%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-`;
-
-const FormRoomItem = styled.input`
-    width: 30%;
-    border: 2px solid grey;
-    border-radius: 8px;
-    padding: 10px;
-    margin-right: 8px;
-`;
-
-const FormInputHarga = styled.input`
-    width: 100%;
-    border: 2px solid grey;
-    border-radius: 8px;
-    padding: 10px;
-    `;
