@@ -77,7 +77,7 @@ export default function TableRoom(props) {
                 </thead>
                 <tbody>
                   {room?.map((room) => (
-                    <tr className="bg-secondary-blue">
+                    <tr className="odd:bg-secondary-softblue text-primary-gray">
                       <td className="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
                         {(angka += 1)}
                       </td>
@@ -90,11 +90,9 @@ export default function TableRoom(props) {
                       <td className="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
                         {room.floor}
                       </td>
-                      <td className="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
-                        {room.roomitem.map((item) => (
-                          <li className="list-none inline m-1">
-                            {item.itemName}
-                          </li>
+                      <td className="flex gap-2 text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
+                        {room.roomitem?.map((roomitem) => (
+                          <li className="list-none">{roomitem.itemName}</li>
                         ))}
                       </td>
                       <td className="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
@@ -102,12 +100,12 @@ export default function TableRoom(props) {
                       </td>
                       <td className="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
                         {room.status ? (
-                          <button className="bg-success-green text-textColor-green font-bold py-2 px-6 rounded-full">
-                            Available
-                          </button>
-                        ) : (
                           <button className="bg-error-pink text-textColor-red font-bold py-2 px-6 rounded-full">
                             Booked
+                          </button>
+                        ) : (
+                          <button className="bg-success-green text-textColor-green font-bold py-2 px-6 rounded-full">
+                            Available
                           </button>
                         )}
                       </td>

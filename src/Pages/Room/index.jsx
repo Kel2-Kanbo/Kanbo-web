@@ -45,14 +45,6 @@ export default function Room() {
     }
   };
 
-  //add room item
-  const addRoomItem = async (data) => {
-    const response = await api.post("/room/roomitem", data);
-    if (response.data) {
-      setRoom([...room.roomitem, response.data]);
-    }
-  }
-
   //remove room
   const removeRoom = async (id) => {
     const response = await api.delete(`/room/${id}`);
