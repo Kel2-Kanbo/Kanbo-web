@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import ButtonIconDelete from "../ButtonIconDelete";
-import ButtonIconEdit from "../ButtonIconEdit";
 
 export default function TableBuilding(props) {
   const { building, removeBuilding, updateBuilding } = props;
@@ -26,6 +25,18 @@ export default function TableBuilding(props) {
               <table className="min-w-full">
                 <thead className="bg-white">
                   <tr>
+                    <th
+                      scope="col"
+                      className="text-sm font-medium text-textColor-black px-6 py-4 text-left"
+                    >
+                      No
+                    </th>
+                    <th
+                      scope="col"
+                      className="text-sm font-medium text-textColor-black px-6 py-4 text-left"
+                    >
+                      Picture
+                    </th>
                     <th
                       scope="col"
                       className="text-sm font-medium text-textColor-black px-6 py-4 text-left"
@@ -68,6 +79,12 @@ export default function TableBuilding(props) {
                   {building?.map((building) => (
                     <tr className="bg-secondary-blue">
                       <td className="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
+                        {(angka += 1)}
+                      </td>
+                      <td className="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
+                        <img src={building.picture} alt="building" width="72px" />
+                      </td>
+                      <td className="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
                         {building.buildingName}
                       </td>
                       <td className="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
@@ -81,18 +98,6 @@ export default function TableBuilding(props) {
                       </td>
                       <td className="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
                         {building.description}
-                      </td>
-                      
-                      <td className="text-sm text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">
-                        {building.status ? (
-                          <button className="bg-success-green text-textColor-green font-bold py-2 px-6 rounded-full">
-                            Available
-                          </button>
-                        ) : (
-                          <button className="bg-error-pink text-textColor-red font-bold py-2 px-6 rounded-full">
-                            Booked
-                          </button>
-                        )}
                       </td>
                       <td className="flex justify-around whitespace-nowrap">
                         <button

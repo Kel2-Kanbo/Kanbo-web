@@ -7,6 +7,7 @@ import TableBuilding from "../../Components/TableBuilding";
 
 export default function Building() {
   const [showModal, setShowModal] = useState(false);
+  console.log(showModal);
   const [building, setBuilding] = useState([]);
   console.log(building);
 
@@ -76,17 +77,17 @@ export default function Building() {
 
       <div className="flex justify-end">
         <div className="w-auto p-8">
-          <Button type="button" style={{backgroundColor: "blue", color: "white"}} onClick={() => _handleOpenModal}>
+          <Button type="button" style={{backgroundColor: "blue", color: "white"}} onClick={ _handleOpenModal}>
             Create Building
           </Button>
         </div>
-        {showModal ? (
+        {showModal ?(
           <CreateBuilding handleClose={_handleCloseModal} addBuilding={addBuilding} />
-        ) : null}
+          ) : (null)}
       </div>
       <div className="bg-primary-white items-center m-4">
         <TableBuilding
-          Building={Building}
+          building={building}
           removeBuilding={removeBuilding}
           updateBuilding={updateBuilding}
         />

@@ -3,6 +3,7 @@ import './App.css';
 
 import Dashboard from './Pages/Dashboard';
 import NotFound from './Pages/NotFound';
+import Building from './Pages/Building';
 
 function App() {
   return (
@@ -11,6 +12,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          
+          <Route exact path="/building" element={<Building />} />
           {/* <Route exact path="/login" element={<Login />} />
           <Route element={ <PrivateRoute /> }>
             <Route path="/home-admin" element={<Home />} />
