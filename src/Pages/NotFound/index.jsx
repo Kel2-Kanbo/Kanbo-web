@@ -1,6 +1,4 @@
 import React from "react";
-// import Navbar from "../../components/Navbar";
-// import Footer from "../../components/Footer";
 import PageNotFound from "../../Components/pagenotfound.png"
 
 import { Link } from "react-router-dom";
