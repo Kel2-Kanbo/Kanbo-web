@@ -84,13 +84,10 @@ export default function Room() {
 
   return (
     <div className='flex h-screen bg-secondary-softblue'>
-
-      <div className='basis-1/6 bg-primary-white'>
-        <Sidebar />
-      </div>
+      <Sidebar />
+      <Navbar />
       <div className="basis-5/6">
-        <Navbar />
-        <div className='px-4 py-4'>
+        <div className='px-4 py-4 mt-20'>
           <h1 className="text-3xl font-bold mb-4">Room</h1>
 
           <div className="flex items-center justify-between mb-6">

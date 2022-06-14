@@ -22,7 +22,7 @@ export default function Login() {
     //             email: email,
     //             password: password
     //         });
-    //         history.push("/dashboard-admin");
+    //         history.push("/dashboard");
     //     } catch (error) {
     //         if (error.response) {
     //             setMsg(error.response.data.msg);

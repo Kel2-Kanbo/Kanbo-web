@@ -74,12 +74,10 @@ const Complex = () => {
 
   return (
     <div className='flex h-screen bg-secondary-softblue'>
-      <div className='basis-1/6 bg-primary-white'>
         <Sidebar />
-      </div>
-      <div className='basis-5/6'>
         <Navbar />
-        <div className="px-4 py-4">
+      <div className='basis-5/6'>
+        <div className="px-4 py-4 mt-20">
           <h1 className="text-3xl font-bold mb-1">Complex</h1>
           <h4 className="text-md text-primary-gray">Manage complex</h4>
           <div className="flex justify-end">
@@ -90,7 +88,7 @@ const Complex = () => {
               </Button>
             </div>
             {showModal ? (
-              <CreateComplex
+              < CreateComplex
                 handleClose={_handleCloseModal}
                 addComplex={addComplex}
               />
