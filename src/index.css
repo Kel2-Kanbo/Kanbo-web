@@ -12,6 +12,7 @@ body {
     font-family: 'Rubik', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #EDEAFF;
 }
 
 code {
@@ -33,14 +34,14 @@ th,td{
   /* border: 1px solid #000; */
 }
 
-/* .sidebar{
+.sidebar{
   background: #FFFFFF;
   color: #4C35E0;
   height: 100vh;
   width: 200px;
   border-top-right-radius: 2rem;
   transition: all 0.5s;
-} */
+}
 .top_section{
   display: flex;
   align-items:center;
@@ -55,10 +56,10 @@ th,td{
   margin-left: 50px;
 }
 .link{
-  /* display: flex; */
-  /* color: #4C35E0; */
-  /* padding: 10px 15px; */
-  /* gap: 15px; */
+  display: flex;
+  color: #4C35E0;
+  padding: 10px 15px;
+  gap: 15px;
   transition: all 0.5s;
 }
 .link:hover{

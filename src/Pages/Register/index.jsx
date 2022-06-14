@@ -98,7 +98,7 @@ export default function Register() {
 				// 	role: 'admin',
 				// });
 				alert(`Register "${inputs[0].value}" Success`);
-				navigate("/login")
+				navigate("/")
 			}
 			catch (error) {
 				if (error.response) {

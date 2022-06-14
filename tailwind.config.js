@@ -25,10 +25,12 @@ module.exports = {
       },
       secondary: {
         blue: "#EDEAFF",
-        yellow: "#FFEC42",
+        green: "#B7FFAB",
+        mossgreen: "#C7F4F2",
+        orange: "#FFEC42",
+        yellow: "#FFEEC3",
         red: "#FF3030",
         softblue: "#EDEAFF",
-        orange: "#FFCA42",
         white1: "#FDFEFF",
         white2: "#F4F4F4",
       },
@@ -43,4 +45,4 @@ module.exports = {
     },
   },
   plugins: [],
-};
+}

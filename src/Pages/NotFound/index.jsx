@@ -1,6 +1,4 @@
 import React from "react";
-// import Navbar from "../../components/Navbar";
-// import Footer from "../../components/Footer";
 import PageNotFound from "../../Components/pagenotfound.png"
 
 import { Link } from "react-router-dom";
@@ -24,7 +22,7 @@ const NotFound = () => {
               Try going back to our homepage.
             </p>
             <p className="text-center text-secondary-red hover:text-primary-blue ">
-              <Link to="/" className="">
+              <Link to="/dashboard" className="">
                 Back to Dashboard
               </Link>
             </p>
