@@ -33,6 +33,32 @@
       "building": "1"
     }
   ],
+  "building": [
+    {
+      "picture": "https://images.unsplash.com/photo-1581541234269-03d5d8576c0e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=846&q=80",
+      "buildingName": "Gedung A",
+      "complexName": "Tower A1",
+      "address": "Jalan kesana kemari",
+      "jumlahRoom": 6,
+      "description": "lorem"
+    },
+    {
+      "picture": "https://images.unsplash.com/photo-1581541234269-03d5d8576c0e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=846&q=80",
+      "buildingName": "Gedung B",
+      "complexName": "Tower A1",
+      "address": "Jalan kesana kemari",
+      "jumlahRoom": 10,
+      "description": "lorem"
+    },
+    {
+      "picture": "https://images.unsplash.com/photo-1581541234269-03d5d8576c0e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=846&q=80",
+      "buildingName": "Gedung C",
+      "complexName": "Tower A1",
+      "address": "Jalan kesana kemari",
+      "jumlahRoom": 2,
+      "description": "lorem"
+    }
+  ],
   "register": [
     {
       "name": "dimas",
