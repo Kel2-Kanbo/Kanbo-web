@@ -58,32 +58,11 @@
   ],
   "room": [
     {
-      "id": 2,
-      "picture": "https://images.unsplash.com/photo-1544457070-4cd773b4d71e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=930&q=80",
-      "roomName": "Room 2",
-      "floor": "Lt 2",
-      "roomitem": [
-        {
-          "id": 1,
-          "itemName": "TV",
-          "quantity": 2,
-          "desc": "description"
-        },
-        {
-          "id": 2,
-          "itemName": "AC",
-          "quantity": 2,
-          "desc": "description"
-        }
-      ],
-      "roomPrice": "Rp. 800.000",
-      "status": true
-    },
-    {
       "id": 3,
       "picture": "https://images.unsplash.com/photo-1581541234269-03d5d8576c0e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=846&q=80",
       "roomName": "Room 3",
       "floor": "Lt 2",
+      "description": "Room 2",
       "roomitem": [
         {
           "id": 1,
@@ -106,6 +85,7 @@
       "picture": "https://images.unsplash.com/photo-1596900749995-57cec6ddb861?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8b2ZmaWNlJTIwcm9vbXxlbnwwfDJ8MHx8&auto=format&fit=crop&w=600&q=60",
       "roomName": "Room 4",
       "floor": "Lt 3",
+      "description": "Room 4",
       "roomitem": [
         {
           "id": 1,
@@ -134,6 +114,7 @@
       "picture": "https://images.unsplash.com/photo-1616593918824-4fef16054381?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
       "roomName": "Room 5",
       "floor": "Lt 3",
+      "description": "Room 5",
       "roomitem": [
         {
           "id": 1,
@@ -155,6 +136,7 @@
       "picture": "https://source.unsplash.com/random",
       "roomName": "Room 3",
       "floor": "Lt 3",
+      "description": "Room 3",
       "roomPrice": "Rp. 1.000.000",
       "status": true,
       "roomitem": [
@@ -171,6 +153,37 @@
           "desc": "description"
         }
       ]
+    },
+    {
+      "id": "170894da-9cef-4a36-afbb-54056e5f7aef",
+      "roomName": "room 10",
+      "floor": "lt 6",
+      "description": "ini desc ini desc",
+      "roomPrice": "12000000",
+      "picture": "https://source.unsplash.com/random",
+      "status": true,
+      "roomitem": [
+        {
+          "id": 1,
+          "itemName": "TV",
+          "quantity": 2,
+          "desc": "description"
+        },
+        {
+          "id": 2,
+          "itemName": "AC",
+          "quantity": 1,
+          "desc": "description"
+        }
+      ]
+    },
+    {
+      "id": "9624fb57-0f91-449c-bd43-ad9386081843",
+      "roomName": "nama",
+      "floor": "lt 3",
+      "description": "ini desc ini desc",
+      "roomPrice": "20000000",
+      "picture": "https://source.unsplash.com/random"
     }
   ]
 }

@@ -218,6 +218,7 @@ export default function Register() {
 
 				<Button onClick={_handleRegister}>Register</Button>
 				<p className="text-sm text-center mt-4">
+
 					Have an account?{" "}
 					<Link to="/" className="font-bold text-primary-blue">
 						Login
