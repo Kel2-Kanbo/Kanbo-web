@@ -23,14 +23,6 @@
       "city": "City 2",
       "district": "District 2",
       "building": "8"
-    },
-    {
-      "id": "3b5efbbf-f91b-4d78-945b-c6bf79f514a4",
-      "complexName": "satu",
-      "complexAddress": "dua",
-      "city": "City 1",
-      "district": "District 2",
-      "building": "1"
     }
   ],
   "building": [
@@ -202,14 +194,6 @@
           "desc": "description"
         }
       ]
-    },
-    {
-      "id": "9624fb57-0f91-449c-bd43-ad9386081843",
-      "roomName": "nama",
-      "floor": "lt 3",
-      "description": "ini desc ini desc",
-      "roomPrice": "20000000",
-      "picture": "https://source.unsplash.com/random"
     }
   ]
 }
