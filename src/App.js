@@ -11,6 +11,8 @@ import NotFound from './Pages/NotFound';
 import CreateUpdateRoom from './Pages/CreateUpdateRoom';
 import Register from './Pages/Register';
 import Building from './Pages/Building';
+import ForgotPassword from "./Pages/ForgotPassword";
+import NewPassword from "./Pages/NewPassword";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/forgot" element={<ForgotPassword />} />
+          <Route path="/new-pw" element={<NewPassword />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/complex" element={<Complex />} />
           <Route path="/building" element={<Building />} />
