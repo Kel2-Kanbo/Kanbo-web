@@ -33,6 +33,29 @@
       "building": "1"
     }
   ],
+  "register": [
+    {
+      "name": "dimas",
+      "email": "dimas@mail.com",
+      "username": "dimas",
+      "password": "123456",
+      "role": "admin"
+    },
+    {
+      "name": "dimas",
+      "email": "dimas@mail.com",
+      "username": "dimas",
+      "password": "123456",
+      "role": "admin"
+    },
+    {
+      "name": "dimas",
+      "email": "dimas@mail.com",
+      "username": "dimas",
+      "password": "123456",
+      "role": "admin"
+    }
+  ],
   "room": [
     {
       "id": 3,
