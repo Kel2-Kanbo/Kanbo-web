@@ -142,7 +142,9 @@ export default function Register() {
 				</button> */}
 				{/* <span className="text-black">{error}</span> */}
 
-				<Button onClick={_handleRegister}>Register</Button>
+				<Button 
+				onClick={_handleRegister}
+				>Register</Button>
 				<p className="text-sm">
 					Have an account?{" "}
 					<Link to="/" className="font-bold text-primary-blue">

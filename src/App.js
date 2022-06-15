@@ -10,6 +10,7 @@ import Room from './Pages/Room';
 import NotFound from './Pages/NotFound';
 import CreateUpdateRoom from './Pages/CreateUpdateRoom';
 import Register from './Pages/Register';
+import VerifyEmail from "./Components/VerifyEmail";
 import Building from './Pages/Building';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path="/room" element={<Room />} />
           <Route path="/createRoom" element={<CreateUpdateRoom />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/verify" element={<VerifyEmail />} />
           <Route path="/create-building" element={<CreateBuilding />} />
           <Route path="*" element={<NotFound />} />
           {/* <Route exact path="/login" element={<Login />} />

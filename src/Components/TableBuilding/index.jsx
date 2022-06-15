@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import ButtonIconDelete from "../ButtonIconDelete";
+import ButtonIconEdit from "../ButtonIconEdit";
 
 export default function TableBuilding(props) {
   const { building, removeBuilding, updateBuilding } = props;
@@ -19,8 +20,7 @@ export default function TableBuilding(props) {
   return (
     <div>
       <div className="flex flex-col">
-        <div>
-          <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+        <div className="inline-block min-w-full p-2">
             <div className="overflow-hidden">
               <table className="min-w-full">
                 <thead className="bg-white">
@@ -100,6 +100,18 @@ export default function TableBuilding(props) {
                         {building.description}
                       </td>
                       <td className="flex justify-around whitespace-nowrap">
+                        <button onClick={_handleOpenModalEdit}>
+                        <ButtonIconEdit
+                          // onClick={() => updateBuilding(building)}
+                        />
+                        {/* {showModalEdit ? (
+                          <EditBuilding
+                            handleClose={_handleCloseModalEdit}
+                            updateComplex={updateBuilding}
+                            building={building}
+                          />
+                        ) : null} */}
+                      </button>
                         <button
                           onClick={() => removeBuilding(building.id)}
                           className="px-2 py-4">
@@ -111,7 +123,6 @@ export default function TableBuilding(props) {
                 </tbody>
               </table>
             </div>
-          </div>
         </div>
       </div>
     </div>
