@@ -3,29 +3,21 @@ import { v4 as uuidv4 } from "uuid";
 
 import Button from "../Button";
 import FormInput from "../FormInput";
-import FormRoomItem from "../FormRoomItem";
 import FormWrap from "../FormWrap";
+import FormTextArea from "../FormTextArea";
 
 export default function CreateRoom(props) {
-  const { addRoom, handleClose, addRoomItem } = props;
+  const { addRoom, handleClose } = props;
 
-  const [data, setData] = useState([
-    {
-      picture: "",
-      roomName: "",
-      floor: "",
-      description: "",
-      roomitem: [
-        {
-          itemName: "",
-          quantity: "",
-          descItem: "",
-        },
-      ],
-      roomPrice: "",
-      status: false,
-    },
-  ]);
+  const [data, setData] = useState({
+    picture: "",
+    roomName: "",
+    floor: "",
+    description: "",
+    roomPrice: "",
+    status: false,
+    roomitem: ["TV", "AC", "WIFI"],
+  });
 
   console.log(data);
   const [msg, setMsg] = useState("");
@@ -73,30 +65,6 @@ export default function CreateRoom(props) {
     },
   ]);
 
-  const [inputsRoomItem, setInputsRoomItem] = useState([
-    {
-      id: 0,
-      name: "roomItem",
-      type: "text",
-      placeholder: "Room Item",
-      value: "",
-    },
-    {
-      id: 1,
-      name: "quantity",
-      type: "number",
-      placeholder: "Quantity",
-      value: "",
-    },
-    {
-      id: 2,
-      name: "descItem",
-      type: "textarea",
-      placeholder: "Description",
-      value: "",
-    },
-  ]);
-
   const handleChange = (value, index) => {
     setInputs(
       inputs.map((input) => {
@@ -109,63 +77,6 @@ export default function CreateRoom(props) {
         return input;
       })
     );
-  };
-
-  const handleChangeRoomItem = (value, index) => {
-    setInputsRoomItem(
-      inputsRoomItem.map((input) => {
-        if (input.id === index) {
-          return {
-            ...input,
-            value,
-          };
-        }
-        return input;
-      })
-    );
-    setData({
-      ...data.roomitem[index],
-      [inputsRoomItem[index].name]: value,
-    });
-  };
-
-  const handleAddRoomItem = (e) => {
-    if (inputsRoomItem[0].value && inputsRoomItem[1].value) {
-      addRoomItem({
-        ...data,
-        roomitem: {
-          id: uuidv4(),
-          itemName: inputsRoomItem[0].value,
-          quantity: inputsRoomItem[1].value,
-          descItem: inputsRoomItem[2].value,
-        },
-      });
-      alert("Room Item Added");
-      e.preventDefault();
-      setInputsRoomItem([
-        {
-          id: 0,
-          name: "roomItem",
-          type: "text",
-          placeholder: "Room Item",
-          value: "",
-        },
-        {
-          id: 1,
-          name: "quantity",
-          type: "number",
-          placeholder: "Quantity",
-          value: "",
-        },
-        {
-          id: 2,
-          name: "descItem",
-          type: "textarea",
-          placeholder: "Description",
-          value: "",
-        },
-      ]);
-    }
   };
 
   const handleAddRoom = (e) => {
@@ -183,7 +94,6 @@ export default function CreateRoom(props) {
         description: inputs[2].value,
         roomPrice: inputs[3].value,
         picture: inputs[4].value,
-        roomitem: data.roomitem,
       });
       alert("Room Added");
       e.preventDefault();
@@ -271,29 +181,6 @@ export default function CreateRoom(props) {
         value: "",
       },
     ]);
-    setInputsRoomItem([
-      {
-        id: 0,
-        name: "roomItem",
-        type: "text",
-        placeholder: "Room Item",
-        value: "",
-      },
-      {
-        id: 1,
-        name: "quantity",
-        type: "number",
-        placeholder: "Quantity",
-        value: "",
-      },
-      {
-        id: 2,
-        name: "descItem",
-        type: "textarea",
-        placeholder: "Description",
-        value: "",
-      },
-    ]);
   };
 
   return (
@@ -306,8 +193,16 @@ export default function CreateRoom(props) {
         <p className="has-text-centered text-error-red">{msg}</p>
 
         {inputs.map((input, inputIdx) =>
-          input.name !== "roomPrice" ? (
+          input.name !== "roomPrice" && input.name !== "description" ? (
             <FormInput
+              key={inputIdx}
+              {...input}
+              value={input.value}
+              type={input.type}
+              onChange={(e) => handleChange(e.target.value, inputIdx)}
+            />
+          ) : input.name === "description" ? (
+            <FormTextArea
               key={inputIdx}
               {...input}
               value={input.value}
@@ -323,40 +218,10 @@ export default function CreateRoom(props) {
                 type={input.type}
                 onChange={(e) => handleChange(e.target.value, inputIdx)}
               />
-              <p className="text-md text-gray-600">
-                /Days</p>
+              <p className="text-md text-gray-600">/Days</p>
             </div>
           )
         )}
-
-        <h3 className="text-2xl text-center font-bold">Room Item</h3>
-        <div className="flex">
-          {inputsRoomItem.map((input, inputIdx) => (
-            <FormRoomItem
-              key={inputIdx}
-              {...input}
-              value={input.value}
-              type={input.type}
-              onChange={(e) => handleChangeRoomItem(e.target.value, inputIdx)}
-            />
-          ))}
-        </div>
-          <Button onClick={handleAddRoomItem} type="submit" className="mt-4">
-            Add Room Item
-          </Button>
-        <div>
-          {data.roomitem === undefined ? (
-            <p className="has-text-centered text-error-red">No Room Item</p>
-          ) : (
-            <ul className="list-disc ml-4">
-              {data.roomitem.map((item, itemIdx) => (
-                <li key={itemIdx}>
-                  {item.itemName} - {item.quantity}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
 
         <div className="flex gap-4 justify-between w-full">
           <button
@@ -374,4 +239,3 @@ export default function CreateRoom(props) {
     </>
   );
 }
-
