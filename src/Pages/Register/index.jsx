@@ -125,16 +125,6 @@ export default function Register() {
 			}
 			try {
 				await Axios.post("http://3.88.14.239/api/auth/signup", data).then(response => console.log(response));
-				// Swal.fire({
-				// 	title: "Register Success",
-				// 	// text: `You `,
-				// 	confirmButtonColor: "#4C35E0",
-				// 	// confirmButtonText: "Ok!",
-				// }).then((result) => {
-				// 	if (result.isConfirmed) {
-				// 		navigate("/")
-				// 	}
-				// });
 			}
 			catch (error) {
 				if (error.response) {
@@ -142,7 +132,16 @@ export default function Register() {
 				}
 			}
 			finally {
-				console.log("aaaa");
+				Swal.fire({
+					title: "Register Success",
+					// text: `You `,
+					confirmButtonColor: "#4C35E0",
+					// confirmButtonText: "Ok!",
+				}).then((result) => {
+					if (result.isConfirmed) {
+						navigate("/verify")
+					}
+				});
 			}
 			// }
 		} else {
