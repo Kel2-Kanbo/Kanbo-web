@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import Swal from "sweetalert2";
 
 import Button from "../Button";
 import FormInput from "../FormInput";
@@ -55,14 +56,6 @@ export default function CreateRoom(props) {
       value: "",
       required: true,
     },
-    {
-      id: 4,
-      name: "picture",
-      type: "text",
-      placeholder: "Picture",
-      value: "",
-      required: true,
-    },
   ]);
 
   const handleChange = (value, index) => {
@@ -79,13 +72,35 @@ export default function CreateRoom(props) {
     );
   };
 
+  const [imageRoom, setImageRoom] = useState("");
+
+  const uploadImageRoom = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertBase64(file);
+    setImageRoom(base64);
+    console.log(base64);
+  };
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
   const handleAddRoom = (e) => {
     if (
       inputs[0].value &&
       inputs[1].value &&
       inputs[2].value &&
-      inputs[3].value &&
-      inputs[4].value
+      inputs[3].value
     ) {
       addRoom({
         id: uuidv4(),
@@ -93,10 +108,17 @@ export default function CreateRoom(props) {
         floor: inputs[1].value,
         description: inputs[2].value,
         roomPrice: inputs[3].value,
-        picture: inputs[4].value,
+        picture: imageRoom,
       });
-      alert("Room Added");
-      e.preventDefault();
+      Swal.fire({
+        title: "Create Room Success",
+        confirmButtonColor: "#4C35E0",
+        confirmButtonText: "Ok!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          e.preventDefault();
+        }
+      });
 
       setInputs([
         {
@@ -127,14 +149,8 @@ export default function CreateRoom(props) {
           placeholder: "Room Price",
           value: "",
         },
-        {
-          id: 4,
-          name: "picture",
-          type: "text",
-          placeholder: "Picture",
-          value: "",
-        },
       ]);
+      setImageRoom("");
 
       handleClose();
     } else {
@@ -173,20 +189,14 @@ export default function CreateRoom(props) {
         placeholder: "Room Price",
         value: "",
       },
-      {
-        id: 4,
-        name: "picture",
-        type: "text",
-        placeholder: "Picture",
-        value: "",
-      },
     ]);
+    setImageRoom("");
   };
 
   return (
     <>
       <FormWrap
-        className="modal fade fixed top-0 left-0 hidden w-full h-4/5 outline-none overflow-x-hidden overflow-y-auto"
+        className="modal fade fixed top-0 left-0 hidden w-full h-5/6 outline-none overflow-x-hidden overflow-y-scroll"
         onSubmit={handleAddRoom}
       >
         <h3 className="text-2xl text-center font-bold">Create Room</h3>
@@ -222,8 +232,15 @@ export default function CreateRoom(props) {
             </div>
           )
         )}
+        <div>
+          <FormInput
+            type="file"
+            id="gambar"
+            onChange={(e) => uploadImageRoom(e)}
+          />
+        </div>
 
-        <div className="flex gap-4 justify-between w-full">
+        <div className="flex gap-4 justify-between mt-4 w-full">
           <button
             className="font-bold text-textColor-black uppercase px-6 py-3 text-sm shadow mr-1 mb-1"
             type="button"

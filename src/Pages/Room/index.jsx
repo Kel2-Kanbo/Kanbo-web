@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 import api from "../../API/Complex";
 
 import Button from "../../Components/Button";
 import CreateRoom from "../../Components/CreateRoom";
 import TableRoom from "../../Components/TableRoom";
-import Sidebar from '../../Components/Sidebar'
-import Navbar from '../../Components/Navbar'
+import Sidebar from "../../Components/Sidebar";
+import Navbar from "../../Components/Navbar";
 
 export default function Room() {
   const [showModal, setShowModal] = useState(false);
@@ -27,7 +28,7 @@ export default function Room() {
       placeholder: "Building",
       options: [],
       value: "",
-    }
+    },
   ]);
 
   //get room data from the server
@@ -49,8 +50,15 @@ export default function Room() {
   const removeRoom = async (id) => {
     const response = await api.delete(`/room/${id}`);
     if (response.data) {
-      alert("Delete room success");
-      setRoom(room.filter((item) => item.id !== id));
+      Swal.fire({
+        title: "Delete Room Success",
+        confirmButtonColor: "#4C35E0",
+        confirmButtonText: "Ok!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setRoom(room.filter((item) => item.id !== id));
+        }
+      });
     }
   };
 
@@ -83,11 +91,11 @@ export default function Room() {
   }, []);
 
   return (
-    <div className='flex h-screen bg-secondary-softblue'>
+    <div className="flex h-screen bg-secondary-softblue">
       <Sidebar />
       <Navbar />
       <div className="basis-5/6">
-        <div className='px-4 py-4 mt-20'>
+        <div className="px-4 py-4 mt-20">
           <h1 className="text-3xl font-bold mb-4">Room</h1>
 
           <div className="flex items-center justify-between mb-6">
@@ -100,7 +108,6 @@ export default function Room() {
             </div>
             <div className="w-auto">
               <Button type="button" onClick={_handleOpenModal}>
-
                 Create Room
               </Button>
             </div>
@@ -118,6 +125,5 @@ export default function Room() {
         </div>
       </div>
     </div>
-
   );
 }
