@@ -6,6 +6,7 @@ import Sidebar from "../../Components/Sidebar";
 import Navbar from "../../Components/Navbar";
 import CreateBuilding from "../../Components/CreateBuilding";
 import TableBuilding from "../../Components/TableBuilding";
+import Search from "../../Components/Search";
 
 export default function Building() {
   const [showModal, setShowModal] = useState(false);
@@ -74,16 +75,7 @@ export default function Building() {
       <Navbar />
       <div className="basis-5/6">
         <div className='px-4 py-4 mt-20'>
-          <h1 className="text-3xl font-bold mb-4">Building</h1>
-
-          <div className="flex items-center justify-between mb-6">
-            <div className="text-sm">
-              <select className="text-textColor-blackThin whitespace-nowrap px-4 py-3 rounded border bg-primary-white">
-                <option value="" className="bg-secondary-blue text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap">Building A</option>
-              </select>
-            </div>
-          </div>
-          <div className="flex justify-end">
+          <div className="flex justify-end mb-4">
             <div className="w-auto ">
               <Button type="button" className="bg-primary-blue text-primary-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                 onClick={_handleOpenModal}>
@@ -94,14 +86,16 @@ export default function Building() {
               <CreateBuilding handleClose={_handleCloseModal} addBuilding={addBuilding} />
             ) : null}
           </div>
+          <Search />
+          <div className="bg-primary-white items-center mt-4">
+            <TableBuilding
+              building={building}
+              removeBuilding={removeBuilding}
+              updateBuilding={updateBuilding}
+            />
+          </div>
         </div>
-        <div className="bg-primary-white items-center m-4">
-          <TableBuilding
-            building={building}
-            removeBuilding={removeBuilding}
-            updateBuilding={updateBuilding}
-          />
-        </div>
+
       </div>
     </div>
   );
