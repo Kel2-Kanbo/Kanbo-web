@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { menuItem, SidebarData } from '../SidebarData';
-import Logo from '../LogoCerah'
+import Logo from '../Logo'
 import { FaBars } from 'react-icons/fa';
 import { NavLink, useNavigate } from 'react-router-dom';
 
@@ -32,7 +32,7 @@ const Sidebar = () => {
           }).then((result) => {
             if (result.isConfirmed) {
                 navigate("/");
-              Swal.fire("Berhasil!", "success");
+            //   Swal.fire("Terima!", "success");
             }
           });
 
@@ -72,6 +72,7 @@ const Sidebar = () => {
                     </NavLink>
                 </div>
            </div>
+
         </>
     );
 };
