@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import NavItem from "../NavItem";
 
 import "./NavbarStyle.css"
-
 import SearchNavbar from "../SearchNavbar";
 
 export default function Navbar({ fixed }) {

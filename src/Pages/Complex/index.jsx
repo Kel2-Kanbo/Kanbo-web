@@ -10,7 +10,7 @@ import TableComplex from "../../Components/TableComplex";
 const Complex = () => {
   const [showModal, setShowModal] = useState(false);
   const [complex, setComplex] = useState([]);
-  console.log(complex);
+  // console.log(complex);
 
   const _handleOpenModal = () => {
     setShowModal(true);
@@ -44,15 +44,48 @@ const Complex = () => {
   };
 
   //update complex
-  const updateComplex = async (data) => {
-    console.log(data);
-    console.log(data.id);
-    const response = await api.put(`/complex/${data.id}`, data);
-    const { id } = response.data;
+  // const updateComplex = async (id) => {
+  //   const response = await api.put(`complex/${id}`);
+  //   console.log(response);
+        // const { id } = response.data;
+        // console.log(response.data);
+        // setComplex(
+        //   complex.map((data) => {
+        //     return data.id === id ? { ...response.data } : data;
+        //   })
+        // );
+        // if (response.data) {
+        //   const allComplex = await getComplex();
+        //   setComplex(allComplex);
+        //   setShowModal(false);
+        // }
+  // };
+  // const updateComplex = async (props) => {
+  //   console.log("dataid", complex.props);
+  //   await api.put(`complex/${complex.id}`, props);
+  //   const { id } = complex.props;
+  //   console.log(complex.props);
+  //   setComplex(
+  //     complex.map((props) => {
+  //       return props.id === id ? { ...complex.props } : props;
+  //     })
+  //   );
+  //   if (complex.props) {
+  //     const allComplex = await getComplex();
+  //     setComplex([allComplex]);
+  //     setShowModal(false);
+  //   }
+  // };
+
+  const updateComplex = async (props) => {
+    console.log("tes data", props);
+    // console.log("tes data id ",data.id);
+    const response = await api.put(`/complex/${complex.id}`, props);
+    const [id] = response.data;
     console.log(response.data);
     setComplex(
       complex.map((data) => {
-        return data.id === id ? { ...response.data } : data;
+        return data.id === id ? { ...response.data } : props;
       })
     );
     if (response.data) {
@@ -74,9 +107,9 @@ const Complex = () => {
 
   return (
     <div className='flex h-screen bg-secondary-softblue'>
-        <Sidebar />
+     <Sidebar />
         <Navbar />
-      <div className='basis-5/6'>
+      <div className='basis-5/6 pl-6'>
         <div className="px-4 py-4 mt-20">
           <h1 className="text-3xl font-bold mb-1">Complex</h1>
           <h4 className="text-md text-primary-gray">Manage complex</h4>
@@ -88,7 +121,7 @@ const Complex = () => {
               </Button>
             </div>
             {showModal ? (
-              < CreateComplex
+              <CreateComplex
                 handleClose={_handleCloseModal}
                 addComplex={addComplex}
               />
