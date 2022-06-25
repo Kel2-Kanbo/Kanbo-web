@@ -99,7 +99,7 @@ export default function Room() {
               </select>
             </div>
             <div className="w-auto">
-              <Button type="button" style={{ backgroundColor: "blue", color: "white" }} onClick={_handleOpenModal}>
+              <Button type="button" onClick={_handleOpenModal}>
 
                 Create Room
               </Button>

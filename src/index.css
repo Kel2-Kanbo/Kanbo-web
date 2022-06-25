@@ -57,7 +57,7 @@ th,td{
 }
 .link{
   display: flex;
-  color: #4C35E0;
+  /* color: #4C35E0; */
   padding: 10px 15px;
   gap: 15px;
   transition: all 0.5s;
@@ -75,10 +75,13 @@ th,td{
   border-top-left-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
-.icon, .link_text{
-  font-size: 20px;
-  /* color: #000; */
+.active .icon svg{
+  fill: #4C35E0;
 }
+/* .icon, .link_text{
+  font-size: 20px;
+  color: #000;
+}  */
 /* End of Sidebar*/
 
 /* notfound */
