@@ -9,7 +9,8 @@ import NotFound from "./Pages/NotFound";
 import CreateUpdateRoom from "./Pages/CreateUpdateRoom";
 import Register from "./Pages/Register";
 import VerifyEmail from "./Components/VerifyEmail";
-import Building from "./Pages/Building";
+import Building from './Pages/Building';
+import EditComplexPages from './Components/EditComplexPages';
 import ForgotPassword from "./Pages/ForgotPassword";
 import NewPassword from "./Pages/NewPassword";
 import PrivateRoute from "./PrivateRoute";
@@ -27,6 +28,7 @@ function App() {
           <Route path="/new-pw" element={<NewPassword />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/complex" element={<Complex />} />
+          <Route path="/update-complex/:id" element={<EditComplexPages />} />
           <Route path="/building" element={<Building />} />
           <Route path="/room" element={<Room />} />
           {/* <Route path="/createRoom" element={<CreateUpdateRoom />} /> */}

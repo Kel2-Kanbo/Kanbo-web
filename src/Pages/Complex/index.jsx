@@ -82,7 +82,58 @@ const Complex = () => {
     }
   };
 
-  // //update complex
+
+  //update complex
+  // const updateComplex = async (id) => {
+  //   const response = await api.put(`complex/${id}`);
+  //   console.log(response);
+        // const { id } = response.data;
+        // console.log(response.data);
+        // setComplex(
+        //   complex.map((data) => {
+        //     return data.id === id ? { ...response.data } : data;
+        //   })
+        // );
+        // if (response.data) {
+        //   const allComplex = await getComplex();
+        //   setComplex(allComplex);
+        //   setShowModal(false);
+        // }
+  // };
+  // const updateComplex = async (props) => {
+  //   console.log("dataid", complex.props);
+  //   await api.put(`complex/${complex.id}`, props);
+  //   const { id } = complex.props;
+  //   console.log(complex.props);
+  //   setComplex(
+  //     complex.map((props) => {
+  //       return props.id === id ? { ...complex.props } : props;
+  //     })
+  //   );
+  //   if (complex.props) {
+  //     const allComplex = await getComplex();
+  //     setComplex([allComplex]);
+  //     setShowModal(false);
+  //   }
+  // };
+
+  // const updateComplex = async (complex) => {
+  //  console.log("tes data"+ complex);
+    // console.log("tes data id ",data.id);
+  //  const response = await api.put(`/complex/{id}`, complex);
+  //  const [id] = response.complex;
+  //  console.log("tes response", response.complex);
+  //  setComplex(
+  //    complex.map((data) => {
+  //      return data.id === id ? { ...response.data } : complex;
+  //    })
+  //  );
+  //  if (response.data) {
+  //    const allComplex = await getComplex();
+  //    setComplex(allComplex);
+  //    setShowModal(false);
+  
+  // update complex
   const updateComplex = async (data) => {
     try {
       await editComplex(data).then((response) => {
@@ -173,10 +224,10 @@ const Complex = () => {
   }, []);
 
   return (
-    <div className="flex h-screen bg-secondary-softblue">
-      <Sidebar />
-      <Navbar />
-      <div className="basis-5/6">
+    <div className='flex h-screen bg-secondary-softblue'>
+     <Sidebar />
+        <Navbar />
+      <div className='basis-5/6 pl-6'>
         <div className="px-4 py-4 mt-20">
           <h1 className="text-3xl font-bold mb-1">Complex</h1>
           <h4 className="text-md text-primary-gray">Manage complex</h4>

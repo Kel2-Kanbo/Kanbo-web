@@ -85,7 +85,7 @@ export default function Room() {
     <div className='flex h-screen bg-secondary-softblue'>
       <Sidebar />
       <Navbar />
-      <div className="basis-5/6">
+      <div className="basis-5/6 pl-6">
         <div className='px-4 py-4 mt-20'>
           <h1 className="text-3xl font-bold mb-4">Room</h1>
 

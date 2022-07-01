@@ -9,7 +9,23 @@
       "building": "90"
     },
     {
-      "id": "a797df8e-4b6c-4fb2-9280-a0c725d4e8f7",
+      "id": "9ecce465-4975-447b-b3a4-4a032090b209",
+      "complexName": "new complex",
+      "complexAddress": "alamat 1",
+      "city": "City 2",
+      "district": "District 2",
+      "building": "8"
+    },
+    {
+      "id": "3b5efbbf-f91b-4d78-945b-c6bf79f514a4",
+      "complexName": "satu",
+      "complexAddress": "dua",
+      "city": "City 1",
+      "district": "District 2",
+      "building": "1"
+    },
+    {
+      "id": "2488726c-147e-4c41-9a88-f50cb186c063",
       "complexName": "anjel",
       "complexAddress": "lina",
       "city": "City 2",
@@ -17,12 +33,28 @@
       "building": "8"
     },
     {
-      "id": "9ecce465-4975-447b-b3a4-4a032090b209",
-      "complexName": "new complex",
-      "complexAddress": "alamat 1",
+      "id": "8854b58a-0c70-4417-b332-34b09b707d09",
+      "complexName": "Maulana",
+      "complexAddress": "alamat tes",
       "city": "City 2",
       "district": "District 2",
-      "building": "8"
+      "building": "13"
+    },
+    {
+      "id": "776670b8-9bbf-4f8d-a726-ab4e50466c1e",
+      "complexName": "Maulana",
+      "complexAddress": "anjelina",
+      "city": "City 1",
+      "district": "District 1",
+      "building": "12"
+    },
+    {
+      "id": "b5ba2a4a-039f-4289-aec9-f8b612685f66",
+      "complexName": "psrk",
+      "complexAddress": "park residence",
+      "city": "City 3",
+      "district": "District 3",
+      "building": "15"
     }
   ],
   "building": [
