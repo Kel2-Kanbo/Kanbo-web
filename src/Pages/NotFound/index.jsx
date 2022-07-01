@@ -1,22 +1,18 @@
 import React from "react";
-// import Navbar from "../../components/Navbar";
-// import Footer from "../../components/Footer";
-// import ImageNotFound from "../../assets/images/not-found.gif";
+import PageNotFound from "../../Components/pagenotfound.png"
 
 import { Link } from "react-router-dom";
 
 const NotFound = () => {
   return (
     <>
-      {/* <Navbar /> */}
-      <div className="md:container md:mx-auto px-3">
+      <div className=" md:container md:mx-auto mt-6 px-3 ">
         <div>
-          <div >
-            {/* <img
-              src={ImageNotFound}
-              className="img-not-found mt-5"
-              alt="Traveler Images"
-            /> */}
+            <img
+              src={PageNotFound}
+              className=" img-notfound mx-auto"
+              alt="404"
+            />
             <h1 className="text-center title-notfound">
               This page is outside of the Universe
             </h1>
@@ -25,15 +21,13 @@ const NotFound = () => {
               <br />
               Try going back to our homepage.
             </p>
-            <p className="text-center">
-              <Link to="/" className="btn-notfound">
-                Back
+            <p className="text-center text-secondary-red hover:text-primary-blue ">
+              <Link to="/dashboard" className="">
+                Back to Dashboard
               </Link>
             </p>
-          </div>
         </div>
       </div>
-      {/* <Footer /> */}
     </>
   );
 };
