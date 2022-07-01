@@ -1,51 +1,73 @@
-import styled from "@emotion/styled";
-import Axios from "axios";
 import React, { useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
 
-import FormInput from '../FormInput'
+import FormInput from '../FormInput';
+import SelectWrap from '../SelectWrap';
+import FormWrap from '../FormWrap';
+import Button from "../Button";
 
-export default function CreateBuilding() {
-  const [showModal, setShowModal] = useState(false);
+export default function CreateBuilding(props) {
+  const [showModal, setShowModal] = useState(true);
+  const {handleClose, addBuilding} = props
 
   const [data, setData] = useState({
-    officeName: "",
-    officeAddress: "",
-    officeComplex: "",
+    buildingName: "",
+    complexName: "",
+    address: "",
+    jumlahRoom: "",
     description: "",
+    picture: "",
   });
-  const [msg, setMsg] = useState("")
+
+  const [msg, setMsg] = useState("");
 
   const [inputs, setInputs] = useState([
     {
       id: 0,
-      name: "officeName",
+      name: "buildingName",
       type: "text",
-      placeholder: "Office Name",
+      placeholder: "Building Name",
       value: "",
       required: true,
     },
     {
       id: 1,
-      name: "officeAddress",
+      name: "complexName",
+      type: "select",
+      placeholder: "Complex Name",
+      options: ["Complex 1", "Complex 2", "Complex 3"],
+      value: "",
+      required: true,
+    },
+    {
+      id: 2,
+      name: "address",
       type: "text",
       placeholder: "Address",
       value: "",
       required: true,
     },
     {
-      id: 2,
-      name: "officeComplex",
-      type: "select",
-      placeholder: "Complex",
-      options: ["Complex 1", "Complex 2", "Complex 3"],
+      id: 3,
+      name: "jumlahRoom",
+      type: "number",
+      placeholder: "Jumlah Room",
       value: "",
       required: true,
     },
     {
-      id: 3,
+      id: 4,
       name: "description",
       type: "textarea",
       placeholder: "Description",
+      value: "",
+      required: true,
+    },
+    {
+      id: 5,
+      name: "picture",
+      type: "text",
+      placeholder: "Picture",
       value: "",
       required: true,
     },
@@ -63,55 +85,150 @@ export default function CreateBuilding() {
         return input;
       })
     );
-
-    setData({
+      setData({
       ...data,
-      [inputs[index].name]: value,
+      [inputs[index].name]:value,
     });
   };
 
-  const _handleCreateBuilding = async (e) => {
-    if (data.officeAddress && data.officeName && data.officeComplex && data.description) {
-      try {
-        await Axios.post("http://localhost:3000/api/buildings", {
-          address: data.officeAddress,
-          officeName: data.officeName,
-          complex: data.officeComplex,
-          description: data.description,
+  
+
+  const _handleCreateBuilding = (e) => {
+    if (
+      inputs[0].value && 
+      inputs[1].value && 
+      inputs[2].value && 
+      inputs[3].value && 
+      inputs[4].value && 
+      inputs[5].value
+      ) {
+        addBuilding({
+          id: uuidv4(),
+          buildingName: inputs[0].value,
+          complexName: inputs[1].value,
+          address: inputs[2].value,
+          jumlahRoom: inputs[3].value,
+          description: inputs[4].value,
+          picture: inputs[5].value,
         });
-        alert("Building Created");
-      } catch (error) {
-        if (error.response) {
-          setMsg(error.response.data.msg);
-        }
-      }
+      alert("Building Created");
       e.preventDefault();
 
-      setData({
-        officeName: "",
-        officeAddress: "",
-        officeComplex: "",
-        description: "",
-      })
+      setInputs([
+        {
+          id: 0,
+          name: "buildingName",
+          type: "text",
+          placeholder: "Building Name",
+          value: "",
+          required: true,
+        },
+        {
+          id: 1,
+          name: "complexName",
+          type: "select",
+          placeholder: "Complex Name",
+          options: ["Complex 1", "Complex 2", "Complex 3"],
+          value: "",
+          required: true,
+        },
+        {
+          id: 2,
+          name: "address",
+          type: "text",
+          placeholder: "Address",
+          value: "",
+          required: true,
+        },
+        {
+          id: 3,
+          name: "jumlahRoom",
+          type: "number",
+          placeholder: "Jumlah Room",
+          value: "",
+          required: true,
+        },
+        {
+          id: 4,
+          name: "description",
+          type: "textarea",
+          placeholder: "Description",
+          value: "",
+          required: true,
+        },
+        {
+          id: 5,
+          name: "picture",
+          type: "text",
+          placeholder: "Picture",
+          value: "",
+          required: true,
+        },
+      ]);
       setShowModal(false);
     } else {
       setMsg("Please fill out all fields");
     }
   };
 
+  const _handleClose = () => {
+    handleClose();
+    setInputs([
+      {
+        id: 0,
+        name: "buildingName",
+        type: "text",
+        placeholder: "Building Name",
+        value: "",
+        required: true,
+      },
+      {
+        id: 1,
+        name: "complexName",
+        type: "select",
+        placeholder: "Complex Name",
+        options: ["Complex 1", "Complex 2", "Complex 3"],
+        value: "",
+        required: true,
+      },
+      {
+        id: 2,
+        name: "address",
+        type: "text",
+        placeholder: "Address",
+        value: "",
+        required: true,
+      },
+      {
+        id: 3,
+        name: "jumlahRoom",
+        type: "number",
+        placeholder: "Jumlah Room",
+        value: "",
+        required: true,
+      },
+      {
+        id: 4,
+        name: "description",
+        type: "textarea",
+        placeholder: "Description",
+        value: "",
+        required: true,
+      },
+        {
+        id: 5,
+        name: "picture",
+        type: "text",
+        placeholder: "Picture",
+        value: "",
+        required: true,
+      },
+    ]);
+  };
+
   return (
-    <>
-      <button
-        className={`mr-1 mb-1 ${showModal ? "opacity-50" : " opacity-100"
-          } `}
-        type="button"
-        onClick={() => setShowModal(true)}
-      >
-        Create Building
-      </button>
-      {showModal ? (
         <>
-          <CreateWrap onSubmit={_handleCreateBuilding}>
+          <FormWrap onSubmit={_handleCreateBuilding}>
             <h3 className="text-2xl text-center font-bold">
               Create Building
             </h3>
@@ -130,10 +247,12 @@ export default function CreateBuilding() {
               ) : input.type === "select" ? (
                 <>
                   <SelectWrap
+                    key={inputIdx}
                     type={input.type}
                     onChange={(e) => _handleChange(e.target.value, inputIdx)}
+                    value={input.value}
                   >
-                    <option value="">Complex</option>
+                    <option value="">Complex Option</option>
                     {input.options.map((option, optionIdx) => (
                       <option key={optionIdx} value={option}>
                         {option}
@@ -148,7 +267,8 @@ export default function CreateBuilding() {
                     key={inputIdx}
                     value={input.value}
                     type={input.type}
-                    onChange={(e) => _handleChange(e.target.value, inputIdx)}></textarea>
+                    onChange={(e) => _handleChange(e.target.value, inputIdx)}>
+                  </textarea>
                 </>
               ) : (
                 ""
@@ -156,55 +276,22 @@ export default function CreateBuilding() {
             )}
 
             <div className="flex justify-between w-full text-primary-white">
-              <button
+              <Button
                 className="font-bold bg-error-red uppercase px-6 py-3 text-sm rounded shadow mr-1 mb-1"
                 type="button"
-                onClick={() => setShowModal(false)}
+                onClick={_handleClose}
               >
                 Close
-              </button>
-              <button
+              </Button>
+              <Button
                 className="bg-primary-blue font-bold uppercase text-sm px-6 py-3 rounded shadow mr-1 mb-1"
                 type="button"
                 onClick={_handleCreateBuilding}
               >
                 Submit
-              </button>
+              </Button>
             </div>
-          </CreateWrap>
+          </FormWrap>
         </>
-      ) : null}
-    </>
   );
 }
-
-const SelectWrap = styled.select`
-  width: 100%;
-  border: 2px solid black;
-  border-radius: 8px;
-  padding: 10px;
-`;
-
-const CreateWrap = styled.div`
-  background-color: #fff;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
-  row-gap: 20px;
-  border: 1px solid black;
-  border-radius: 10px;
-  align-items: center;
-  padding: 24px;
-  width: 40%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  .textarea{
-    width: 100%;
-    height: 100%;
-    border: 2px solid black;
-    border-radius: 8px;
-    padding: 10px;
-  }
-`;

@@ -77,15 +77,15 @@ const Complex = () => {
   //   }
   // };
 
-  const updateComplex = async (props) => {
-    console.log("tes data", props);
+  const updateComplex = async (complex) => {
+    console.log("tes data"+ complex);
     // console.log("tes data id ",data.id);
-    const response = await api.put(`/complex/${complex.id}`, props);
-    const [id] = response.data;
-    console.log(response.data);
+    const response = await api.put(`/complex/{id}`, complex);
+    const [id] = response.complex;
+    console.log("tes response", response.complex);
     setComplex(
       complex.map((data) => {
-        return data.id === id ? { ...response.data } : props;
+        return data.id === id ? { ...response.data } : complex;
       })
     );
     if (response.data) {

@@ -1,35 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from '../../Components/Logo';
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import Axios from "axios";
 import FormInput from '../../Components/FormInput';
 import Button from '../../Components/Button';
 import Background from '../../Assets/Admin.png'
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
-// import styled, { css } from 'styled-components';
-// import axios from 'axios';
+import Swal from "sweetalert2";
+// import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
     const navigate = useNavigate();
-    // const [msg, setMsg] = useState('');
-    // const history = useHistory();
 
-    // const Auth = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         await axios.post('http://localhost:5000/login', {
-    //             email: email,
-    //             password: password
-    //         });
-    //         history.push("/dashboard");
-    //     } catch (error) {
-    //         if (error.response) {
-    //             setMsg(error.response.data.msg);
-    //         }
-    //     }
-    // }
-
+    const [isEmptyEmail, setIsEmptyEmail] = useState(true);
+    const [isEmptyPassword, setIsEmptyPassword] = useState(true);
     const [inputs, setInputs] = useState([
         {
             id: 0,
@@ -47,8 +32,8 @@ export default function Login() {
             pattern: "^[A-Za-z0-9]{6,12}$",
             err: 'Must contain at least 6 or more characters',
         },
-    ])
-
+    ]);
+    const [msg, setMsg] = useState("");
     const [isPasswordShown, setIsPasswordShown] = useState(false);
     const handleClickPassword = () => {
         setIsPasswordShown(!isPasswordShown);
@@ -61,16 +46,57 @@ export default function Login() {
         newInputsArr[index] = newInputs;
         setInputs(newInputsArr);
     }
-    const onLogin = (e) => {
+    const onLogin = async (e) => {
         e.preventDefault();
-        navigate("/dashboard")
+        if (inputs[0].value && inputs[1].value) {
+            const data = {
+                password: inputs[1].value,
+                username: inputs[0].value,
+            }
+            try {
+                await Axios.post("http://3.88.14.239/api/auth/signin", data).then(response => console.log(response));
+            }
+            catch (error) {
+                if (error.response) {
+                    setMsg(error.response.data.msg)
+                }
+            }
+            finally {
+                Swal.fire({
+                    title: "Login Success",
+                    // text: `You `,
+                    confirmButtonColor: "#4C35E0",
+                    // confirmButtonText: "Ok!",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        navigate("/dashboard");
+                    }
+                });
+            }
+        } else {
+            setIsEmptyEmail(true);
+            setIsEmptyPassword(true);
+        }
     }
 
     const backgroundImage = {
         backgroundImage: `url(${Background})`,
         backgroundSize: "100% 100%",
     };
+    useEffect(() => {
+        if (!inputs[0].value) {
+            setIsEmptyEmail(false);
+        } else {
+            setIsEmptyEmail(true);
+        }
+        if (!inputs[1].value) {
+            setIsEmptyPassword(false);
+        } else {
+            setIsEmptyPassword(true);
+        }
 
+    }, [inputs]);
+    // console.log(isEmptyEmail);
     return (
         <LoginWrap style={backgroundImage}>
             <div className='flex h-screen'>
@@ -80,11 +106,11 @@ export default function Login() {
                     <div className='flex justify-center mb-4'>
                         <Logo />
                     </div>
-                    {/* <div>
+                    <div>
                         <h1 style={{
-                            textAlign: 'center',
-                        }} className="py-2">Masuk sebagai admin!</h1>
-                    </div> */}
+                            textAlign: 'start',
+                        }} className="py-2 text-primary-gray">login as admin!</h1>
+                    </div>
 
                     <div>
                         {
@@ -100,9 +126,17 @@ export default function Login() {
                                         required
                                         onChange={(e) => handleChange(e.target.value, inputIdx)}
                                     />
-                                    <p className='my-2 invisible peer-invalid:visible text-primary-red text-sm'>
-                                        {/* {input.err} */}
-                                    </p>
+                                    {
+                                        input.type === "email" ? <p className={`my-2 ${isEmptyEmail ? "peer-invalid:visible text-primary-red invisible" : "invisible"}  text-sm`}>
+                                            {input.err}
+                                        </p> : null
+                                    }
+                                    {
+                                        input.type === "password" ? <p className={`my-2 ${isEmptyPassword ? "peer-invalid:visible text-primary-red invisible" : "invisible"} text-sm`}>
+                                            {input.err}
+                                        </p> : null
+                                    }
+
                                 </div>
                             ))
                         }

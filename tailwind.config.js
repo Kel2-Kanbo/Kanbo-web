@@ -40,9 +40,9 @@ module.exports = {
         blackThin: "#5C5C5C",
         red: "#FF3030",
         pink: "#FFB6B6",
-        green: "#53D425"
+        green: "#53D425",
       },
-    }
+    },
   },
   plugins: [],
 }
