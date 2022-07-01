@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { AiOutlinePlus } from "react-icons/ai";
 import Swal from "sweetalert2";
 
+import { createNearby } from "../../API/ApiFetch";
 import FormInput from "../FormInput";
 import SelectWrap from "../SelectWrap";
 import FormWrap from "../FormWrap";
@@ -11,10 +12,29 @@ import FormTextArea from "../FormTextArea";
 
 export default function CreateBuilding(props) {
   const [showModal, setShowModal] = useState(true);
-  const { handleClose, addBuilding, getComplex } = props;
+  const { handleClose, addBuilding, complex } = props;
 
-  const [complexName, setComplexName] = useState(getComplex);
-  console.log(complexName);
+  const complexName = complex?.map((item) => {
+    return { 
+      value: item.complex_name,
+      id: item.complex_id,
+    };
+  });
+
+  const complex_name = new Array(complexName.length);
+  for (let i = 0; i < complexName.length; i++) {
+    complex_name[i] = complexName[i].value;
+  }
+
+  const createNearbyFacilities = async (data) => {
+    try {
+      await createNearby(data).then((response) => {
+        console.log(response);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const [data, setData] = useState({
     buildingName: "",
@@ -41,7 +61,7 @@ export default function CreateBuilding(props) {
       name: "complexName",
       type: "select",
       placeholder: "Complex Name",
-      options: ["Complex 1", "Complex 2", "Complex 3"],
+      options: complex_name,
       value: "",
       required: true,
     },
@@ -94,7 +114,7 @@ export default function CreateBuilding(props) {
       type: "time",
       placeholder: "Time",
       value: "",
-      required: true,
+      // required: true,
     },
     {
       id: 3,
@@ -103,7 +123,7 @@ export default function CreateBuilding(props) {
       placeholder: "Category",
       options: ["Hospital", "Bank", "Mall"],
       value: "",
-      required: true,
+      // required: true,
     },
   ]);
 
@@ -173,7 +193,7 @@ export default function CreateBuilding(props) {
     ) {
       addBuilding({
         id: uuidv4(),
-        buildingName: inputs[0].value,
+        name: inputs[0].value,
         complexName: inputs[1].value,
         address: inputs[2].value,
         jumlahRoom: inputs[3].value,
@@ -227,6 +247,63 @@ export default function CreateBuilding(props) {
         },
       ]);
       setShowModal(false);
+    } else {
+      setMsg("Please fill out all fields");
+    }
+  };
+
+  const _handleCreateNearby = (e) => {
+    if (
+      nearby[0].value &&
+      nearby[1].value &&
+      nearby[2].value &&
+      nearby[3].value
+    ) {
+      createNearbyFacilities({
+        building_id: data.id,
+        name: nearby[0].value,
+        description: nearby[1].value,
+        time: nearby[2].value,
+        category: nearby[3].value,
+      });
+
+      e.preventDefault();
+
+      setNearby([
+        {
+          id: 0,
+          name: "facility",
+          type: "text",
+          placeholder: "Facility",
+          value: "",
+          required: true,
+        },
+        {
+          id: 1,
+          name: "distance",
+          type: "text",
+          placeholder: "Distance",
+          value: "",
+          required: true,
+        },
+        {
+          id: 2,
+          name: "time",
+          type: "time",
+          placeholder: "Time",
+          value: "",
+          // required: true,
+        },
+        {
+          id: 3,
+          name: "category",
+          type: "select",
+          placeholder: "Category",
+          options: ["Hospital", "Bank", "Mall"],
+          value: "",
+          // required: true,
+        },
+      ]);
     } else {
       setMsg("Please fill out all fields");
     }
@@ -331,7 +408,7 @@ export default function CreateBuilding(props) {
 
         <div className="w-full flex justify-between">
           <h4 className="text-md font-bold">Nearby facilities</h4>
-          <button>
+          <button onClick={_handleCreateNearby}>
             <AiOutlinePlus />
           </button>
         </div>

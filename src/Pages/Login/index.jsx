@@ -58,31 +58,28 @@ export default function Login() {
         await AuthLogin(data).then((response) => {
           console.log(response);
         });
-
-        // const config = { headers: { "Content-Type": "application/json" } };
-        // await Axios.post(
-        //   "http://3.88.14.239/api/auth/signin",
-        //   data,
-        //   config
-        // ).then((response) => {
-        //   console.log(response);
-        //   console.log(response.data);
-        // });
       } catch (error) {
         if (error.response) {
           setMsg(error.response.data.msg);
+          Swal.fire({
+            title: "Akun tidak terdaftar",
+            text: "Kembali ke halaman login",
+            confirmButtonText: "Ok",
+          });
         }
       } finally {
-        Swal.fire({
-          title: "Login Success",
-          // text: `You `,
-          confirmButtonColor: "#4C35E0",
-          // confirmButtonText: "Ok!",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            navigate("/dashboard");
-          }
-        });
+        if (msg === "") {
+          Swal.fire({
+            title: "Login Success",
+            // text: `You `,
+            confirmButtonColor: "#4C35E0",
+            // confirmButtonText: "Ok!",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              navigate("/dashboard");
+            }
+          });
+        }
       }
     } else {
       setIsEmptyEmail(true);
@@ -146,6 +143,16 @@ export default function Login() {
                   required
                   onChange={(e) => handleChange(e.target.value, inputIdx)}
                 />
+
+                {input.type === "password" && (
+                  <button
+                    className="-mt-12 h-8 -ml-12"
+                    onClick={handleClickPassword}
+                  >
+                    {isPasswordShown ? <AiFillEyeInvisible /> : <AiFillEye />}
+                  </button>
+                )}
+
                 {input.type === "email" ? (
                   <p
                     className={`my-2 ${
@@ -170,11 +177,6 @@ export default function Login() {
                 ) : null}
               </div>
             ))}
-            {/* <button
-                            className='show-password -mt-12 h-8 lg:-mr-72 md:-mr-32 sm:-mr-56'
-                            onClick={handleClickPassword}>
-                            {isPasswordShown ? <AiFillEyeInvisible /> : <AiFillEye />}
-                        </button> */}
 
             <div
               style={{
