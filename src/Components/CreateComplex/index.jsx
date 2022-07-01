@@ -7,7 +7,7 @@ import FormWrap from "../FormWrap";
 import Button from "../Button";
 
 export default function CreateComplex(props) {
-  const { handleClose, addComplex } = props
+  const { handleClose, addComplex, city, district } = props
 
   const [data, setData] = useState({
     complexName: "",
@@ -17,6 +17,20 @@ export default function CreateComplex(props) {
     building: "",
   });
   const [msg, setMsg] = useState("");
+
+  const cityName = city?.map((item) => {
+    return {
+      value: item.name,
+      id: item.id
+    }
+  })
+  const city_name = new Array(cityName.length);
+  for (let i = 0; i < cityName.length; i++) {
+    city_name[i] = cityName[i].value;
+  }
+
+  console.log(city_name);
+  console.log(city);
 
   const [inputs, setInputs] = useState([
     {
@@ -40,7 +54,7 @@ export default function CreateComplex(props) {
       name: "city",
       type: "select",
       placeholder: "City",
-      options: ["City 1", "City 2", "City 3"],
+      options: city_name,
       value: "",
       required: true,
     },

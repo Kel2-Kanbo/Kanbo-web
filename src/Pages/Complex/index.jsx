@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from "react";
-import api from "../../API/Complex";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
+import {
+  getComplex,
+  createComplex,
+  deleteComplex,
+  editComplex,
+  getCity,
+  getDistrict,
+} from "../../API/ApiFetch";
 import Button from "../../Components/Button";
-import CreateComplex from "../../Components/CreateComplex";
+// import CreateComplex from "../../Components/CreateComplex";
+import CreateComplex from "./CreateComplex";
 import Navbar from "../../Components/Navbar";
 import Sidebar from "../../Components/Sidebar";
 import TableComplex from "../../Components/TableComplex";
@@ -10,7 +20,9 @@ import TableComplex from "../../Components/TableComplex";
 const Complex = () => {
   const [showModal, setShowModal] = useState(false);
   const [complex, setComplex] = useState([]);
-  // console.log(complex);
+  const [city, setCity] = useState([]);
+  const [district, setDistrict] = useState([]);
+  console.log(complex);
 
   const _handleOpenModal = () => {
     setShowModal(true);
@@ -20,28 +32,56 @@ const Complex = () => {
   };
 
   //get complex data from the server
-  const getComplex = async () => {
-    const response = await api.get("/complex");
-    return response.data;
+  const getComplexes = async () => {
+    try {
+      await getComplex().then((response) => {
+        setComplex(response);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  //add complex
+  // //add complex
   const addComplex = async (data) => {
-    const response = await api.post("/complex", data);
-    if (response.data) {
-      setComplex([...complex, response.data]);
-      setShowModal(false);
+    try {
+      await createComplex(data).then((response) => {
+        console.log(response);
+        setComplex([...complex, response.data]);
+      });
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data.msg);
+      }
+    } finally {
+      Swal.fire({
+        title: "Create Complex Success",
+        // text: `You `,
+        confirmButtonColor: "#4C35E0",
+        // confirmButtonText: "Ok!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setComplex([...complex, data]);
+          setShowModal(false);
+        }
+      });
     }
   };
 
-  //remove complex
+  // //remove complex
   const removeComplex = async (id) => {
-    const response = await api.delete(`/complex/${id}`);
-    if (response.data) {
-      alert("Complex has been deleted");
-      setComplex(complex.filter((item) => item.id !== id));
+    try {
+      await deleteComplex(id).then((response) => {
+        console.log(response);
+        setComplex(complex.filter((complex) => complex.id !== id));
+      });
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data.msg);
+      }
     }
   };
+
 
   //update complex
   // const updateComplex = async (id) => {
@@ -77,32 +117,110 @@ const Complex = () => {
   //   }
   // };
 
-  const updateComplex = async (complex) => {
-    console.log("tes data"+ complex);
+  // const updateComplex = async (complex) => {
+  //  console.log("tes data"+ complex);
     // console.log("tes data id ",data.id);
-    const response = await api.put(`/complex/{id}`, complex);
-    const [id] = response.complex;
-    console.log("tes response", response.complex);
-    setComplex(
-      complex.map((data) => {
-        return data.id === id ? { ...response.data } : complex;
-      })
-    );
-    if (response.data) {
-      const allComplex = await getComplex();
-      setComplex(allComplex);
-      setShowModal(false);
+  //  const response = await api.put(`/complex/{id}`, complex);
+  //  const [id] = response.complex;
+  //  console.log("tes response", response.complex);
+  //  setComplex(
+  //    complex.map((data) => {
+  //      return data.id === id ? { ...response.data } : complex;
+  //    })
+  //  );
+  //  if (response.data) {
+  //    const allComplex = await getComplex();
+  //    setComplex(allComplex);
+  //    setShowModal(false);
+  
+  // update complex
+  const updateComplex = async (data) => {
+    try {
+      await editComplex(data).then((response) => {
+        console.log(response);
+        setComplex(complex.map((item) => (item.id === data.id ? data : item)));
+      });
+
+      // if (response.status === 200) {
+      //   const allBuilding = await getBuilding();
+      //   setComplex(allBuilding);
+      // }
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data.msg);
+      }
+    } finally {
+      Swal.fire({
+        title: "Update Building Success",
+        // text: `You `,
+        confirmButtonColor: "#4C35E0",
+        // confirmButtonText: "Ok!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setComplex(
+            complex.map((item) => (item.id === data.id ? data : item))
+          );
+          setShowModal(false);
+        }
+      });
     }
   };
 
+  const getCities = async () => {
+    try {
+      await getCity().then((response) => {
+        setCity(response);
+        console.log(response)
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // const getDistricts = async () => {
+  //   try {
+  //     await getDistrict().then((response) => {
+  //       setDistrict(response);
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   useEffect(() => {
     const getAllComplex = async () => {
-      const allComplex = await getComplex();
+      const allComplex = await getComplexes();
       if (allComplex) {
         setComplex(allComplex);
       }
     };
     getAllComplex();
+
+    // const getAllCity = async () => {
+    //   const allCity = await getCities()
+    //   if(allCity) {
+    //     setCity(allCity)
+    //   }
+    // };
+    // getAllCity();
+
+    // const getAllDistrict = async () => {
+    //   const allDistrict = await getDistricts();
+    //   if (allDistrict) {
+    //     setDistrict(allDistrict);
+    //   }
+    // };
+    // getAllDistrict();
+  }, []);
+
+  useEffect(() => {
+    const getAllCity = async () => {
+      const allCity = await getCities();
+      if (allCity) {
+        setCity(allCity);
+      }
+    };
+    getAllCity();
   }, []);
 
   return (
@@ -115,17 +233,23 @@ const Complex = () => {
           <h4 className="text-md text-primary-gray">Manage complex</h4>
           <div className="flex justify-end">
             <div className="w-auto">
-              <Button type="button" className="bg-primary-blue text-primary-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-                onClick={_handleOpenModal}>
+              <Link to="/create-complex">
+              <Button
+                type="button"
+                className="bg-primary-blue text-primary-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+              >
                 Create Complex
               </Button>
+                </Link>
             </div>
-            {showModal ? (
-              <CreateComplex
+            {/* {showModal ? (
+              < CreateComplex
                 handleClose={_handleCloseModal}
                 addComplex={addComplex}
+                city={city}
+                district={district}
               />
-            ) : null}
+            ) : null} */}
           </div>
           <div className="bg-primary-white items-center rounded mt-4">
             <TableComplex
@@ -136,7 +260,7 @@ const Complex = () => {
           </div>
         </div>
       </div>
-    </div >
-  )
-}
+    </div>
+  );
+};
 export default Complex;
