@@ -47,6 +47,14 @@
       "city": "City 1",
       "district": "District 1",
       "building": "12"
+    },
+    {
+      "id": "b5ba2a4a-039f-4289-aec9-f8b612685f66",
+      "complexName": "psrk",
+      "complexAddress": "park residence",
+      "city": "City 3",
+      "district": "District 3",
+      "building": "15"
     }
   ],
   "building": [
