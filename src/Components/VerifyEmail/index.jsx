@@ -2,10 +2,9 @@ import React from 'react';
 import Logo from '../Logo';
 import styled from '@emotion/styled';
 import background from '../../Assets/Admin.png'
+import { Link } from 'react-router-dom';
 
-const VerifyEmail = () => {
-
-
+const VerifyEmail = () => {  
     const backgroundImage = {
         backgroundImage: `url(${background})`,
         backgroundSize: "100% 100%",
@@ -31,6 +30,7 @@ const VerifyEmail = () => {
                     className="my-5">
                     Your entered <b>yaya@gmail.com</b> as the email address for your account. You will need to verify you email to complete registration
                 </p>
+                <Link to="/"><h2 className='cursor-pointer text-lg font-bold text-center'>Login</h2></Link>
 
                 <div style={{ textAlign: "center" }}>
                     <p className="mt-5">Did not receive the email? Check your spam folder</p>

@@ -94,7 +94,7 @@ export default function TableBuilding(props) {
                       {building.address}
                     </td>
                     <td className="text-base text-textColor-blackThin   whitespace-nowrap">
-                      {building.jumlahRoom}
+                      {building.numOfRooms}
                     </td>
                     <td className="text-base text-textColor-blackThin   whitespace-nowrap">
                       {building.description}
