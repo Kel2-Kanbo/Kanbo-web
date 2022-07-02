@@ -13,7 +13,7 @@ import { AuthRegister } from "../../API/APIAuth";
 
 export default function Register() {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
-  const _handleClickPassword = () => {
+  const handleClickPassword = () => {
     setIsPasswordShown(!isPasswordShown);
   };
 
@@ -130,34 +130,28 @@ export default function Register() {
       try {
         await AuthRegister(data).then((response) => {
           console.log(response);
-          if (response.status === 200) {
+          if (response) {
             Swal.fire({
               title: "Register Success",
-              // text: `You `,
               confirmButtonColor: "#4C35E0",
-              // confirmButtonText: "Ok!",
             }).then((result) => {
               if (result.isConfirmed) {
                 navigate("/verify", { state: { data } });
               }
             });
           }
-          if (response.status === 400) {
-            Swal.fire({
-              title: "Register Failed",
-              text: `${response.message}`,
-              confirmButtonColor: "#4C35E0",
-              // confirmButtonText: "Ok!",
-            }).then((result) => {
-              if (result.isConfirmed) {
-                navigate("/register");
-              }
-            });
-          }
         });
       } catch (error) {
         if (error.response) {
-          setMsg(error.response);
+          Swal.fire({
+            title: "Register Failed",
+            text: error.response.data.message,
+            confirmButtonColor: "#4C35E0",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              navigate("/register");
+            }
+          });
         }
       }
     } else {
@@ -218,6 +212,15 @@ export default function Register() {
                 {input.err}
               </p>
             ) : null}
+
+            {input.type === "password" && (
+              <span
+                className="w-full flex items-center justify-end -mt-10 h-10 -ml-4"
+                onClick={handleClickPassword}
+              >
+                {isPasswordShown ? <AiFillEyeInvisible /> : <AiFillEye />}
+              </span>
+            )}
             {input.name === "username" ? (
               <p
                 className={`my-2 ${
@@ -263,7 +266,12 @@ export default function Register() {
         </button> */}
         {/* <span className="text-black">{error}</span> */}
 
-        <Button onClick={_handleRegister}>Register</Button>
+        <Button
+          onClick={_handleRegister}
+          className="bg-primary-blue text-secondary-softblue"
+        >
+          Register
+        </Button>
         <p className="text-sm text-center mt-4">
           Have an account?{" "}
           <Link to="/" className="font-bold text-primary-blue">
