@@ -3,18 +3,13 @@ import React, { useState } from "react";
 import EditComplex from "../EditComplex";
 import ButtonIconDelete from "../ButtonIconDelete";
 import ButtonIconEdit from "../ButtonIconEdit";
+import UpdateComplex from "../../Pages/Complex/UpdateComplex";
+import { Link } from "react-router-dom";
 
 export default function TableComplex(props) {
   const { complex, removeComplex, updateComplex } = props;
-  // console.log(complex)
-  const [showModalEdit, setShowModalEdit] = useState(false);
-
-  const _handleOpenModalEdit = () => {
-    updateComplex(complex.id);
-    setShowModalEdit(true);
-  }
-  const _handleCloseModalEdit = () => {
-    setShowModalEdit(false);
+  const setDataComplex = (complex) => {
+    console.log(complex);
   }
 
   let angka = 0;
@@ -69,11 +64,14 @@ export default function TableComplex(props) {
                   >
                     Actions
                   </th>
-                </tr >
-              </thead >
+                </tr>
+              </thead>
               <tbody>
                 {complex?.map((complex, complexIdx) => (
-                  <tr key={complexIdx} className="odd:bg-secondary-softblue text-primary-gray">
+                  <tr
+                    key={complexIdx}
+                    className="odd:bg-secondary-softblue text-primary-gray"
+                  >
                     <td className="px-6 py-4 whitespace-no-wrap">
                       {(angka = angka + 1)}
                     </td>
@@ -93,10 +91,15 @@ export default function TableComplex(props) {
                       {complex.numOfBuilding}
                     </td>
                     <td className="flex justify-center gap-8 px-6 py-4 whitespace-nowrap">
-                      <button onClick={_handleOpenModalEdit}>
-                        <ButtonIconEdit
-                          
-                        />
+                      <button>
+                        <Link
+                          to= {`/update-complex/${complex.id}`}
+                          state={{complex}}
+                          key={complexIdx}
+                          onClick={() => setDataComplex(complex)}
+                        >
+                          <ButtonIconEdit />
+                        </Link>
                       </button>
                       <button onClick={() => removeComplex(complex.id)}>
                         <ButtonIconDelete />
@@ -105,17 +108,17 @@ export default function TableComplex(props) {
                   </tr>
                 ))}
               </tbody>
-            </table >
-            {showModalEdit ? (
+            </table>
+            {/* {showModalEdit ? (
               <EditComplex
                 handleClose={_handleCloseModalEdit}
                 updateComplex={updateComplex}
                 complex={complex}
               />
-            ) : null}
-          </div >
-        </div >
-      </div >
-    </div >
+            ) : null} */}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

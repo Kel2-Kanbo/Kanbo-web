@@ -56,28 +56,21 @@ export default function Login() {
       };
       try {
         await AuthLogin(data).then((response) => {
-          console.log(response);
+          if (response) {
+            Swal.fire({
+              title: "Login Success",
+              confirmButtonColor: "#4C35E0",
+            });
+            navigate("/dashboard");
+          }
         });
       } catch (error) {
         if (error.response) {
-          setMsg(error.response.data.msg);
+          setMsg(error.response.data.message);
           Swal.fire({
-            title: "Akun tidak terdaftar",
-            text: "Kembali ke halaman login",
-            confirmButtonText: "Ok",
-          });
-        }
-      } finally {
-        if (msg === "") {
-          Swal.fire({
-            title: "Login Success",
-            // text: `You `,
+            title: "Account not found",
+            text: error.response.data.message,
             confirmButtonColor: "#4C35E0",
-            // confirmButtonText: "Ok!",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              navigate("/dashboard");
-            }
           });
         }
       }
@@ -145,12 +138,12 @@ export default function Login() {
                 />
 
                 {input.type === "password" && (
-                  <button
-                    className="-mt-12 h-8 -ml-12"
+                  <span
+                    className="w-full flex items-center justify-end -mt-10 h-10 -ml-4"
                     onClick={handleClickPassword}
                   >
                     {isPasswordShown ? <AiFillEyeInvisible /> : <AiFillEye />}
-                  </button>
+                  </span>
                 )}
 
                 {input.type === "email" ? (
@@ -191,7 +184,7 @@ export default function Login() {
               className="rounded
                                 w-full
                                 border-1
-                                bg-stone-500"
+                                bg-primary-blue text-secondary-softblue"
               type="submit"
             >
               Login

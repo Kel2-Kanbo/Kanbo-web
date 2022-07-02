@@ -1,18 +1,14 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
+import Button from "../Button";
 import ButtonIconDelete from "../ButtonIconDelete";
 import ButtonIconEdit from "../ButtonIconEdit";
 
 export default function TableBuilding(props) {
   const { building, removeBuilding, updateBuilding } = props;
-  const [showModalEdit, setShowModalEdit] = useState(false);
-
-  const _handleCloseModalEdit = () => {
-    setShowModalEdit(false);
-  };
-
-  const _handleOpenModalEdit = () => {
-    setShowModalEdit(true);
+  const setDataBuilding = (building) => {
+    console.log(building);
   };
 
   let angka = 0;
@@ -76,8 +72,11 @@ export default function TableBuilding(props) {
                 </tr>
               </thead>
               <tbody>
-                {building?.map((building) => (
-                  <tr className="odd:bg-secondary-softblue text-primary-gray">
+                {building?.map((building, buildingIdx) => (
+                  <tr
+                    key={buildingIdx}
+                    className="odd:bg-secondary-softblue text-primary-gray"
+                  >
                     <td className="text-base text-textColor-blackThin   whitespace-nowrap">
                       {(angka += 1)}
                     </td>
@@ -100,21 +99,20 @@ export default function TableBuilding(props) {
                       {building.description}
                     </td>
                     <td className="flex items-center justify-around whitespace-nowrap">
-                      <button onClick={_handleOpenModalEdit}>
-                        <ButtonIconEdit
-                        // onClick={() => updateBuilding(building)}
-                        />
-                        {/* {showModalEdit ? (
-                          <EditBuilding
-                            handleClose={_handleCloseModalEdit}
-                            updateComplex={updateBuilding}
-                            building={building}
-                          />
-                        ) : null} */}
-                      </button>
+                      <Button>
+                        <Link
+                          to={`/update-building/${building.id}`}
+                          state={{ building }}
+                          key={buildingIdx}
+                          onClick={() => setDataBuilding(building)}
+                        >
+                          <ButtonIconEdit />
+                        </Link>
+                      </Button>
                       <button
                         onClick={() => removeBuilding(building.id)}
-                        className="px-2 py-4">
+                        className="px-2 py-4"
+                      >
                         <ButtonIconDelete />
                       </button>
                     </td>

@@ -16,6 +16,8 @@ import NewPassword from "./Pages/NewPassword";
 import PrivateRoute from "./PrivateRoute";
 import CreateComplex from "./Pages/Complex/CreateComplex";
 import CreateBuilding from "./Pages/Building/CreateBuilding";
+import UpdateComplex from "./Pages/Complex/UpdateComplex";
+import UpdateBuilding from "./Pages/Building/UpdateBuilding";
 
 function App() {
   return (
@@ -28,7 +30,7 @@ function App() {
           <Route path="/new-pw" element={<NewPassword />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/complex" element={<Complex />} />
-          <Route path="/update-complex/:id" element={<EditComplexPages />} />
+          {/* <Route path="/update-complex/:id" element={<EditComplexPages />} /> */}
           <Route path="/building" element={<Building />} />
           <Route path="/room" element={<Room />} />
           {/* <Route path="/createRoom" element={<CreateUpdateRoom />} /> */}
@@ -36,6 +38,8 @@ function App() {
           <Route path="/verify" element={<VerifyEmail />} />
           <Route path="/create-building" element={<CreateBuilding />} />
           <Route path="/create-complex" element={<CreateComplex />} />
+          <Route path="/update-complex/:id" element={<UpdateComplex />} />
+          <Route path="/update-building/:id" element={<UpdateBuilding />} />
           <Route path="*" element={<NotFound />} />
           <Route exact path="/login" element={<Login />} />
           {/* <Route element={<PrivateRoute />}>
