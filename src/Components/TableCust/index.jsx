@@ -59,7 +59,7 @@ export default function TableCust(props){
                 </tr >
               </thead >
               <tbody>
-                {customer?.map((cust) => (
+                {customer?.map((customer) => (
                   <tr className="odd:bg-secondary-softblue text-primary-gray">
                     <td className="px-6 py-4 whitespace-no-wrap">
                       {customer.customerName}
