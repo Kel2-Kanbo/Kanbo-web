@@ -119,7 +119,7 @@ export default function NewPassword() {
               </div>
             ))}
 
-            <Button onClick={handleReset} type="submit">
+            <Button onClick={handleReset} type="submit" className="bg-primary-blue text-secondary-softblue">
               Reset
             </Button>
           </div>

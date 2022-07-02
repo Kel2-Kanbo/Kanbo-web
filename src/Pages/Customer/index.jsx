@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import api from "../../API/Complex"
+// import api from "../../API/Complex"
 
 import Button from "../../Components/Button";
 import Navbar from "../../Components/Navbar";
@@ -11,7 +11,7 @@ const Customer = () => {
     const [customer, setCustomer] = useState([]);
 
     const removeCustomer = async (id) => {
-        const response = await api.delete(`/customer/${id}`);
+        const response = await delete(`/customer/${id}`);
         if(response.data) {
             alert("Customer has been delete");
             setCustomer(customer.filter((item) => item.id !== id));

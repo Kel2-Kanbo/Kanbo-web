@@ -98,7 +98,7 @@ export default function Room() {
               </select>
             </div>
             <div className="w-auto">
-              <Button type="button" onClick={_handleOpenModal}>
+              <Button type="button" onClick={_handleOpenModal} className="bg-primary-blue text-secondary-softblue">
 
                 Create Room
               </Button>
