@@ -1,15 +1,30 @@
-import React from 'react';
-import Logo from '../Logo';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import { Link, useLocation } from 'react-router-dom';
+import Button from '../Button';
+import Logo from '../Logo';
 import background from '../../Assets/Admin.png'
 
-const VerifyEmail = () => {
-
-
+const VerifyEmail = () => {  
     const backgroundImage = {
         backgroundImage: `url(${background})`,
         backgroundSize: "100% 100%",
     };
+    
+  const location = useLocation();
+  const state = location.state;
+  console.log(state)
+
+  const [email, setEmail] = useState(state);
+  console.log(email);
+  const value = Object.values(email);
+  console.log(value);
+  const getDataemail = value?.map((item) => {
+    return item;
+  });
+  console.log(getDataemail);
+  console.log(getDataemail[0].email);
+
 
     return (
         <VerifyWrap style={backgroundImage}>
@@ -29,8 +44,9 @@ const VerifyEmail = () => {
                 <h1 style={{ textAlign: "center" }}><b>VERIFY YOUR EMAIL</b></h1>
                 <p style={{ textAlign: "center" }}
                     className="my-5">
-                    Your entered <b>yaya@gmail.com</b> as the email address for your account. You will need to verify you email to complete registration
+                    Your entered <a href='https://mail.google.com/mail/u/0/#all' target="_blank"><b>{getDataemail[0].email}</b></a> as the email address for your account. You will need to verify you email to complete registration
                 </p>
+                <Link to="/"><Button className='cursor-pointer text-lg font-bold text-center bg-secondary-softblue'>Login</Button></Link>
 
                 <div style={{ textAlign: "center" }}>
                     <p className="mt-5">Did not receive the email? Check your spam folder</p>

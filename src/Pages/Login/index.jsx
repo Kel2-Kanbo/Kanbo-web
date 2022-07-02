@@ -56,33 +56,23 @@ export default function Login() {
       };
       try {
         await AuthLogin(data).then((response) => {
-          console.log(response);
-        });
-
-        // const config = { headers: { "Content-Type": "application/json" } };
-        // await Axios.post(
-        //   "http://3.88.14.239/api/auth/signin",
-        //   data,
-        //   config
-        // ).then((response) => {
-        //   console.log(response);
-        //   console.log(response.data);
-        // });
-      } catch (error) {
-        if (error.response) {
-          setMsg(error.response.data.msg);
-        }
-      } finally {
-        Swal.fire({
-          title: "Login Success",
-          // text: `You `,
-          confirmButtonColor: "#4C35E0",
-          // confirmButtonText: "Ok!",
-        }).then((result) => {
-          if (result.isConfirmed) {
+          if (response) {
+            Swal.fire({
+              title: "Login Success",
+              confirmButtonColor: "#4C35E0",
+            });
             navigate("/dashboard");
           }
         });
+      } catch (error) {
+        if (error.response) {
+          setMsg(error.response.data.message);
+          Swal.fire({
+            title: "Account not found",
+            text: error.response.data.message,
+            confirmButtonColor: "#4C35E0",
+          });
+        }
       }
     } else {
       setIsEmptyEmail(true);
@@ -146,6 +136,16 @@ export default function Login() {
                   required
                   onChange={(e) => handleChange(e.target.value, inputIdx)}
                 />
+
+                {input.type === "password" && (
+                  <span
+                    className="w-full flex items-center justify-end -mt-10 h-10 -ml-4"
+                    onClick={handleClickPassword}
+                  >
+                    {isPasswordShown ? <AiFillEyeInvisible /> : <AiFillEye />}
+                  </span>
+                )}
+
                 {input.type === "email" ? (
                   <p
                     className={`my-2 ${
@@ -170,11 +170,6 @@ export default function Login() {
                 ) : null}
               </div>
             ))}
-            {/* <button
-                            className='show-password -mt-12 h-8 lg:-mr-72 md:-mr-32 sm:-mr-56'
-                            onClick={handleClickPassword}>
-                            {isPasswordShown ? <AiFillEyeInvisible /> : <AiFillEye />}
-                        </button> */}
 
             <div
               style={{
@@ -189,7 +184,7 @@ export default function Login() {
               className="rounded
                                 w-full
                                 border-1
-                                bg-stone-500"
+                                bg-primary-blue text-secondary-softblue"
               type="submit"
             >
               Login

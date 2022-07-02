@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import api from "../../API/Complex";
 
 import Button from "../../Components/Button";
 import CreateRoom from "../../Components/CreateRoom";
@@ -31,62 +30,62 @@ export default function Room() {
   ]);
 
   //get room data from the server
-  const getRoom = async () => {
-    const response = await api.get("/room");
-    return response.data;
-  };
+  // const getRoom = async () => {
+  //   const response = await api.get("/room");
+  //   return response.data;
+  // };
 
-  //add room
-  const addRoom = async (data) => {
-    const response = await api.post("/room", data);
-    if (response.data) {
-      setRoom([...room, response.data]);
-      setShowModal(false);
-    }
-  };
+  // //add room
+  // const addRoom = async (data) => {
+  //   const response = await api.post("/room", data);
+  //   if (response.data) {
+  //     setRoom([...room, response.data]);
+  //     setShowModal(false);
+  //   }
+  // };
 
-  //remove room
-  const removeRoom = async (id) => {
-    const response = await api.delete(`/room/${id}`);
-    if (response.data) {
-      alert("Delete room success");
-      setRoom(room.filter((item) => item.id !== id));
-    }
-  };
+  // //remove room
+  // const removeRoom = async (id) => {
+  //   const response = await api.delete(`/room/${id}`);
+  //   if (response.data) {
+  //     alert("Delete room success");
+  //     setRoom(room.filter((item) => item.id !== id));
+  //   }
+  // };
 
-  //update room
-  const updateRoom = async (data) => {
-    console.log(data);
-    console.log(data.id);
-    const response = await api.put(`/room/${data.id}`, data);
-    const { id } = response.data;
-    console.log(response.data);
-    setRoom(
-      room.map((data) => {
-        return data.id === id ? { ...response.data } : data;
-      })
-    );
-    if (response.data) {
-      const allRoom = await getRoom();
-      setRoom(allRoom);
-    }
-  };
+  // //update room
+  // const updateRoom = async (data) => {
+  //   console.log(data);
+  //   console.log(data.id);
+  //   const response = await api.put(`/room/${data.id}`, data);
+  //   const { id } = response.data;
+  //   console.log(response.data);
+  //   setRoom(
+  //     room.map((data) => {
+  //       return data.id === id ? { ...response.data } : data;
+  //     })
+  //   );
+  //   if (response.data) {
+  //     const allRoom = await getRoom();
+  //     setRoom(allRoom);
+  //   }
+  // };
 
-  useEffect(() => {
-    const getAllRoom = async () => {
-      const allRoom = await getRoom();
-      if (allRoom) {
-        setRoom(allRoom);
-      }
-    };
-    getAllRoom();
-  }, []);
+  // useEffect(() => {
+  //   const getAllRoom = async () => {
+  //     const allRoom = await getRoom();
+  //     if (allRoom) {
+  //       setRoom(allRoom);
+  //     }
+  //   };
+  //   getAllRoom();
+  // }, []);
 
   return (
     <div className='flex h-screen bg-secondary-softblue'>
       <Sidebar />
       <Navbar />
-      <div className="basis-5/6">
+      <div className="basis-5/6 pl-6">
         <div className='px-4 py-4 mt-20'>
           <h1 className="text-3xl font-bold mb-4">Room</h1>
 
@@ -105,14 +104,17 @@ export default function Room() {
               </Button>
             </div>
             {showModal ? (
-              <CreateRoom handleClose={_handleCloseModal} addRoom={addRoom} />
+              <CreateRoom 
+              handleClose={_handleCloseModal} 
+              // addRoom={addRoom} 
+              />
             ) : null}
           </div>
           <div className="bg-primary-white items-center">
             <TableRoom
               room={room}
-              removeRoom={removeRoom}
-              updateRoom={updateRoom}
+            //   removeRoom={removeRoom}
+            //   updateRoom={updateRoom}
             />
           </div>
         </div>
