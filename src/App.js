@@ -5,6 +5,8 @@ import Login from "./Pages/Login";
 import Complex from "./Pages/Complex";
 import Dashboard from "./Pages/Dashboard";
 import Room from "./Pages/Room";
+import Customer from "./Pages/Customer";
+import Review from "./Pages/Review";
 import NotFound from "./Pages/NotFound";
 import CreateUpdateRoom from "./Pages/CreateUpdateRoom";
 import Register from "./Pages/Register";
@@ -33,7 +35,10 @@ function App() {
           {/* <Route path="/update-complex/:id" element={<EditComplexPages />} /> */}
           <Route path="/building" element={<Building />} />
           <Route path="/room" element={<Room />} />
-          {/* <Route path="/createRoom" element={<CreateUpdateRoom />} /> */}
+          <Route path="/customer" element={<Customer />} />
+          <Route path="/review" element={<Review />} />
+          <Route path="/createRoom" element={<CreateUpdateRoom />} />
+
           <Route path="/register" element={<Register />} />
           <Route path="/verify" element={<VerifyEmail />} />
           <Route path="/create-building" element={<CreateBuilding />} />
