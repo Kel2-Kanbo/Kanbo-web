@@ -1,16 +1,38 @@
-import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import React, { useState, useEffect, useContext } from "react";
+// import { v4 as uuidv4 } from "uuid";
+import {
+  getCity,
+  getDistrict,
+  getProvince,
+  editRoo,
+  editRoom,
+  getBuilding,
+} from "../../../API/ApiFetch";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import Button from "../Button";
-import FormInput from "../FormInput";
-import FormWrap from "../FormWrap";
-import FormTextArea from "../FormTextArea";
-import FormWrapModal from "../FormWrapModal";
-import { getBuilding } from "../../API/ApiFetch";
-import SelectWrap from "../SelectWrap";
+import FormInput from "../../../Components/FormInput";
+import SelectWrap from "../../../Components/SelectWrap";
+import FormWrap from "../../../Components/FormWrap";
+import Button from "../../../Components/Button";
+import Sidebar from "../../../Components/Sidebar";
+import Navbar from "../../../Components/Navbar";
+import Swal from "sweetalert2";
+import FormTextArea from "../../../Components/FormTextArea";
 
-export default function CreateRoom(props) {
-  const { addRoom, handleClose, showModal } = props;
+export default function UpdateRoom(props) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const state = location.state;
+  const [complex, setComplex] = useState(state);
+
+  const [building, setBuilding] = useState([]);
+
+  const value = Object.values(complex);
+  console.log(value);
+  const getDataComplex = value?.map((item) => {
+    return item;
+  });
+  
 
   const [data, setData] = useState({
     picture: "",
@@ -22,9 +44,48 @@ export default function CreateRoom(props) {
     roomitem: ["TV", "AC", "WIFI"],
   });
 
-  console.log(data);
   const [msg, setMsg] = useState("");
-  const [building, setBuilding] = useState([]);
+
+  const _handleChange = (value, index) => {
+    setInputs(
+      inputs.map((input) => {
+        if (input.id === index) {
+          return {
+            ...input,
+            value,
+          };
+        }
+        return input;
+      })
+    );
+
+    setComplex({
+      ...complex,
+      [inputs[index].name]: value,
+    });
+  };
+
+
+  // useEffect(() => {
+  //   getProvince().then((response) => {
+  //     setProvince(response);
+  //   }
+  //   );
+  // }, []);
+
+  // useEffect(() => {
+  //   getCity(complex.province).then((response) => {
+  //     setCity(response);
+  //   }
+  //   );
+  // }, [complex.province]);
+
+  // useEffect(() => {
+  //   getDistrict(complex.city).then((response) => {
+  //     setDistrict(response);
+  //   }
+  //   );
+  // }, [complex.city]);
 
   const [inputs, setInputs] = useState([
     {
@@ -101,70 +162,36 @@ export default function CreateRoom(props) {
     },
   ]);
 
-  const handleChange = (value, index) => {
-    setInputs(
-      inputs.map((input) => {
-        if (input.id === index) {
-          return {
-            ...input,
-            value,
-          };
-        }
-        return input;
-      })
-    );
-  };
+  // const _handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   editRoom(data);
+  // }
 
-  const [imageRoom, setImageRoom] = useState("");
-
-  const uploadImageRoom = async (e) => {
-    const file = e.target.files[0];
-    const base64 = await convertBase64(file);
-    setImageRoom(base64);
-    console.log(base64);
-  };
-
-  const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
-
-  const _handleCreateRoom = (e) => {
+  const _handleUpdateRoom = async (id, data) => {
     if (
       inputs[0].value &&
       inputs[1].value &&
       inputs[2].value &&
       inputs[3].value &&
       inputs[4].value &&
-      inputs[5].value &&
-      inputs[6].value &&
-      inputs[7].value &&
-      inputs[8].value
+      inputs[5].value
     ) {
-      addRoom({
-        // id: uuidv4(),
-        roomName: inputs[0].value,
-        buildingName: inputs[1].value,
-        address: inputs[2].value,
-        description: inputs[3].value,
-        capacity: inputs[4].value,
-        floor: inputs[5].value,
-        table: inputs[6].value,
-        large: inputs[7].value,
-        roomPrice: inputs[8].value,
-        picture: imageRoom,
+      editRoom(id, data).then((response) => {
+        console.log(response);
+        if (response.message === 200) {
+          Swal.fire({
+            title: "Update Building Success",
+            confirmButtonColor: "#4C35E0",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              setComplex(
+                complex.map((item) => (item.id === data.id ? data : item))
+              );
+            }
+          });
+        }
       });
-      e.preventDefault();
+      navigate("/room");
 
       setInputs([
         {
@@ -240,15 +267,38 @@ export default function CreateRoom(props) {
           required: true,
         },
       ]);
-
-      handleClose();
     } else {
-      setMsg("Please fill all the fields");
+      setMsg("Please fill out all fields");
     }
   };
 
+   const [imageRoom, setImageRoom] = useState("");
+
+  const uploadImageRoom = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertBase64(file);
+    setImageRoom(base64);
+    console.log(base64);
+  };
+
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
+
   const _handleClose = () => {
-    handleClose();
+    navigate("/room");
     setInputs([
       {
         id: 0,
@@ -346,19 +396,19 @@ export default function CreateRoom(props) {
     getAllBuildings();
   }, []);
 
-  if (!showModal) return null;
-
   return (
-    <>
-      <div
-        onSubmit={_handleCreateRoom}
-        className="fixed flex-col gap-10 inset-0 bg-primary-black bg-opacity-30 backdrop-blur-md flex justify-center items-center"
-      >
-        <FormWrapModal className=" h-4/5 outline-none overflow-x-hidden overflow-y-auto">
-          <h3 className="text-2xl text-center font-bold">Create Room</h3>
-          <p className="has-text-centered text-error-red">{msg}</p>
+    <div className=" flex bg-secondary-blue h-screen">
+      <Sidebar />
+      <Navbar />
+      <div className="basis-5/6">
+        <div className="px-4 py-4 mt-20">
+          <h1 className="text-3xl font-bold mb-4">Room</h1>
 
-          {inputs.map((input, inputIdx) =>
+          <div className="flex items-center justify-between mb-6">
+            <FormWrap onSubmit={_handleUpdateRoom}>
+              <h3 className="text-2xl text-center font-bold">Update Room</h3>
+              <p className="has-text-centered text-error-red">{msg}</p>
+              {inputs.map((input, inputIdx) =>
             input.name !== "roomPrice" &&
             input.name !== "description" &&
             input.type !== "select" &&
@@ -371,7 +421,7 @@ export default function CreateRoom(props) {
                 {...input}
                 value={input.value}
                 type={input.type}
-                onChange={(e) => handleChange(e.target.value, inputIdx)}
+                onChange={(e) => _handleChange(e.target.value, inputIdx)}
               />
             ) : input.name === "description" ? (
               <FormTextArea
@@ -379,7 +429,7 @@ export default function CreateRoom(props) {
                 {...input}
                 value={input.value}
                 type={input.type}
-                onChange={(e) => handleChange(e.target.value, inputIdx)}
+                onChange={(e) => _handleChange(e.target.value, inputIdx)}
               />
             ) : input.name === "roomPrice" ? (
               <div className="flex gap-2 items-center w-full">
@@ -388,7 +438,7 @@ export default function CreateRoom(props) {
                   {...input}
                   value={input.value}
                   type={input.type}
-                  onChange={(e) => handleChange(e.target.value, inputIdx)}
+                  onChange={(e) => _handleChange(e.target.value, inputIdx)}
                 />
                 <p className="text-md text-gray-600">/Days</p>
               </div>
@@ -397,7 +447,7 @@ export default function CreateRoom(props) {
                 <SelectWrap
                   key={inputIdx}
                   type={input.type}
-                  onChange={(e) => handleChange(e.target.value, inputIdx)}
+                  onChange={(e) => _handleChange(e.target.value, inputIdx)}
                   value={input.value}
                 >
                   <option value="">Select Building</option>
@@ -416,7 +466,7 @@ export default function CreateRoom(props) {
                   {...input}
                   value={input.value}
                   type={input.type}
-                  onChange={(e) => handleChange(e.target.value, inputIdx)}
+                  onChange={(e) => _handleChange(e.target.value, inputIdx)}
                 />
               </div>
             )
@@ -450,13 +500,15 @@ export default function CreateRoom(props) {
             <Button
               className="bg-primary-blue font-bold uppercase text-sm px-6 py-3 rounded shadow mr-1 mb-1"
               type="button"
-              onClick={_handleCreateRoom}
+              onClick={_handleUpdateRoom}
             >
               Submit
             </Button>
           </div>
-        </FormWrapModal>
+            </FormWrap>
+          </div>
+        </div>
       </div>
-    </>
+    </div>
   );
 }

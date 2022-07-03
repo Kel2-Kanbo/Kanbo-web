@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import Button from "../../Components/Button";
 import CreateRoom from "../../Components/CreateRoom";
 import TableRoom from "../../Components/TableRoom";
-import Sidebar from '../../Components/Sidebar'
-import Navbar from '../../Components/Navbar'
+import Sidebar from "../../Components/Sidebar";
+import Navbar from "../../Components/Navbar";
 
 export default function Room() {
   const [showModal, setShowModal] = useState(false);
@@ -17,17 +18,6 @@ export default function Room() {
   const _handleCloseModal = () => {
     setShowModal(false);
   };
-
-  const [building, setBuilding] = useState([
-    {
-      id: 0,
-      name: "",
-      type: "select",
-      placeholder: "Building",
-      options: [],
-      value: "",
-    }
-  ]);
 
   //get room data from the server
   // const getRoom = async () => {
@@ -82,11 +72,11 @@ export default function Room() {
   // }, []);
 
   return (
-    <div className='flex h-screen bg-secondary-softblue'>
+    <div className="flex h-screen bg-secondary-softblue">
       <Sidebar />
       <Navbar />
       <div className="basis-5/6 pl-6">
-        <div className='px-4 py-4 mt-20'>
+        <div className="px-4 py-4 mt-20">
           <h1 className="text-3xl font-bold mb-4">Room</h1>
 
           <div className="flex items-center justify-between mb-6">
@@ -98,28 +88,32 @@ export default function Room() {
               </select>
             </div>
             <div className="w-auto">
-              <Button type="button" onClick={_handleOpenModal} className="bg-primary-blue text-secondary-softblue">
-
+              <Button
+                type="button"
+                className="bg-primary-blue text-primary-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                onClick={_handleOpenModal}
+              >
                 Create Room
               </Button>
             </div>
             {showModal ? (
-              <CreateRoom 
-              handleClose={_handleCloseModal} 
-              // addRoom={addRoom} 
+              <CreateRoom
+                handleClose={_handleCloseModal}
+                showModal={showModal}
+                // addRoom={addRoom}
               />
             ) : null}
           </div>
+
           <div className="bg-primary-white items-center">
             <TableRoom
               room={room}
-            //   removeRoom={removeRoom}
-            //   updateRoom={updateRoom}
+              //   removeRoom={removeRoom}
+              //   updateRoom={updateRoom}
             />
           </div>
         </div>
       </div>
     </div>
-
   );
 }

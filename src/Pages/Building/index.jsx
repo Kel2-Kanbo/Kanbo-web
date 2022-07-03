@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Button from "../../Components/Button";
 import Sidebar from "../../Components/Sidebar";
 import Navbar from "../../Components/Navbar";
-// import CreateBuilding from "../../Components/CreateBuilding";
+import CreateBuilding from "../../Components/CreateBuilding";
 // import CreateBuilding from "./CreateBuilding";
 import TableBuilding from "../../Components/TableBuilding";
 import {
@@ -19,6 +19,15 @@ import {
 export default function Building() {
   const [building, setBuilding] = useState([]);
   console.log(building);
+
+  const [showModal, setShowModal] = useState(false);
+
+  const _handleOpenModal = () => {
+    setShowModal(true);
+  };
+  const _handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   //get building
   const getAllBuilding = async () => {
@@ -182,24 +191,24 @@ export default function Building() {
           </div>
           <div className="flex justify-end">
             <div className="w-auto ">
-              <Link to="/create-building">
+              {/* <Link to="/create-building"> */}
                 <Button
                   type="button"
                   className="bg-primary-blue text-primary-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-                  // onClick={building}
+                  onClick={_handleOpenModal}
                 >
                   Create Building
                   {/* <CreateBuilding/> */}
                 </Button>
-              </Link>
+              {/* </Link> */}
             </div>
-            {/* {showModal ? (
+            {showModal ? (
               <CreateBuilding
                 handleClose={_handleCloseModal}
-                createBuilding={createBuilding}
-                complex={complex}
+                showModal={showModal}
+                // complex={complex}
               />
-            ) : null} */}
+            ) : null}
           </div>
         </div>
         <div className="bg-primary-white items-center m-4">

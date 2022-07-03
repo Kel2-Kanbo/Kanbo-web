@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "universal-cookie";
 
 const BASE_URL = "http://3.88.14.239:80/api/auth/";
 const config = {
@@ -8,6 +9,8 @@ const config = {
   },
 };
 
+const cookie = new Cookies();
+
 export const AuthLogin = async (data) => {
   const response = await axios.post(BASE_URL + "signin", data, config, {
     withCredentials: true,
@@ -15,7 +18,7 @@ export const AuthLogin = async (data) => {
   console.log(response.data);
   console.log(response.data.token);
 
-  localStorage.setItem("Bearer", response.data.token);
+  cookie.set("Bearer", response.data.token);
 
   return response.data;
 };

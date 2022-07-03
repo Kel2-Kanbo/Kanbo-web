@@ -9,10 +9,11 @@ import {
   editComplex,
   getCity,
   getDistrict,
+  getProvince,
 } from "../../API/ApiFetch";
 import Button from "../../Components/Button";
-// import CreateComplex from "../../Components/CreateComplex";
-import CreateComplex from "./CreateComplex";
+import CreateComplex from "../../Components/CreateComplex";
+// import CreateComplex from "./CreateComplex";
 import Navbar from "../../Components/Navbar";
 import Sidebar from "../../Components/Sidebar";
 import TableComplex from "../../Components/TableComplex";
@@ -20,6 +21,15 @@ import TableComplex from "../../Components/TableComplex";
 const Complex = () => {
   const [complex, setComplex] = useState([]);
   console.log(complex);
+
+  const [showModal, setShowModal] = useState(false);
+
+  const _handleOpenModal = () => {
+    setShowModal(true);
+  };
+  const _handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   //get complex data from the server
   const getComplexes = async () => {
@@ -32,31 +42,29 @@ const Complex = () => {
     }
   };
 
-  // // //add complex
-  // const addComplex = async (data) => {
-  //   try {
-  //     await createComplex(data).then((response) => {
-  //       console.log(response);
-  //       setComplex([...complex, response.data]);
-  //     });
-  //   } catch (error) {
-  //     if (error.response) {
-  //       console.log(error.response.data.msg);
-  //     }
-  //   } finally {
-  //     Swal.fire({
-  //       title: "Create Complex Success",
-  //       // text: `You `,
-  //       confirmButtonColor: "#4C35E0",
-  //       // confirmButtonText: "Ok!",
-  //     }).then((result) => {
-  //       if (result.isConfirmed) {
-  //         setComplex([...complex, data]);
-  //         setShowModal(false);
-  //       }
-  //     });
-  //   }
-  // };
+  // //add complex
+  const addComplex = async (data) => {
+    try {
+      await createComplex(data).then((response) => {
+        if (response.data) {
+          Swal.fire({
+            title: "Create Complex Success",
+            confirmButtonColor: "#4C35E0",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              setComplex([...complex, response.data]);
+              setShowModal(false);
+            }
+          });
+        }
+        console.log(response);
+      });
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data.msg);
+      }
+    }
+  };
 
   // //remove complex
   const removeComplex = async (id) => {
@@ -91,39 +99,14 @@ const Complex = () => {
     }
   };
 
-  // update complex
-  // const updateComplex = async (id, data) => {
+  // const getProvinces = async () => {
   //   try {
-  //     await editComplex(id, data).then((response) => {
+  //     await getProvince.then((response) => {
+  //       setProvince(response);
   //       console.log(response);
-  //       setComplex(
-  //         complex.map((data) => {
-  //           return data.id === id ? { ...response.data } : data;
-  //         })
-  //       );
   //     });
-
-  //     // if (response.status === 200) {
-  //     //   const allBuilding = await getBuilding();
-  //     //   setComplex(allBuilding);
-  //     // }
   //   } catch (error) {
-  //     if (error.response) {
-  //       console.log(error.response.data.msg);
-  //     }
-  //   } finally {
-  //     Swal.fire({
-  //       title: "Update Building Success",
-  //       // text: `You `,
-  //       confirmButtonColor: "#4C35E0",
-  //       // confirmButtonText: "Ok!",
-  //     }).then((result) => {
-  //       if (result.isConfirmed) {
-  //         setComplex(
-  //           complex.map((item) => (item.id === data.id ? data : item))
-  //         );
-  //       }
-  //     });
+  //     console.log(error);
   //   }
   // };
 
@@ -172,52 +155,43 @@ const Complex = () => {
     //   }
     // };
     // getAllDistrict();
-  }, []);
 
-  // useEffect(() => {
-  //   const getAllCity = async () => {
-  //     const allCity = await getCities();
-  //     if (allCity) {
-  //       setCity(allCity);
-  //     }
-  //   };
-  //   getAllCity();
-  // }, []);
+    // const getAllProvince = async () => {
+    //   const allProvince = await getProvinces();
+    //   if (allProvince) {
+    //     setProvince(allProvince);
+    //   }
+    // }
+  }, []);
 
   return (
     <div className="flex h-screen bg-secondary-softblue">
       <Sidebar />
       <Navbar />
-      <div className="basis-5/6 pl-6">
+      <div className="basis-5/6">
         <div className="px-4 py-4 mt-20">
           <h1 className="text-3xl font-bold mb-1">Complex</h1>
           <h4 className="text-md text-primary-gray">Manage complex</h4>
           <div className="flex justify-end">
             <div className="w-auto">
-              <Link to="/create-complex">
-                <Button
-                  type="button"
-                  className="bg-primary-blue text-primary-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-                >
-                  Create Complex
-                </Button>
-              </Link>
+              <Button
+                type="button"
+                className="bg-primary-blue text-primary-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                onClick={_handleOpenModal}
+              >
+                Create Complex
+              </Button>
             </div>
-            {/* {showModal ? (
-              < CreateComplex
+            {showModal ? (
+              <CreateComplex
+                showModal={showModal}
                 handleClose={_handleCloseModal}
                 addComplex={addComplex}
-                city={city}
-                district={district}
               />
-            ) : null} */}
+            ) : null}
           </div>
           <div className="bg-primary-white items-center rounded mt-4">
-            <TableComplex
-              complex={complex}
-              removeComplex={removeComplex}
-              // updateComplex={updateComplex}
-            />
+            <TableComplex complex={complex} removeComplex={removeComplex} />
           </div>
         </div>
       </div>
