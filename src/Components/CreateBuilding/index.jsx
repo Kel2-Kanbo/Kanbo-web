@@ -27,10 +27,11 @@ export default function CreateBuilding(props) {
   // }
 
   const [data, setData] = useState({
+    id: 0,
     buildingName: "",
     complexName: "",
     address: "",
-    jumlahRoom: "",
+    numOfRooms: "",
     description: "",
     picture: "",
   });
@@ -67,7 +68,7 @@ export default function CreateBuilding(props) {
     },
     {
       id: 3,
-      name: "jumlahRoom",
+      name: "numOfRooms",
       type: "number",
       placeholder: "Jumlah Room",
       value: "",
@@ -99,6 +100,7 @@ export default function CreateBuilding(props) {
       ...data,
       [inputs[index].name]: value,
     });
+
   };
 
   const [imageBuilding, setImageBuilding] = useState("");
@@ -131,19 +133,20 @@ export default function CreateBuilding(props) {
       inputs[1].value &&
       inputs[2].value &&
       inputs[3].value &&
-      inputs[4].value
+      inputs[4].value &&
+      data
     ) {
       addBuilding({
-        // id: uuidv4(),
-        name: inputs[0].value,
+        buildingName: inputs[0].value,
         complexName: inputs[1].value,
         address: inputs[2].value,
-        jumlahRoom: inputs[3].value,
+        numOfRooms: inputs[3].value,
         description: inputs[4].value,
-        picture: imageBuilding,
+        building_image: imageBuilding,
       });
 
       e.preventDefault();
+      handleClose();
 
       setInputs([
         {
@@ -173,7 +176,7 @@ export default function CreateBuilding(props) {
         },
         {
           id: 3,
-          name: "jumlahRoom",
+          name: "numOfRooms",
           type: "number",
           placeholder: "Jumlah Room",
           value: "",
@@ -224,7 +227,7 @@ export default function CreateBuilding(props) {
       },
       {
         id: 3,
-        name: "jumlahRoom",
+        name: "numOfRooms",
         type: "number",
         placeholder: "Jumlah Room",
         value: "",
@@ -296,7 +299,7 @@ export default function CreateBuilding(props) {
                 >
                   <option value="">Complex</option>
                   {complex.map((complex, complexIdx) => (
-                    <option key={complexIdx} value={complex.id}>
+                    <option key={complexIdx} value={complex.complex_name}>
                       {complex.complex_name}
                     </option>
                   ))}

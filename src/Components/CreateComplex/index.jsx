@@ -27,16 +27,11 @@ export default function CreateComplex(props) {
   });
   const [msg, setMsg] = useState("");
 
-  const [province, setProvince] = useState([
-    {
-      id: 0,
-      name: "",
-    },
-  ]);
+  const [province, setProvince] = useState([]);
+  console.log(province);
   const [city, setCity] = useState([]);
   const [district, setDistrict] = useState([]);
 
-  console.log(province);
   console.log(city);
 
   // const dataProvince = province?.map((item) => {
@@ -46,9 +41,6 @@ export default function CreateComplex(props) {
   // }
   // );
   // console.log(dataProvince);
-
-  const [provinceId, setProvinceId] = useState(0);
-  const [cityId, setCityId] = useState(0);
 
   // console.log(city);
   // const cityName = city?.map((item) => {
@@ -139,6 +131,10 @@ export default function CreateComplex(props) {
       ...data,
       [inputs[index].name]: value,
     });
+
+    // setProvince({
+    //   [inputs[index].name]: value,
+    // });
   };
 
   const _handleCreateComplex = (e) => {
@@ -312,10 +308,11 @@ export default function CreateComplex(props) {
   //   }
   // };
 
-  //get city by province id
-  const getCities = async (provinceId) => {
+  //get city by province
+  const getCities = async (id) => {
+    console.log(id);
     try {
-      await getCity(provinceId).then((response) => {
+      await getCity(id).then((response) => {
         setCity(response);
         console.log(response);
       });
@@ -323,6 +320,7 @@ export default function CreateComplex(props) {
       console.log(error);
     }
   };
+
   // const getCities = async(id) => {
   //   try {
   //     await getCity(id).then((response) => {
@@ -334,9 +332,9 @@ export default function CreateComplex(props) {
   //   }
   // }
 
-  const getDistricts = async (city) => {
+  const getDistricts = async () => {
     try {
-      await getDistrict(city.id).then((response) => {
+      await getDistrict().then((response) => {
         setDistrict(response);
         console.log(response);
       });
@@ -419,13 +417,21 @@ export default function CreateComplex(props) {
                         ))} */}
                   {input.name === "province"
                     ? province.map((option, optionIdx) => (
-                        <option key={optionIdx} value={option.id}>
+                        <option
+                          key={optionIdx}
+                          value={option.id}
+                          onChange={() => getCities(option.id)}
+                        >
                           {option.name}
                         </option>
                       ))
                     : input.name === "city"
                     ? city.map((option, optionIdx) => (
-                        <option key={optionIdx} value={option.id}>
+                        <option
+                          key={optionIdx}
+                          value={option.id}
+                          onChange={() => getDistricts(option)}
+                        >
                           {option.name}
                         </option>
                       ))

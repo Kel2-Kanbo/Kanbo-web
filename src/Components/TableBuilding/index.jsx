@@ -81,7 +81,7 @@ export default function TableBuilding(props) {
                       {(angka += 1)}
                     </td>
                     <td className="text-base text-textColor-blackThin   whitespace-nowrap">
-                      <img src={building.picture} alt="building" width="72px" />
+                      <img src={building.building_image} alt="building" width="72px" />
                     </td>
                     <td className="text-base text-textColor-blackThin   whitespace-nowrap">
                       {building.buildingName}

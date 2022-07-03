@@ -206,6 +206,7 @@ export default function Building() {
               <CreateBuilding
                 handleClose={_handleCloseModal}
                 showModal={showModal}
+                addBuilding={addBuilding}
                 // complex={complex}
               />
             ) : null}
