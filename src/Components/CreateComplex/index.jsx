@@ -332,9 +332,9 @@ export default function CreateComplex(props) {
   //   }
   // }
 
-  const getDistricts = async () => {
+  const getDistricts = async (id) => {
     try {
-      await getDistrict().then((response) => {
+      await getDistrict(id).then((response) => {
         setDistrict(response);
         console.log(response);
       });
@@ -430,7 +430,7 @@ export default function CreateComplex(props) {
                         <option
                           key={optionIdx}
                           value={option.id}
-                          onChange={() => getDistricts(option)}
+                          onChange={() => getDistricts(option.id)}
                         >
                           {option.name}
                         </option>

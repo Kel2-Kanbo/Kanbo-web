@@ -27,7 +27,6 @@ export default function CreateBuilding(props) {
   // }
 
   const [data, setData] = useState({
-    id: 0,
     buildingName: "",
     complexName: "",
     address: "",
