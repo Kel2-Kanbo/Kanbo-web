@@ -30,9 +30,20 @@ export default function CreateComplex(props) {
   const [province, setProvince] = useState([]);
   console.log(province);
   const [city, setCity] = useState([]);
+  console.log(city);
   const [district, setDistrict] = useState([]);
 
-  console.log(city);
+  const getProvinceId = province.map((item) => {
+    return {
+      value: item.name,
+      id: item.id,
+    };
+  }
+  );
+
+  console.log(getProvinceId);
+  console.log(getProvinceId[0].id);
+  
 
   // const dataProvince = province?.map((item) => {
   //   return {
@@ -309,10 +320,10 @@ export default function CreateComplex(props) {
   // };
 
   //get city by province
-  const getCities = async (id) => {
+  const getCities = (id) => {
     console.log(id);
     try {
-      await getCity(id).then((response) => {
+       getCity(id).then((response) => {
         setCity(response);
         console.log(response);
       });
