@@ -7,6 +7,7 @@ import Dashboard from "./Pages/Dashboard";
 import Room from "./Pages/Room";
 import Customer from "./Pages/Customer";
 import Review from "./Pages/Review";
+import Chat from "./Pages/Chat";
 import NotFound from "./Pages/NotFound";
 import CreateUpdateRoom from "./Pages/CreateUpdateRoom";
 import Register from "./Pages/Register";
@@ -33,23 +34,24 @@ function App() {
           <Route path="/new-pw" element={<NewPassword />} />
           <Route path="/register" element={<Register />} />
           <Route path="/verify" element={<VerifyEmail />} />
-          <Route exact path="/login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/chat" element={<Chat />} />
 
-          <Route element={<PrivateRoute />}>
-            <Route path="/complex" element={<Complex />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/building" element={<Building />} />
-            <Route path="/room" element={<Room />} />
-            {/* <Route path="/create-building" element={<CreateBuilding />} /> */}
-            {/* <Route path="/create-complex" element={<CreateComplex />} /> */}
-            <Route path="/update-complex/:id" element={<UpdateComplex />} />
-            <Route path="/update-building/:id" element={<UpdateBuilding />} />
-            <Route path="/update-room" element={<UpdateRoom />} />
-            <Route path="/customer" element={<Customer />} />
-            <Route path="/review" element={<Review />} />
-            <Route path="/createRoom" element={<CreateUpdateRoom />} />
-          </Route>
-          
+          {/* <Route element={<PrivateRoute />}> */}
+          <Route path="/complex" element={<Complex />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/building" element={<Building />} />
+          <Route path="/room" element={<Room />} />
+          {/* <Route path="/create-building" element={<CreateBuilding />} /> */}
+          {/* <Route path="/create-complex" element={<CreateComplex />} /> */}
+          <Route path="/update-complex/:id" element={<UpdateComplex />} />
+          <Route path="/update-building/:id" element={<UpdateBuilding />} />
+          <Route path="/update-room" element={<UpdateRoom />} />
+          <Route path="/customer" element={<Customer />} />
+          <Route path="/review" element={<Review />} />
+          <Route path="/createRoom" element={<CreateUpdateRoom />} />
+          {/* </Route> */}
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
