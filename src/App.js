@@ -7,6 +7,7 @@ import Dashboard from "./Pages/Dashboard";
 import Room from "./Pages/Room";
 import Customer from "./Pages/Customer";
 import Review from "./Pages/Review";
+import Booking from "./Pages/Booking";
 import NotFound from "./Pages/NotFound";
 import CreateUpdateRoom from "./Pages/CreateUpdateRoom";
 import Register from "./Pages/Register";
@@ -47,6 +48,7 @@ function App() {
             <Route path="/update-room" element={<UpdateRoom />} />
             <Route path="/customer" element={<Customer />} />
             <Route path="/review" element={<Review />} />
+            <Route path="/booking" element={<Booking/>} />
             <Route path="/createRoom" element={<CreateUpdateRoom />} />
           </Route>
           
