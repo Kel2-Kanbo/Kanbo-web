@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-
-import FormInput from "../FormInput";
-import SelectWrap from "../SelectWrap";
-import FormWrapModal from "../FormWrapModal";
-import Button from "../Button";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+// import { v4 as uuidv4 } from "uuid";
 import {
-  createComplex,
   getCity,
   getDistrict,
+  createComplex,
   getProvince,
-} from "../../API/ApiFetch";
+} from "../../../API/ApiFetch";
+import { Link, useNavigate } from "react-router-dom";
+
+import FormInput from "../../../Components/FormInput";
+import SelectWrap from "../../../Components/SelectWrap";
+import FormWrap from "../../../Components/FormWrap";
+import Button from "../../../Components/Button";
+import Sidebar from "../../../Components/Sidebar";
+import Navbar from "../../../Components/Navbar";
 import Swal from "sweetalert2";
 
 export default function CreateComplex(props) {
-  const { handleClose, showModal } = props;
-
+  // const { handleClose, addComplex, city, district } = props;
   const navigate = useNavigate();
+
   const [data, setData] = useState({
     complexName: "",
     complexAddress: "",
@@ -27,23 +29,17 @@ export default function CreateComplex(props) {
   });
   const [msg, setMsg] = useState("");
 
-  const [province, setProvince] = useState([]);
-  console.log(province);
+  const [province, setProvince] = useState([
+    {
+      id: 0,
+      name: "",
+    },
+  ]);
   const [city, setCity] = useState([]);
-  console.log(city);
   const [district, setDistrict] = useState([]);
 
-  const getProvinceId = province.map((item) => {
-    return {
-      value: item.name,
-      id: item.id,
-    };
-  }
-  );
-
-  console.log(getProvinceId);
-  console.log(getProvinceId[0].id);
-  
+  console.log(province);
+  console.log(city);
 
   // const dataProvince = province?.map((item) => {
   //   return {
@@ -52,6 +48,9 @@ export default function CreateComplex(props) {
   // }
   // );
   // console.log(dataProvince);
+
+  const [provinceId, setProvinceId] = useState(0);
+  const [cityId, setCityId] = useState(0);
 
   // console.log(city);
   // const cityName = city?.map((item) => {
@@ -142,10 +141,6 @@ export default function CreateComplex(props) {
       ...data,
       [inputs[index].name]: value,
     });
-
-    // setProvince({
-    //   [inputs[index].name]: value,
-    // });
   };
 
   const _handleCreateComplex = (e) => {
@@ -238,7 +233,7 @@ export default function CreateComplex(props) {
   };
 
   const _handleClose = () => {
-    handleClose();
+    navigate("/complex");
     setInputs([
       {
         id: 0,
@@ -319,11 +314,10 @@ export default function CreateComplex(props) {
   //   }
   // };
 
-  //get city by province
-  const getCities = (id) => {
-    console.log(id);
+  //get city by province id
+  const getCities = async (provinceId) => {
     try {
-       getCity(id).then((response) => {
+      await getCity(provinceId).then((response) => {
         setCity(response);
         console.log(response);
       });
@@ -331,7 +325,6 @@ export default function CreateComplex(props) {
       console.log(error);
     }
   };
-
   // const getCities = async(id) => {
   //   try {
   //     await getCity(id).then((response) => {
@@ -343,9 +336,9 @@ export default function CreateComplex(props) {
   //   }
   // }
 
-  const getDistricts = async (id) => {
+  const getDistricts = async (city) => {
     try {
-      await getDistrict(id).then((response) => {
+      await getDistrict(city.id).then((response) => {
         setDistrict(response);
         console.log(response);
       });
@@ -392,88 +385,85 @@ export default function CreateComplex(props) {
     getAllProvince();
   }, []);
 
-  if (!showModal) return null;
-
   return (
-    <>
-      <div
-        onSubmit={_handleCreateComplex}
-        className="fixed flex-col gap-10 inset-0 bg-primary-black bg-opacity-30 backdrop-blur-md flex justify-center items-center"
-      >
-        <FormWrapModal>
-          <h3 className="text-2xl text-center font-bold">Create Complex</h3>
-          <p className="has-text-centered text-error-red">{msg}</p>
-          {inputs.map((input, inputIdx) =>
-            input.type !== "select" ? (
-              <>
-                <FormInput
-                  key={inputIdx}
-                  {...input}
-                  value={input.value}
-                  type={input.type}
-                  onChange={(e) => _handleChange(e.target.value, inputIdx)}
-                />
-              </>
-            ) : (
-              <>
-                <SelectWrap
-                  type={input.type}
-                  onChange={(e) => _handleChange(e.target.value, inputIdx)}
-                >
-                  <option value="">{input.placeholder}</option>
-                  {/* {input.options.map((option, optionIdx) => (
+    <div className=" flex bg-secondary-blue h-screen">
+      <Sidebar />
+      <Navbar />
+      <div className="basis-5/6">
+        <div className="px-4 py-4 mt-20">
+          <h1 className="text-3xl font-bold mb-4">Complex</h1>
+
+          <div className="flex items-center justify-between mb-6">
+            <FormWrap onSubmit={_handleCreateComplex}>
+              <h3 className="text-2xl text-center font-bold">Create Complex</h3>
+              <p className="has-text-centered text-error-red">{msg}</p>
+              {/* <div className="w-full grid grid-cols-1 gap-4"> */}
+              {inputs.map((input, inputIdx) =>
+                input.type !== "select" ? (
+                  <>
+                    <FormInput
+                      key={inputIdx}
+                      {...input}
+                      value={input.value}
+                      type={input.type}
+                      onChange={(e) => _handleChange(e.target.value, inputIdx)}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <SelectWrap
+                      type={input.type}
+                      onChange={(e) => _handleChange(e.target.value, inputIdx)}
+                    >
+                      <option value="">{input.placeholder}</option>
+                      {/* {input.options.map((option, optionIdx) => (
                           <option key={optionIdx} value={option}>
                             {option}
                           </option>
                         ))} */}
-                  {input.name === "province"
-                    ? province.map((option, optionIdx) => (
-                        <option
-                          key={optionIdx}
-                          value={option.id}
-                          onChange={() => getCities(option.id)}
-                        >
-                          {option.name}
-                        </option>
-                      ))
-                    : input.name === "city"
-                    ? city.map((option, optionIdx) => (
-                        <option
-                          key={optionIdx}
-                          value={option.id}
-                          onChange={() => getDistricts(option.id)}
-                        >
-                          {option.name}
-                        </option>
-                      ))
-                    : district.map((option, optionIdx) => (
-                        <option key={optionIdx} value={option.id}>
-                          {option.name}
-                        </option>
-                      ))}
-                </SelectWrap>
-              </>
-            )
-          )}
-
-          <div className="flex justify-between w-full text-primary-white">
-            <Button
-              className="font-bold bg-error-red uppercase px-6 py-3 text-sm rounded shadow mr-1 mb-1"
-              type="button"
-              onClick={_handleClose}
-            >
-              Close
-            </Button>
-            <Button
-              className="bg-primary-blue font-bold uppercase text-sm px-6 py-3 rounded shadow mr-1 mb-1"
-              type="button"
-              onClick={_handleCreateComplex}
-            >
-              Submit
-            </Button>
+                      {input.name === "province"
+                        ? province.map((option, optionIdx) => (
+                            <option key={optionIdx} value={option.id}>
+                              {option.name}
+                            </option>
+                          ))
+                        : input.name === "city"
+                        ? city.map((option, optionIdx) => (
+                            <option key={optionIdx} value={option.id}>
+                              {option.name}
+                            </option>
+                          ))
+                        : district.map((option, optionIdx) => (
+                            <option key={optionIdx} value={option.id}>
+                              {option.name}
+                            </option>
+                          ))}
+                    </SelectWrap>
+                  </>
+                )
+              )}
+              {/* </div> */}
+              <div className="w-full flex justify-end">
+                <div className="flex w-2/4 items-center gap-4">
+                  <Button
+                    className="font-bold bg-secondary-softblue text-primary-blue w-1/2 uppercase px-6 py-3 text-sm rounded shadow mr-1 mb-1"
+                    type="button" onClick={_handleClose}
+                  >
+                    Close
+                  </Button>
+                  <Button
+                    className="bg-primary-blue w-1/2 text-primary-white font-bold uppercase text-sm px-6 py-3 rounded shadow mr-1 mb-1"
+                    type="button"
+                    onClick={_handleCreateComplex}
+                  >
+                    Add Complex
+                  </Button>
+                </div>
+              </div>
+            </FormWrap>
           </div>
-        </FormWrapModal>
+        </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -3,12 +3,9 @@ import { Navigate } from 'react-router-dom'
 import Cookies from 'universal-cookie'
 import { Outlet } from 'react-router'
 
-const cookies = new Cookies()
+const cookie = new Cookies();
 
 export default function PrivateRoute() {
-    const token = cookies.get('Bearer')
-    if (!token) {
-        return <Navigate to="/login" />
-    }
-    return <Outlet />
+    const user = cookie.get("Bearer");
+    return user ? <Outlet/> : <Navigate to="/"/>
 }

@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import api from "../../API/Complex";
-import newAPI from "../../API/newAPI";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 import Button from "../../Components/Button";
 import Sidebar from "../../Components/Sidebar";
 import Navbar from "../../Components/Navbar";
 import CreateBuilding from "../../Components/CreateBuilding";
+// import CreateBuilding from "./CreateBuilding";
 import TableBuilding from "../../Components/TableBuilding";
-import { getBuilding } from "../../API/ApiFetch";
-// import { data } from "autoprefixer";
+import {
+  getBuilding,
+  createBuilding,
+  deleteBuilding,
+  editBuilding,
+  getComplex,
+} from "../../API/ApiFetch";
 
 export default function Building() {
-  const [showModal, setShowModal] = useState(false);
-  console.log(showModal);
   const [building, setBuilding] = useState([]);
   console.log(building);
+
+  const [showModal, setShowModal] = useState(false);
 
   const _handleOpenModal = () => {
     setShowModal(true);
@@ -25,21 +29,35 @@ export default function Building() {
     setShowModal(false);
   };
 
-  const getAllBuilding = async() => {
-    try{
+  //get building
+  const getAllBuilding = async () => {
+    try {
       await getBuilding().then((response) => {
         setBuilding(response);
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
+  // //get complex
+  // const getAllComplex = async () => {
+  //   try {
+  //     await getComplex().then((response) => {
+  //       setComplex(response);
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  //create building
   const addBuilding = async (data) => {
     try {
-      await newAPI
-        .post("/api/page/admin/building", data)
-        .then((response) => console.log(response));
+      await createBuilding(data).then((response) => {
+        console.log(response);
+        setBuilding([...building, response.data]);
+      });
     } catch (error) {
       if (error.response) {
         console.log(error.response.data.msg);
@@ -53,42 +71,72 @@ export default function Building() {
       }).then((result) => {
         if (result.isConfirmed) {
           setBuilding([...building, data]);
-          setShowModal(false);
         }
       });
     }
-    // const response = await newAPI.post("/api/page/admin/building/create", data);
-    // if (response.data) {
-    //   setBuilding([...building, response.data]);
-    //   setShowModal(false);
-    // }
   };
 
+  //delete building
   const removeBuilding = async (id) => {
-    const response = await newAPI.delete(`/api/page/admin/building/${id}`);
-    if (response.data) {
-      alert("Delete building success");
-      setBuilding(building.filter((item) => item.id !== id));
+    try {
+      await deleteBuilding(id).then((response) => {
+        Swal.fire({
+          title: "Do You Want To Delete This Building?",
+          text: `All data will be lost `,
+          confirmButtonColor: "#4C35E0",
+          confirmButtonText: "Delete",
+          showCancelButton: true,
+          cancelButtonText: "Cancel",
+          cancelButtonColor: "#4C35E0",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            setBuilding(building.filter((item) => item.id !== id));
+          }
+        });
+      });
+    } catch (error) {
+      if (error.response) {
+        Swal.fire({
+          title: "Error Can't Delete Building",
+          text: error.response.message,
+          confirmButtonColor: "#4C35E0",
+          confirmButtonText: "Ok!",
+        });
+      }
     }
   };
 
+  //update building
   const updateBuilding = async (data) => {
-    console.log(data);
-    console.log(data.id);
-    const response = await newAPI.put(
-      `/api/page/admin/building/${data.id}`,
-      data
-    );
-    const { id } = response.data;
-    console.log(response.data);
-    setBuilding(
-      building.map((data) => {
-        return data.id === id ? { ...response.data } : data;
-      })
-    );
-    if (response.data) {
-      const allBuilding = await getBuilding();
-      setBuilding(allBuilding);
+    try {
+      await editBuilding(data).then((response) => {
+        console.log(response);
+        setBuilding(
+          building.map((item) => (item.id === data.id ? data : item))
+        );
+      });
+
+      // if (response.status === 200) {
+      //   const allBuilding = await getBuilding();
+      //   setBuilding(allBuilding);
+      // }
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data.msg);
+      }
+    } finally {
+      Swal.fire({
+        title: "Update Building Success",
+        // text: `You `,
+        confirmButtonColor: "#4C35E0",
+        // confirmButtonText: "Ok!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setBuilding(
+            building.map((item) => (item.id === data.id ? data : item))
+          );
+        }
+      });
     }
   };
 
@@ -97,13 +145,31 @@ export default function Building() {
       const allBuilding = await getAllBuilding();
       if (allBuilding) {
         setBuilding(allBuilding);
-        console.log(allBuilding)
+        console.log(allBuilding);
       }
     };
     getAllBuildings();
   }, []);
 
+  // useEffect(() => {
+  //   const getAllComplexes = async () => {
+  //     const allComplex = await getAllComplex();
+  //     if (allComplex) {
+  //       setComplex(allComplex);
+  //       console.log(allComplex);
+  //     }
+  //   };
+  //   getAllComplexes();
+  // }, []);
+
   return (
+    // <div className='flex h-screen bg-secondary-softblue'>
+    //     <Sidebar />
+    //     <Navbar />
+    //   <div className='basis-5/6 pl-6'>
+    //     <div className="px-4 py-4 mt-20">
+    //       <h1 className="text-3xl font-bold mb-1">Building</h1>
+    //       <h4 className="text-md text-primary-gray">Manage Building</h4>
     <div className=" flex bg-secondary-blue h-screen">
       <Sidebar />
       <Navbar />
@@ -125,19 +191,23 @@ export default function Building() {
           </div>
           <div className="flex justify-end">
             <div className="w-auto ">
-              <Button
-                type="button"
-                className="bg-primary-blue text-primary-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-                onClick={_handleOpenModal}
-              >
-                Create Building
-              </Button>
+              {/* <Link to="/create-building"> */}
+                <Button
+                  type="button"
+                  className="bg-primary-blue text-primary-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                  onClick={_handleOpenModal}
+                >
+                  Create Building
+                  {/* <CreateBuilding/> */}
+                </Button>
+              {/* </Link> */}
             </div>
             {showModal ? (
               <CreateBuilding
                 handleClose={_handleCloseModal}
+                showModal={showModal}
                 addBuilding={addBuilding}
-                // getComplex={getComplex}
+                // complex={complex}
               />
             ) : null}
           </div>

@@ -64,6 +64,17 @@ export const SidebarData = [
     cName: 'nav-text',
   },
   {
+    title: 'Customer',
+    path: '/customer',
+    icon: <svg width="16" height="18" viewBox="0 0 16 18" fill="none" className='fill-primary-gray' xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 0.75C5.92893 0.75 4.25 2.42893 4.25 4.5C4.25 6.57107 5.92893 8.25 8 8.25C10.0711 8.25 11.75 6.57107 11.75 4.5C11.75 2.42893 10.0711 0.75 8 0.75Z" />
+    <path d="M4 10.25C1.92893 10.25 0.25 11.9289 0.25 14V15.1883C0.25 15.9415 0.795884 16.5837 1.53927 16.7051C5.8181 17.4037 10.1819 17.4037 14.4607 16.7051C15.2041 16.5837 15.75 15.9415 15.75 15.1883V14C15.75 11.9289 14.0711 10.25 12 10.25H11.6591C11.4746 10.25 11.2913 10.2792 11.1159 10.3364L10.2504 10.6191C8.78813 11.0965 7.21187 11.0965 5.74959 10.6191L4.88407 10.3364C4.70869 10.2792 4.52536 10.25 4.34087 10.25H4Z" />
+    </svg>
+    
+    ,
+    cName: 'nav-text',
+  },
+  {
     title: 'Booking',
     path: '/booking',
     icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className='fill-primary-gray' xmlns="http://www.w3.org/2000/svg">
@@ -83,48 +94,13 @@ export const SidebarData = [
     ,
     cName: 'nav-text',
   },
-];
-
-export const Menus = [
-  { title: "Dashboard", src: "Chart_fill" },
-  { title: "Inbox", src: "Chat" },
-  { title: "Room", path: "/room", src: "User", gap: true },
-  { title: "Schedule ", src: "Calendar" },
-  { title: "Search", src: "Search" },
-  { title: "Analytics", src: "Chart" },
-  { title: "Files ", src: "Folder", gap: true },
-  { title: "Setting", src: "Setting" },
-];
-
-export const menuItem = [
   {
-    path: "/",
-    name: "Dashboard",
-    icon: <FaTh />
+    title: 'Review',
+    path: '/review',
+    icon: <svg width="22" height="20" viewBox="0 0 22 20" fill="none" className='fill-primary-gray' xmlns="http://www.w3.org/2000/svg">
+    <path d="M11.865 0.996222C11.4796 0.332071 10.5205 0.332069 10.1351 0.996222L7.42107 5.67353C7.2307 6.00161 6.90165 6.22551 6.52659 6.28215L1.44027 7.05038C0.585991 7.17941 0.286331 8.25802 0.951637 8.80922L4.74073 11.9484C5.09147 12.239 5.25639 12.6974 5.17119 13.1448L4.18002 18.35C4.02334 19.1728 4.88712 19.8121 5.62827 19.4219L10.4177 16.9C10.7822 16.7081 11.2179 16.7081 11.5824 16.9L16.3718 19.4219C17.113 19.8121 17.9768 19.1728 17.8201 18.35L16.8289 13.1448C16.7437 12.6974 16.9087 12.239 17.2594 11.9484L21.0485 8.80922C21.7138 8.25802 21.4141 7.17941 20.5598 7.05038L15.4735 6.28215C15.0985 6.22551 14.7694 6.00161 14.579 5.67353L11.865 0.996222Z" />
+    </svg>
+    ,
+    cName: 'nav-text',
   },
-  {
-    path: "/about",
-    name: "About",
-    icon: <FaUserAlt />
-  },
-  {
-    path: "/room",
-    name: "Room",
-    icon: <FaRegChartBar />
-  },
-  {
-    path: "/comment",
-    name: "Comment",
-    icon: <FaCommentAlt />
-  },
-  {
-    path: "/product",
-    name: "Product",
-    icon: <FaShoppingBag />
-  },
-  {
-    path: "/productList",
-    name: "Product List",
-    icon: <FaThList />
-  }
 ];

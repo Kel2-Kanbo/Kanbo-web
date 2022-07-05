@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { menuItem, SidebarData } from '../SidebarData';
-import Logo from '../LogoCerah'
+import Logo from '../Logo'
 import { FaBars } from 'react-icons/fa';
 import { NavLink, useNavigate } from 'react-router-dom';
 
@@ -71,7 +71,7 @@ const Sidebar = () => {
                         <span style={{ display: isOpen ? "block" : "none" }} className='text-primary-black'>logout</span>
                     </NavLink>
                 </div>
-            </div>
+           </div>
         </>
     );
 };

@@ -81,13 +81,13 @@ export default function ForgotPassword() {
               </div>
             ))}
 
-            <Button onClick={_handleSend} type="submit" className="mt-2">
+            <Button onClick={_handleSend} type="submit" className="mt-2 bg-primary-blue text-secondary-softblue">
               Send
             </Button>
 
             <div className="mt-4 text-center">
               <p className="text-sm">
-                Didn't recieve the email? Check ypur span folder or{" "}
+                Didn't recieve the email? Check your span folder or{" "}
                 <a className="text-primary-blue" href="/register">
                   Resend email
                 </a>
