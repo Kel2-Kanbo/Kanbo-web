@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import Button from "../../Components/Button";
-import CreateRoom from "../../Components/CreateRoom";
+// import CreateRoom from "../../Components/CreateRoom";
 import TableRoom from "../../Components/TableRoom";
 import Sidebar from "../../Components/Sidebar";
 import Navbar from "../../Components/Navbar";
+import Pagination from "../../Components/Pagination";
 
 export default function Room() {
   const [showModal, setShowModal] = useState(false);
@@ -77,7 +78,6 @@ export default function Room() {
       <Navbar />
       <div className="basis-5/6 pl-6">
         <div className="px-4 py-4 mt-20">
-          <h1 className="text-3xl font-bold mb-4">Room</h1>
 
           <div className="flex items-center justify-between mb-6">
             <div className="text-sm">
@@ -88,6 +88,7 @@ export default function Room() {
               </select>
             </div>
             <div className="w-auto">
+              <Link to="/create-room">
               <Button
                 type="button"
                 className="bg-primary-blue text-primary-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
@@ -95,15 +96,17 @@ export default function Room() {
               >
                 Create Room
               </Button>
+                </Link>
             </div>
-            {showModal ? (
+            {/* {showModal ? (
               <CreateRoom
                 handleClose={_handleCloseModal}
                 showModal={showModal}
                 // addRoom={addRoom}
               />
-            ) : null}
+            ) : null} */}
           </div>
+          <Pagination/>
 
           <div className="bg-primary-white items-center">
             <TableRoom

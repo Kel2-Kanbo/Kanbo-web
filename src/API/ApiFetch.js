@@ -20,7 +20,7 @@ export const getBuilding = async () => {
 
 export const createBuilding = async (data) => {
   const response = await axios.post(BASE_URL + "building/create", data, config);
-  return response.data;
+  return response.data; 
 };
 
 export const deleteBuilding = async (id) => {
@@ -97,3 +97,8 @@ export const editRoom = async (id, data) => {
   const response = await axios.put(BASE_URL + "room/" + id, data, config);
   return response.data;
 };
+
+export const  createRoomItem = async (data) => {
+  const response = await axios.post(BASE_URL + "building/room-item/create", data, config);
+  return response.data;
+}

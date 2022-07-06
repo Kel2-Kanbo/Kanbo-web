@@ -16,7 +16,6 @@ const Review = () => {
         <Navbar />
       <div className='basis-5/6'>
         <div className="px-4 py-4 mt-20">
-          <h1 className="text-3xl font-bold mb-1">MANAGE REVIEW</h1>
           <div className="flex justify-end">
             <div className="w-auto">
             </div>

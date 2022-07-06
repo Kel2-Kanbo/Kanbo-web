@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import EditComplex from "../EditComplex";
 import ButtonIconDelete from "../ButtonIconDelete";
 import ButtonIconEdit from "../ButtonIconEdit";
-import UpdateComplex from "../../Pages/Complex/UpdateComplex";
+import UpdateComplex from "../../Pages/UpdateComplex";
 import { Link } from "react-router-dom";
 
 export default function TableComplex(props) {
