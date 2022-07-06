@@ -18,6 +18,8 @@ import Navbar from "../../Components/Navbar";
 import Pagination from "../../Components/Pagination";
 import Sidebar from "../../Components/Sidebar";
 import TableComplex from "../../Components/TableComplex";
+import api from "../../API/Complex";
+
 
 const Complex = () => {
   const [complex, setComplex] = useState([]);
@@ -31,74 +33,87 @@ const Complex = () => {
   const _handleCloseModal = () => {
     setShowModal(false);
   };
-
   //get complex data from the server
-  const getComplexes = async () => {
-    try {
-      await getComplex().then((response) => {
-        setComplex(response);
-      });
-    } catch (error) {
-      console.log(error);
-    }
+  const getComplex = async () => {
+    const response = await api.get("/complex");
+    return response.data;
   };
-
-  // //add complex
-  const addComplex = async (data) => {
-    try {
-      await createComplex(data).then((response) => {
-        if (response.data) {
-          Swal.fire({
-            title: "Create Complex Success",
-            confirmButtonColor: "#4C35E0",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              setComplex([...complex, response.data]);
-              setShowModal(false);
-            }
-          });
-        }
-        console.log(response);
-      });
-    } catch (error) {
-      if (error.response) {
-        console.log(error.response.data.msg);
+  useEffect(() => {
+    const getAllComplex = async () => {
+      const allComplex = await getComplex();
+      if (allComplex) {
+        setComplex(allComplex);
       }
-    }
-  };
+    };
+    getAllComplex();
+  }, []);
+  //get complex data from the server
+  // const getComplexes = async () => {
+  //   try {
+  //     await getComplex().then((response) => {
+  //       setComplex(response);
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  // //remove complex
-  const removeComplex = async (id) => {
-    try {
-      await deleteComplex(id).then((response) => {
-        console.log(response);
-        if (response.status === 200) {
-          Swal.fire({
-            title: "Do You Want To Delete This Building?",
-            text: `All data will be lost `,
-            showCancelButton: true,
-            cancelButtonText: "Cancel",
-            confirmButtonColor: "#4C35E0",
-            confirmButtonText: "Delete",
-            cancelButtonColor: "#4C35E0",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              setComplex(complex.filter((complex) => complex.id !== id));
-            }
-          });
-        }
-      });
-    } catch (error) {
-      if (error.response) {
-        Swal.fire({
-          title: "Error Can't Delete Complex",
-          text: error.response.message,
-          confirmButtonColor: "#4C35E0",
-          confirmButtonText: "Ok!",
-        });
-      }
-    }
-  };
+  // // //add complex
+  // const addComplex = async (data) => {
+  //   try {
+  //     await createComplex(data).then((response) => {
+  //       if (response.data) {
+  //         Swal.fire({
+  //           title: "Create Complex Success",
+  //           confirmButtonColor: "#4C35E0",
+  //         }).then((result) => {
+  //           if (result.isConfirmed) {
+  //             setComplex([...complex, response.data]);
+  //             setShowModal(false);
+  //           }
+  //         });
+  //       }
+  //       console.log(response);
+  //     });
+  //   } catch (error) {
+  //     if (error.response) {
+  //       console.log(error.response.data.msg);
+  //     }
+  //   }
+  // };
+
+  // // //remove complex
+  // const removeComplex = async (id) => {
+  //   try {
+  //     await deleteComplex(id).then((response) => {
+  //       console.log(response);
+  //       if (response.status === 200) {
+  //         Swal.fire({
+  //           title: "Do You Want To Delete This Building?",
+  //           text: `All data will be lost `,
+  //           showCancelButton: true,
+  //           cancelButtonText: "Cancel",
+  //           confirmButtonColor: "#4C35E0",
+  //           confirmButtonText: "Delete",
+  //           cancelButtonColor: "#4C35E0",
+  //         }).then((result) => {
+  //           if (result.isConfirmed) {
+  //             setComplex(complex.filter((complex) => complex.id !== id));
+  //           }
+  //         });
+  //       }
+  //     });
+  //   } catch (error) {
+  //     if (error.response) {
+  //       Swal.fire({
+  //         title: "Error Can't Delete Complex",
+  //         text: error.response.message,
+  //         confirmButtonColor: "#4C35E0",
+  //         confirmButtonText: "Ok!",
+  //       });
+  //     }
+  //   }
+  // };
 
   // const getProvinces = async () => {
   //   try {
@@ -132,38 +147,38 @@ const Complex = () => {
   //   }
   // };
 
-  useEffect(() => {
-    const getAllComplex = async () => {
-      const allComplex = await getComplexes();
-      if (allComplex) {
-        setComplex(allComplex);
-      }
-    };
-    getAllComplex();
+  // useEffect(() => {
+  //   const getAllComplex = async () => {
+  //     const allComplex = await getComplexes();
+  //     if (allComplex) {
+  //       setComplex(allComplex);
+  //     }
+  //   };
+  //   getAllComplex();
 
-    // const getAllCity = async () => {
-    //   const allCity = await getCities()
-    //   if(allCity) {
-    //     setCity(allCity)
-    //   }
-    // };
-    // getAllCity();
+  // const getAllCity = async () => {
+  //   const allCity = await getCities()
+  //   if(allCity) {
+  //     setCity(allCity)
+  //   }
+  // };
+  // getAllCity();
 
-    // const getAllDistrict = async () => {
-    //   const allDistrict = await getDistricts();
-    //   if (allDistrict) {
-    //     setDistrict(allDistrict);
-    //   }
-    // };
-    // getAllDistrict();
+  // const getAllDistrict = async () => {
+  //   const allDistrict = await getDistricts();
+  //   if (allDistrict) {
+  //     setDistrict(allDistrict);
+  //   }
+  // };
+  // getAllDistrict();
 
-    // const getAllProvince = async () => {
-    //   const allProvince = await getProvinces();
-    //   if (allProvince) {
-    //     setProvince(allProvince);
-    //   }
-    // }
-  }, []);
+  // const getAllProvince = async () => {
+  //   const allProvince = await getProvinces();
+  //   if (allProvince) {
+  //     setProvince(allProvince);
+  //   }
+  // }
+  // }, []);
 
   return (
     <div className="flex h-screen bg-secondary-softblue">
@@ -189,13 +204,16 @@ const Complex = () => {
               <CreateComplex
                 showModal={showModal}
                 handleClose={_handleCloseModal}
-                addComplex={addComplex}
+              // addComplex={addComplex}
               />
             ) : null} */}
           </div>
           <Pagination/>
           <div className="bg-primary-white items-center rounded mt-4">
-            <TableComplex complex={complex} removeComplex={removeComplex} />
+            <TableComplex
+              complex={complex}
+            // removeComplex={removeComplex}
+            />
           </div>
         </div>
       </div>
