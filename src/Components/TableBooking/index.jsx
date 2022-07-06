@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 
 import ButtonIconDelete from "../ButtonIconDelete";
+import ButtonIconEdit from "../ButtonIconEdit";
 
-export default function TableCust(props){
+export default function TableBooking(props){
 
-    const {customer, removeCustomer} = props;
+    const {booking, editBooking, removeBooking} = props;
 
     return(
     <div>
@@ -18,37 +19,43 @@ export default function TableCust(props){
                     scope="col"
                     className="text-base font-medium text-textColor-black px-6 py-4 text-left"
                   >
-                    Customer name
+                    ID Order
                   </th>
                   <th
                     scope="col"
                     className="text-base font-medium text-textColor-black px-6 py-4 text-left"
                   >
-                    Username
+                    Name
                   </th>
                   <th
                     scope="col"
                     className="text-base font-medium text-textColor-black px-6 py-4 text-left"
                   >
-                    Email
+                    Room Booked
                   </th>
                   <th
                     scope="col"
                     className="text-base font-medium text-textColor-black px-6 py-4 text-left"
                   >
-                    Province
+                    Payment
                   </th>
                   <th
                     scope="col"
                     className="text-base font-medium text-textColor-black px-6 py-4 text-left"
                   >
-                    City
+                    Date
                   </th>
                   <th
                     scope="col"
                     className="text-base font-medium text-textColor-black px-6 py-4 text-left"
                   >
-                    District
+                    Total
+                  </th>
+                  <th
+                    scope="col"
+                    className="text-base font-medium text-textColor-black px-6 py-4 text-left"
+                  >
+                    Status
                   </th>
                   <th
                     scope="col"
@@ -59,28 +66,34 @@ export default function TableCust(props){
                 </tr >
               </thead >
               <tbody>
-                {customer?.map((customer) => (
+                {booking?.map((booking) => (
                   <tr className="odd:bg-secondary-softblue text-primary-gray">
                     <td className="px-6 py-4 whitespace-no-wrap">
-                      {customer.customerName}
+                      {booking.idOrder}
                     </td>
                     <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
-                      {customer.userName}
+                      {booking.name}
                     </td>
                     <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
-                      {customer.email}
+                      {booking.roomBooked}
                     </td>
                     <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
-                      {customer.province}
+                      {booking.payment}
                     </td>
                     <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
-                      {customer.city}
+                      {booking.date}
                     </td>
                     <td className="text-base text-textColor-blackThin  px-6 py-4 whitespace-nowrap">
-                      {customer.districs}
+                      {booking.total}
+                    </td>
+                    <td className="text-base text-textColor-blackThin  px-6 py-4 whitespace-nowrap">
+                      {booking.status}
                     </td>
                     <td className="flex justify-center gap-8 px-6 py-4 whitespace-nowrap">
-                      <button onClick={() => removeCustomer(customer.id)}>
+                      <button onClick={() => editBooking(booking.idOrder)}>
+                        <ButtonIconEdit/>
+                      </button>
+                      <button onClick={() => removeBooking(booking.idOrder)}>
                         <ButtonIconDelete />
                       </button>
                     </td>

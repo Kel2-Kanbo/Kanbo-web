@@ -6,6 +6,7 @@ import Complex from "./Pages/Complex";
 import Dashboard from "./Pages/Dashboard";
 import Room from "./Pages/Room";
 import Customer from "./Pages/Customer";
+import Booking from "./Pages/Booking";
 import Review from "./Pages/Review";
 import Chat from "./Pages/Chat";
 import NotFound from "./Pages/NotFound";
@@ -52,8 +53,9 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/update-room" element={<UpdateRoom />} />
             <Route path="/customer" element={<Customer />} />
+            <Route path="/booking" element={<Booking/>} />
             <Route path="/review" element={<Review />} />
-            
+
           <Route path="/createRoom" element={<CreateUpdateRoom />} />
           {/* </Route> */}
  
