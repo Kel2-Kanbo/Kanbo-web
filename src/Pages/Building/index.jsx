@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Button from "../../Components/Button";
 import Sidebar from "../../Components/Sidebar";
@@ -19,8 +19,6 @@ import {
 export default function Building() {
   const [building, setBuilding] = useState([]);
   console.log(building);
-
-  
 
   //get building
   const getAllBuilding = async () => {
@@ -73,25 +71,29 @@ export default function Building() {
   const removeBuilding = async (id) => {
     try {
       await deleteBuilding(id).then((response) => {
-        console.log(response);
-        setBuilding(building.filter((item) => item.id !== id));
+        Swal.fire({
+          title: "Do You Want To Delete This Building?",
+          text: `All data will be lost `,
+          confirmButtonColor: "#4C35E0",
+          confirmButtonText: "Delete",
+          showCancelButton: true,
+          cancelButtonText: "Cancel",
+          cancelButtonColor: "#4C35E0",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            setBuilding(building.filter((item) => item.id !== id));
+          }
+        });
       });
     } catch (error) {
-      console.log(error);
-    } finally {
-      Swal.fire({
-        title: "Do You Want To Delete This Building?",
-        text: `All data will be lost `,
-        confirmButtonColor: "#4C35E0",
-        confirmButtonText: "Delete",
-        showCancelButton: true,
-        cancelButtonText: "Cancel",
-        cancelButtonColor: "#4C35E0",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          setBuilding(building.filter((item) => item.id !== id));
-        }
-      });
+      if (error.response) {
+        Swal.fire({
+          title: "Error Can't Delete Building",
+          text: error.response.message,
+          confirmButtonColor: "#4C35E0",
+          confirmButtonText: "Ok!",
+        });
+      }
     }
   };
 
@@ -186,14 +188,14 @@ export default function Building() {
           <div className="flex justify-end">
             <div className="w-auto ">
               <Link to="/create-building">
-              <Button
-                type="button"
-                className="bg-primary-blue text-primary-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-                // onClick={building}
-              >
-                Create Building
-                {/* <CreateBuilding/> */}
-              </Button>
+                <Button
+                  type="button"
+                  className="bg-primary-blue text-primary-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                  // onClick={building}
+                >
+                  Create Building
+                  {/* <CreateBuilding/> */}
+                </Button>
               </Link>
             </div>
             {/* {showModal ? (

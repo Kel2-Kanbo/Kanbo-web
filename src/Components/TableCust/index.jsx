@@ -1,20 +1,12 @@
 import React, { useState } from "react";
 
-import EditComplex from "../EditComplex";
 import ButtonIconDelete from "../ButtonIconDelete";
-import ButtonIconEdit from "../ButtonIconEdit";
-import UpdateComplex from "../../Pages/Complex/UpdateComplex";
-import { Link } from "react-router-dom";
 
-export default function TableComplex(props) {
-  const { complex, removeComplex, updateComplex } = props;
-  const setDataComplex = (complex) => {
-    console.log(complex);
-  }
+export default function TableCust(props){
 
-  let angka = 0;
+    const {customer, removeCustomer} = props;
 
-  return (
+    return(
     <div>
       <div className="flex flex-col">
         <div className="inline-block min-w-full p-2">
@@ -26,19 +18,25 @@ export default function TableComplex(props) {
                     scope="col"
                     className="text-base font-medium text-textColor-black px-6 py-4 text-left"
                   >
-                    No
+                    Customer name
                   </th>
                   <th
                     scope="col"
                     className="text-base font-medium text-textColor-black px-6 py-4 text-left"
                   >
-                    Complex Name
+                    Username
                   </th>
                   <th
                     scope="col"
                     className="text-base font-medium text-textColor-black px-6 py-4 text-left"
                   >
-                    Address
+                    Email
+                  </th>
+                  <th
+                    scope="col"
+                    className="text-base font-medium text-textColor-black px-6 py-4 text-left"
+                  >
+                    Province
                   </th>
                   <th
                     scope="col"
@@ -54,71 +52,45 @@ export default function TableComplex(props) {
                   </th>
                   <th
                     scope="col"
-                    className="text-base font-medium text-textColor-black px-6 py-4 text-left"
-                  >
-                    Building
-                  </th>
-                  <th
-                    scope="col"
                     className="text-base font-medium text-textColor-black px-6 py-4 text-center"
                   >
                     Actions
                   </th>
-                </tr>
-              </thead>
+                </tr >
+              </thead >
               <tbody>
-                {complex?.map((complex, complexIdx) => (
-                  <tr
-                    key={complexIdx}
-                    className="odd:bg-secondary-softblue text-primary-gray"
-                  >
+                {customer?.map((cust) => (
+                  <tr className="odd:bg-secondary-softblue text-primary-gray">
                     <td className="px-6 py-4 whitespace-no-wrap">
-                      {(angka = angka + 1)}
+                      {customer.customerName}
                     </td>
                     <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
-                      {complex.complex_name}
+                      {customer.userName}
                     </td>
                     <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
-                      {complex.address}
+                      {customer.email}
                     </td>
                     <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
-                      {complex.city_name}
+                      {customer.province}
                     </td>
                     <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
-                      {complex.district_name}
+                      {customer.city}
                     </td>
                     <td className="text-base text-textColor-blackThin  px-6 py-4 whitespace-nowrap">
-                      {complex.numOfBuilding}
+                      {customer.districs}
                     </td>
                     <td className="flex justify-center gap-8 px-6 py-4 whitespace-nowrap">
-                      <button>
-                        <Link
-                          to= {`/update-complex/${complex.id}`}
-                          state={{complex}}
-                          key={complexIdx}
-                          onClick={() => setDataComplex(complex)}
-                        >
-                          <ButtonIconEdit />
-                        </Link>
-                      </button>
-                      <button onClick={() => removeComplex(complex.id)}>
+                      <button onClick={() => removeCustomer(customer.id)}>
                         <ButtonIconDelete />
                       </button>
                     </td>
                   </tr>
                 ))}
               </tbody>
-            </table>
-            {/* {showModalEdit ? (
-              <EditComplex
-                handleClose={_handleCloseModalEdit}
-                updateComplex={updateComplex}
-                complex={complex}
-              />
-            ) : null} */}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+            </table >
+          </div >
+        </div >
+      </div >
+    </div >
+    );
 }
