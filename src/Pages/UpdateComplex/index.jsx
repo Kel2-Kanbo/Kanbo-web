@@ -5,15 +5,15 @@ import {
   getDistrict,
   getProvince,
   editComplex,
-} from "../../../API/ApiFetch";
+} from "../../API/ApiFetch";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import FormInput from "../../../Components/FormInput";
-import SelectWrap from "../../../Components/SelectWrap";
-import FormWrap from "../../../Components/FormWrap";
-import Button from "../../../Components/Button";
-import Sidebar from "../../../Components/Sidebar";
-import Navbar from "../../../Components/Navbar";
+import FormInput from "../../Components/FormInput";
+import SelectWrap from "../../Components/SelectWrap";
+import FormWrap from "../../Components/FormWrap";
+import Button from "../../Components/Button";
+import Sidebar from "../../Components/Sidebar";
+import Navbar from "../../Components/Navbar";
 import Swal from "sweetalert2";
 
 export default function UpdateComplex(props) {

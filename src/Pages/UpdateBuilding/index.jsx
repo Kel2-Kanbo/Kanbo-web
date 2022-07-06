@@ -1,23 +1,35 @@
-import React, { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
+import React, { useState, useEffect, useContext } from "react";
+// import { v4 as uuidv4 } from "uuid";
 import {
-  getComplex,
-  createBuilding,
-  createNearby,
-  getCategoryNearby,
-} from "../../../API/ApiFetch";
+    getComplex,
+    createBuilding,
+    createNearby,
+    getCategoryNearby,
+} from "../../API/ApiFetch"
+import { Link, useLocation } from "react-router-dom";
 
-import FormInput from "../../../Components/FormInput";
-import SelectWrap from "../../../Components/SelectWrap";
-import FormWrap from "../../../Components/FormWrap";
-import Button from "../../../Components/Button";
-import FormTextArea from "../../../Components/FormTextArea";
-import Sidebar from "../../../Components/Sidebar";
-import Navbar from "../../../Components/Navbar";
-import ListNearbyFacility from "./ListNearbyFacility";
+import FormInput from "../../Components/FormInput";
+import SelectWrap from "../../Components/SelectWrap";
+import FormWrap from "../../Components/FormWrap";
+import FormTextArea from "../../Components/FormTextArea";
+import Button from "../../Components/Button";
+import Sidebar from "../../Components/Sidebar";
+import Navbar from "../../Components/Navbar";
+import ListNearbyFacility from "../../Components/ListNearbyFacility";
 
-export default function CreateBuilding(props) {
-  //   const { createBuilding, complex } = props;
+export default function UpdateBuilding(props) {
+  const location = useLocation();
+  const state = location.state;
+  const [building, setBuilding] = useState(state);
+  console.log(building);
+  const value = Object.values(building);
+  console.log(value);
+  const getDataBuilding = value?.map((item) => {
+    return item;
+  });
+  console.log(getDataBuilding);
+  // console.log(getDataBuilding[0].id);
+
   const [complex, setComplex] = useState([]);
   console.log(complex);
 
@@ -49,7 +61,7 @@ export default function CreateBuilding(props) {
       name: "buildingName",
       type: "text",
       placeholder: "Building Name",
-      value: "",
+      value: getDataBuilding[0].buildingName,
       required: true,
     },
     {
@@ -57,7 +69,7 @@ export default function CreateBuilding(props) {
       name: "jumlahRoom",
       type: "number",
       placeholder: "Jumlah Room",
-      value: "",
+      value: getDataBuilding[0].numOfRooms,
       required: true,
     },
     {
@@ -65,7 +77,7 @@ export default function CreateBuilding(props) {
       name: "address",
       type: "text",
       placeholder: "Address",
-      value: "",
+      value: getDataBuilding[0].complexAdress,
       required: true,
     },
     {
@@ -74,7 +86,7 @@ export default function CreateBuilding(props) {
       type: "select",
       placeholder: "Complex Name",
       //   options: complex_name,
-      value: "",
+      value: getDataBuilding[0].complexName,
       required: true,
     },
 
@@ -83,7 +95,7 @@ export default function CreateBuilding(props) {
       name: "description",
       type: "textarea",
       placeholder: "Description",
-      value: "",
+      value: getDataBuilding[0].description,
       required: true,
     },
   ]);
@@ -243,7 +255,7 @@ export default function CreateBuilding(props) {
     });
   };
 
-  const _handleCreateBuilding = (e) => {
+  const _handleUpdateBuilding = (e) => {
     if (
       inputs[0].value &&
       inputs[1].value &&
@@ -353,6 +365,7 @@ export default function CreateBuilding(props) {
     getAllCategories();
   }, []);
 
+
   return (
     <div className=" flex bg-secondary-blue h-screen">
       <Sidebar />
@@ -362,8 +375,8 @@ export default function CreateBuilding(props) {
           <h1 className="text-3xl font-bold mb-4">Building</h1>
 
           <div className="flex items-center justify-between mb-6">
-            <FormWrap onSubmit={_handleCreateBuilding}>
-              <h3 className="text-2xl text-left font-bold">Create Building</h3>
+            <FormWrap onSubmit={_handleUpdateBuilding}>
+              <h3 className="text-2xl text-left font-bold">Update Building</h3>
               <p className="has-text-centered text-error-red">{msg}</p>
               <div className="w-full grid grid-cols-2 gap-4">
                 {inputs.map((input, inputIdx) =>
@@ -389,7 +402,7 @@ export default function CreateBuilding(props) {
                         }
                         value={input.value}
                       >
-                        <option value="">Complex</option>
+                        <option value="">{input.value}</option>
                         {complex.map((complex, complexIdx) => (
                           <option key={complexIdx} value={complex.id}>
                             {complex.complex_name}
@@ -489,6 +502,7 @@ export default function CreateBuilding(props) {
 
               <ListNearbyFacility nearby={nearby} />
 
+          
               <div className="w-full flex justify-end">
                 <div className="flex w-2/4 items-center gap-4">
                   <Button
@@ -500,9 +514,9 @@ export default function CreateBuilding(props) {
                   <Button
                     className="bg-primary-blue w-1/2 text-primary-white font-bold uppercase text-sm px-6 py-3 rounded shadow mr-1 mb-1"
                     type="button"
-                    onClick={_handleCreateBuilding}
+                    onClick={_handleUpdateBuilding}
                   >
-                    Create Building
+                    Update Complex
                   </Button>
                 </div>
               </div>

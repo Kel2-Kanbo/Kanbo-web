@@ -30,9 +30,11 @@ export default function CreateComplex(props) {
   const [province, setProvince] = useState([]);
   console.log(province);
   const [city, setCity] = useState([]);
+  console.log(city);
   const [district, setDistrict] = useState([]);
 
-  console.log(city);
+  const [provinceId, setProvinceId] = useState(province)
+  console.log(provinceId)
 
   // const dataProvince = province?.map((item) => {
   //   return {
@@ -131,6 +133,10 @@ export default function CreateComplex(props) {
       ...data,
       [inputs[index].name]: value,
     });
+
+    setProvinceId({
+      [inputs[index].name]: value,
+    })
 
     // setProvince({
     //   [inputs[index].name]: value,
@@ -309,10 +315,10 @@ export default function CreateComplex(props) {
   // };
 
   //get city by province
-  const getCities = async (id) => {
-    console.log(id);
+  const getCities = async (provinceId) => {
+    console.log(provinceId);
     try {
-      await getCity(id).then((response) => {
+      getCity(provinceId).then((response) => {
         setCity(response);
         console.log(response);
       });
@@ -320,6 +326,8 @@ export default function CreateComplex(props) {
       console.log(error);
     }
   };
+
+  // const getCityById 
 
   // const getCities = async(id) => {
   //   try {
@@ -410,17 +418,13 @@ export default function CreateComplex(props) {
                   onChange={(e) => _handleChange(e.target.value, inputIdx)}
                 >
                   <option value="">{input.placeholder}</option>
-                  {/* {input.options.map((option, optionIdx) => (
-                          <option key={optionIdx} value={option}>
-                            {option}
-                          </option>
-                        ))} */}
+                  
                   {input.name === "province"
                     ? province.map((option, optionIdx) => (
                         <option
                           key={optionIdx}
                           value={option.id}
-                          onChange={() => getCities(option.id)}
+                          // onChange={() => getCities(provinceId)}
                         >
                           {option.name}
                         </option>
@@ -430,7 +434,7 @@ export default function CreateComplex(props) {
                         <option
                           key={optionIdx}
                           value={option.id}
-                          onChange={() => getDistricts(option.id)}
+                          // onChange={() => getDistricts(option.id)}
                         >
                           {option.name}
                         </option>

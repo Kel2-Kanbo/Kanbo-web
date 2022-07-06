@@ -17,11 +17,12 @@ import EditComplexPages from "./Components/EditComplexPages";
 import ForgotPassword from "./Pages/ForgotPassword";
 import NewPassword from "./Pages/NewPassword";
 import PrivateRoute from "./PrivateRoute";
-import CreateComplex from "./Pages/Complex/CreateComplex";
-import CreateBuilding from "./Pages/Building/CreateBuilding";
-import UpdateComplex from "./Pages/Complex/UpdateComplex";
-import UpdateBuilding from "./Pages/Building/UpdateBuilding";
-import UpdateRoom from "./Pages/Room/UpdateRoom";
+import CreateComplex from "./Pages/CreateComplex";
+import CreateBuilding from "./Pages/CreateBuilding";
+import CreateRoom from "./Pages/CreateRoom";
+import UpdateComplex from "./Pages/UpdateComplex";
+import UpdateBuilding from "./Pages/UpdateBuilding";
+import UpdateRoom from "./Pages/UpdateRoom";
 
 function App() {
   return (
@@ -39,19 +40,23 @@ function App() {
 
           {/* <Route element={<PrivateRoute />}> */}
           <Route path="/complex" element={<Complex />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/building" element={<Building />} />
-          <Route path="/room" element={<Room />} />
-          {/* <Route path="/create-building" element={<CreateBuilding />} /> */}
-          {/* <Route path="/create-complex" element={<CreateComplex />} /> */}
-          <Route path="/update-complex/:id" element={<UpdateComplex />} />
-          <Route path="/update-building/:id" element={<UpdateBuilding />} />
-          <Route path="/update-room" element={<UpdateRoom />} />
-          <Route path="/customer" element={<Customer />} />
-          <Route path="/review" element={<Review />} />
+            <Route path="/create-complex" element={<CreateComplex />} />
+            <Route path="/building" element={<Building />} />
+            <Route path="/create-building" element={<CreateBuilding />} />
+            <Route path="/room" element={<Room />} />
+            <Route path="/create-room" element={<CreateRoom />} />
+            <Route path="/update-complex/:id" element={<UpdateComplex />} />
+            <Route path="/update-building/:id" element={<UpdateBuilding />} />
+            <Route path="/update-room/:id" element={<UpdateRoom />} />
+            
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/update-room" element={<UpdateRoom />} />
+            <Route path="/customer" element={<Customer />} />
+            <Route path="/review" element={<Review />} />
+            
           <Route path="/createRoom" element={<CreateUpdateRoom />} />
           {/* </Route> */}
-
+ 
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
