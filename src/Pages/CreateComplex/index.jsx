@@ -5,15 +5,15 @@ import {
   getDistrict,
   createComplex,
   getProvince,
-} from "../../../API/ApiFetch";
+} from "../../API/ApiFetch"
 import { Link, useNavigate } from "react-router-dom";
 
-import FormInput from "../../../Components/FormInput";
-import SelectWrap from "../../../Components/SelectWrap";
-import FormWrap from "../../../Components/FormWrap";
-import Button from "../../../Components/Button";
-import Sidebar from "../../../Components/Sidebar";
-import Navbar from "../../../Components/Navbar";
+import FormInput from "../../Components/FormInput";
+import SelectWrap from "../../Components/SelectWrap";
+import FormWrap from "../../Components/FormWrap";
+import Button from "../../Components/Button";
+import Sidebar from "../../Components/Sidebar";
+import Navbar from "../../Components/Navbar";
 import Swal from "sweetalert2";
 
 export default function CreateComplex(props) {
@@ -391,8 +391,6 @@ export default function CreateComplex(props) {
       <Navbar />
       <div className="basis-5/6">
         <div className="px-4 py-4 mt-20">
-          <h1 className="text-3xl font-bold mb-4">Complex</h1>
-
           <div className="flex items-center justify-between mb-6">
             <FormWrap onSubmit={_handleCreateComplex}>
               <h3 className="text-2xl text-center font-bold">Create Complex</h3>
