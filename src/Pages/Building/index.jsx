@@ -79,7 +79,7 @@ export default function Building() {
     <div className=" flex bg-secondary-blue h-screen">
       <Sidebar />
       <Navbar />
-      <div className="basis-5/6">
+      <div className="basis-5/6 ml-6">
         <div className='px-4 py-4 mt-20'>
           <h1 className="text-3xl font-bold mb-4">Building</h1>
 
