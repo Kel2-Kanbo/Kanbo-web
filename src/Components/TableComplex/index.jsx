@@ -76,25 +76,25 @@ export default function TableComplex(props) {
                       {(angka = angka + 1)}
                     </td>
                     <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
-                      {complex.complexName}
+                      {complex.complex_name}
                     </td>
                     <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
-                      {complex.complexAddress}
+                      {complex.address}
                     </td>
                     <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
-                      {complex.city}
+                      {complex.city_name}
                     </td>
                     <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
-                      {complex.district}
+                      {complex.district_name}
                     </td>
                     <td className="text-base text-textColor-blackThin  px-6 py-4 whitespace-nowrap">
-                      {complex.building}
+                      {complex.numOfBuilding}
                     </td>
                     <td className="flex justify-center gap-8 px-6 py-4 whitespace-nowrap">
                       <button>
                         <Link
-                          to={`/update-complex/${complex.id}`}
-                          state={{ complex }}
+                          to= {`/update-complex/${complex.id}`}
+                          state={{complex}}
                           key={complexIdx}
                           onClick={() => setDataComplex(complex)}
                         >

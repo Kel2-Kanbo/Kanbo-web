@@ -19,7 +19,7 @@ const NAVBAR_TEXTS = [
   { pages: "Customer", link: "/customer" },
   { pages: "Manage Review", link: "/review" },
   { pages: "Chat", link: "/chat" },
-  { pages: "Manage Order", link: "/order" },
+  { pages: "Manage Booking", link: "/booking" },
 
 ];
 

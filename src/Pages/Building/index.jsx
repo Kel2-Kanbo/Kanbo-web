@@ -175,7 +175,7 @@ export default function Building() {
       <Navbar />
       <div className="basis-5/6">
         <div className="px-4 py-4 mt-20">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between mb-2">
             <div className="text-sm">
               <select className="text-textColor-blackThin whitespace-nowrap px-4 py-3 rounded border bg-primary-white">
                 <option
@@ -186,7 +186,6 @@ export default function Building() {
                 </option>
               </select>
             </div>
-          </div>
           <div className="flex justify-end">
             <div className="w-auto ">
               <Link to="/create-building">
@@ -199,6 +198,7 @@ export default function Building() {
                 </Button>
               </Link>
             </div>
+          </div>
             {/* {showModal ? (
               <CreateBuilding
                 handleClose={_handleCloseModal}
