@@ -15,7 +15,7 @@ const NAVBAR_TEXTS = [
   { pages: "Update Building", path: "/update-building/:id" },
   { pages: "Complex", path: "/complex" },
   { pages: "Create Complex", path: "/create-complex" },
-  { pages: "Update Complex", path: "/update-complex/1" },
+  { pages: "Update Complex", path: "/update-complex/:id" },
 
   { pages: "Customer", path: "/customer" },
   { pages: "Manage Review", path: "/review" },

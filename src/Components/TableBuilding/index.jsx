@@ -16,13 +16,13 @@ export default function TableBuilding(props) {
   return (
     <div>
       <div className="flex flex-col">
-        <div className="inline-block min-w-full p-2">
+        <div className="inline-block min-w-fit p-2">
           <div className="overflow-hidden">
-            <table className="min-w-full">
+            <table className="table-fixed min-w-fit">
               <thead className="bg-white">
                 <tr>
                   {tabelHeader.map((item) => (
-                    <th scope="col"
+                    <th
                     className="text-base font-medium text-textColor-black px-6 py-4 text-left"
                   >
                       {item}
@@ -35,27 +35,27 @@ export default function TableBuilding(props) {
                 {building?.map((building, buildingIdx) => (
                   <tr
                     key={buildingIdx}
-                    className="odd:bg-secondary-softblue text-primary-gray"
+                    className="odd:bg-secondary-softblue text-primary-gray "
                   >
-                    <td className="text-base text-textColor-blackThin   whitespace-nowrap">
+                    <td className="text-base text-textColor-blackThin">
                       {(angka += 1)}
                     </td>
-                    <td className="text-base text-textColor-blackThin   whitespace-nowrap">
+                    <td className="text-base text-textColor-blackThin">
                       <img src={building.building_image} alt="building" width="72px" />
                     </td>
-                    <td className="text-base text-textColor-blackThin   whitespace-nowrap">
+                    <td className="text-base text-textColor-blackThin">
                       {building.buildingName}
                     </td>
-                    <td className="text-base text-textColor-blackThin   whitespace-nowrap">
+                    <td className="text-base text-textColor-blackThin">
                       {building.complexName}
                     </td>
-                    <td className="text-base text-textColor-blackThin   whitespace-nowrap">
+                    <td className="text-base text-textColor-blackThin">
                       {building.address}
                     </td>
-                    <td className="text-base text-textColor-blackThin   whitespace-nowrap">
+                    <td className="text-base text-textColor-blackThin">
                       {building.numOfRooms}
                     </td>
-                    <td className="text-base text-textColor-blackThin   whitespace-nowrap">
+                    <td className="text-base text-textColor-blackThin">
                       {building.description}
                     </td>
                     <td className="flex items-center justify-around whitespace-nowrap">

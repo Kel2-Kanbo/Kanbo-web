@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import {
-  getCategoryNearby,
-} from "../../API/ApiFetch";
+import { getCategoryNearby } from "../../API/ApiFetch";
 
 import FormInput from "../FormInput";
 import SelectWrap from "../SelectWrap";
@@ -14,16 +12,16 @@ import Swal from "sweetalert2";
 export default function FormNearbyFacilities(props) {
   const [msg, setMsg] = useState("");
 
-  const [nearby, setNearby] = useState([
-    {
-      id: "",
-      facility: "",
-      category: "",
-      distance: "",
-      time: "",
-    }
-  ]);
+  const [nearby, setNearby] = useState([]);
+  const [nearbyFacility, setNearbyFacility] = useState({
+    facility: "",
+    category: "",
+    distance: 0,
+    duation: 0,
+  });
+
   console.log(nearby);
+  console.log(nearbyFacility);
   const [categoryNearby, setCategoryNearby] = useState([]);
   console.log(categoryNearby);
 
@@ -54,8 +52,8 @@ export default function FormNearbyFacilities(props) {
     },
     {
       id: 3,
-      name: "duration",
-      type: "duration",
+      name: "duation",
+      type: "number",
       placeholder: "Duration",
       value: "",
       required: true,
@@ -78,6 +76,11 @@ export default function FormNearbyFacilities(props) {
       ...nearby,
       [inputNearby[index].name]: value,
     });
+
+    setNearbyFacility({
+      ...nearbyFacility,
+      [inputNearby[index].name]: value,
+    });
   };
 
   const _handleCreateNearby = (e) => {
@@ -87,13 +90,14 @@ export default function FormNearbyFacilities(props) {
       inputNearby[2].value &&
       inputNearby[3].value
     ) {
-
-      setNearby({
+      setNearbyFacility({
         facility_name: inputNearby[0].value,
         facility_category_id: inputNearby[1].value,
         distance: inputNearby[2].value,
         duation: inputNearby[3].value,
       });
+
+      setNearby([...nearby, nearbyFacility]);
 
       e.preventDefault();
 
@@ -102,7 +106,7 @@ export default function FormNearbyFacilities(props) {
         text: "Nearby Facility added",
         icon: "success",
         confirmButtonText: "OK",
-      }); 
+      });
 
       setInputNearby([
         {
@@ -131,8 +135,8 @@ export default function FormNearbyFacilities(props) {
         },
         {
           id: 3,
-          name: "duration",
-          type: "duration",
+          name: "duation",
+          type: "number",
           placeholder: "Duration",
           value: "",
           required: true,
