@@ -9,7 +9,8 @@ import styled from "@emotion/styled";
 import Swal from "sweetalert2";
 // import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-import { AuthLogin } from "../../API/APIAuth";
+// import { login } from "../../API_TEST/complexApi";
+import api from "../../API_TEST/apiConfig"
 
 export default function Login() {
   const navigate = useNavigate();
@@ -55,7 +56,7 @@ export default function Login() {
         email: inputs[0].value,
       };
       try {
-        await AuthLogin(data).then((response) => {
+        await api(data).then((response) => {
           if (response) {
             Swal.fire({
               title: "Login Success",
