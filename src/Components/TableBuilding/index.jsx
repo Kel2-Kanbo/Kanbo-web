@@ -6,7 +6,7 @@ import ButtonIconDelete from "../ButtonIconDelete";
 import ButtonIconEdit from "../ButtonIconEdit";
 
 export default function TableBuilding(props) {
-  const { building, removeBuilding, updateBuilding } = props;
+  const { building, removeBuilding, updateBuilding, tabelHeader } = props;
   const setDataBuilding = (building) => {
     console.log(building);
   };
@@ -21,54 +21,14 @@ export default function TableBuilding(props) {
             <table className="min-w-full">
               <thead className="bg-white">
                 <tr>
-                  <th
-                    scope="col"
-                    className="text-base font-medium text-textColor-black  text-left"
+                  {tabelHeader.map((item) => (
+                    <th scope="col"
+                    className="text-base font-medium text-textColor-black px-6 py-4 text-left"
                   >
-                    No
-                  </th>
-                  <th
-                    scope="col"
-                    className="text-base font-medium text-textColor-black  text-left"
-                  >
-                    Picture
-                  </th>
-                  <th
-                    scope="col"
-                    className="text-base font-medium text-textColor-black  text-left"
-                  >
-                    Building Name
-                  </th>
-                  <th
-                    scope="col"
-                    className="text-base font-medium text-textColor-black  text-left"
-                  >
-                    Complex Name
-                  </th>
-                  <th
-                    scope="col"
-                    className="text-base font-medium text-textColor-black  text-left"
-                  >
-                    Address
-                  </th>
-                  <th
-                    scope="col"
-                    className="text-base font-medium text-textColor-black  text-left"
-                  >
-                    Jumlah Room
-                  </th>
-                  <th
-                    scope="col"
-                    className="text-base font-medium text-textColor-black  text-left"
-                  >
-                    Description
-                  </th>
-                  <th
-                    scope="col"
-                    className="text-base font-medium text-textColor-black  text-left"
-                  >
-                    Actions
-                  </th>
+                      {item}
+                    </th>
+                  ))}
+                  
                 </tr>
               </thead>
               <tbody>

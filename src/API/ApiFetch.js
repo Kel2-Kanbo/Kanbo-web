@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "universal-cookie";
 
-const BASE_URL = "http://3.88.14.239:80/api/page/admin/";
+const BASE_URL = "http://3.80.97.57/api/page/admin/";
 
 const cookie = new Cookies();
 const token = cookie.get("Bearer");
@@ -39,7 +39,7 @@ export const createNearby = async (data) => {
 }
 
 export const getCategoryNearby = async () => {
-  const response = await axios.get(BASE_URL + "building/facility/category", config);
+  const response = await axios.get(BASE_URL + "building/facility/category/findAll", config);
   return response.data;
 }
 

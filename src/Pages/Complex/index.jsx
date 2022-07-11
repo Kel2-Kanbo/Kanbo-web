@@ -23,6 +23,8 @@ const Complex = () => {
   const [complex, setComplex] = useState([]);
   console.log(complex);
 
+  const [tabelHeader, setTabelHeader] = useState(["No", "Complex Name", "Address", "City", "District", "Building", "Actions"]);
+
   const [showModal, setShowModal] = useState(false);
 
   const _handleOpenModal = () => {
@@ -195,7 +197,7 @@ const Complex = () => {
           </div>
           <Pagination/>
           <div className="bg-primary-white items-center rounded mt-4">
-            <TableComplex complex={complex} removeComplex={removeComplex} />
+            <TableComplex complex={complex} removeComplex={removeComplex} tabelHeader={tabelHeader} />
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@ import UpdateComplex from "../../Pages/UpdateComplex";
 import { Link } from "react-router-dom";
 
 export default function TableComplex(props) {
-  const { complex, removeComplex, updateComplex } = props;
+  const { complex, removeComplex, updateComplex, tabelHeader } = props;
   const setDataComplex = (complex) => {
     console.log(complex);
   }
@@ -22,48 +22,14 @@ export default function TableComplex(props) {
             <table className="min-w-full">
               <thead className="bg-white">
                 <tr>
-                  <th
-                    scope="col"
+                  {tabelHeader.map((item) => (
+                    <th scope="col"
                     className="text-base font-medium text-textColor-black px-6 py-4 text-left"
                   >
-                    No
-                  </th>
-                  <th
-                    scope="col"
-                    className="text-base font-medium text-textColor-black px-6 py-4 text-left"
-                  >
-                    Complex Name
-                  </th>
-                  <th
-                    scope="col"
-                    className="text-base font-medium text-textColor-black px-6 py-4 text-left"
-                  >
-                    Address
-                  </th>
-                  <th
-                    scope="col"
-                    className="text-base font-medium text-textColor-black px-6 py-4 text-left"
-                  >
-                    City
-                  </th>
-                  <th
-                    scope="col"
-                    className="text-base font-medium text-textColor-black px-6 py-4 text-left"
-                  >
-                    District
-                  </th>
-                  <th
-                    scope="col"
-                    className="text-base font-medium text-textColor-black px-6 py-4 text-left"
-                  >
-                    Building
-                  </th>
-                  <th
-                    scope="col"
-                    className="text-base font-medium text-textColor-black px-6 py-4 text-center"
-                  >
-                    Actions
-                  </th>
+                      {item}
+                    </th>
+                  ))}
+                  
                 </tr>
               </thead>
               <tbody>

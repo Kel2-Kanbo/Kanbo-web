@@ -2,11 +2,11 @@ import React, { useState, useEffect, useContext } from "react";
 // import { v4 as uuidv4 } from "uuid";
 import {
     getComplex,
-    createBuilding,
+    editBuilding,
     createNearby,
     getCategoryNearby,
 } from "../../API/ApiFetch"
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import FormInput from "../../Components/FormInput";
 import SelectWrap from "../../Components/SelectWrap";
@@ -16,8 +16,11 @@ import Button from "../../Components/Button";
 import Sidebar from "../../Components/Sidebar";
 import Navbar from "../../Components/Navbar";
 import ListNearbyFacility from "../../Components/ListNearbyFacility";
+import Swal from "sweetalert2";
 
 export default function UpdateBuilding(props) {
+  const navigate = useNavigate();
+
   const location = useLocation();
   const state = location.state;
   const [building, setBuilding] = useState(state);
@@ -37,7 +40,6 @@ export default function UpdateBuilding(props) {
     buildingName: "",
     complexName: "",
     address: "",
-    jumlahRoom: "",
     description: "",
     picture: "",
   });
@@ -66,10 +68,11 @@ export default function UpdateBuilding(props) {
     },
     {
       id: 1,
-      name: "jumlahRoom",
-      type: "number",
-      placeholder: "Jumlah Room",
-      value: getDataBuilding[0].numOfRooms,
+      name: "complexName",
+      type: "select",
+      placeholder: "Complex Name",
+      //   options: complex_name,
+      value: getDataBuilding[0].complexName,
       required: true,
     },
     {
@@ -80,18 +83,9 @@ export default function UpdateBuilding(props) {
       value: getDataBuilding[0].complexAdress,
       required: true,
     },
-    {
-      id: 3,
-      name: "complexName",
-      type: "select",
-      placeholder: "Complex Name",
-      //   options: complex_name,
-      value: getDataBuilding[0].complexName,
-      required: true,
-    },
 
     {
-      id: 4,
+      id: 3,
       name: "description",
       type: "textarea",
       placeholder: "Description",
@@ -260,18 +254,23 @@ export default function UpdateBuilding(props) {
       inputs[0].value &&
       inputs[1].value &&
       inputs[2].value &&
-      inputs[3].value &&
-      inputs[4].value
+      inputs[3].value
     ) {
-      createBuilding({
-        buildingName: inputs[0].value,
-        numOfRooms: inputs[1].value,
-        complexAddress: inputs[2].value,
-        complexName: inputs[3].value,
-        description: inputs[4].value,
+      editBuilding({
+        name: inputs[0].value,
+        idComplex: inputs[1].value,
+        address: inputs[2].value,
+        description: inputs[3].value, 
         building_image: imageBuilding,
       });
 
+      Swal.fire({
+        title: "Success",
+        text: "Complex has been created",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+      navigate("/building");
       e.preventDefault();
 
       setInputs([
@@ -280,15 +279,16 @@ export default function UpdateBuilding(props) {
           name: "buildingName",
           type: "text",
           placeholder: "Building Name",
-          value: "",
+          value: getDataBuilding[0].buildingName,
           required: true,
         },
         {
           id: 1,
-          name: "jumlahRoom",
-          type: "number",
-          placeholder: "Jumlah Room",
-          value: "",
+          name: "complexName",
+          type: "select",
+          placeholder: "Complex Name",
+          //   options: complex_name,
+          value: getDataBuilding[0].complexName,
           required: true,
         },
         {
@@ -296,25 +296,16 @@ export default function UpdateBuilding(props) {
           name: "address",
           type: "text",
           placeholder: "Address",
-          value: "",
+          value: getDataBuilding[0].complexAdress,
           required: true,
         },
+    
         {
           id: 3,
-          name: "complexName",
-          type: "select",
-          placeholder: "Complex Name",
-          //   options: complex_name,
-          value: "",
-          required: true,
-        },
-
-        {
-          id: 4,
           name: "description",
           type: "textarea",
           placeholder: "Description",
-          value: "",
+          value: getDataBuilding[0].description,
           required: true,
         },
       ]);
@@ -322,6 +313,48 @@ export default function UpdateBuilding(props) {
       setMsg("Please fill out all fields");
     }
   };
+
+  const _handleClose = () => {
+    navigate("/building");
+     setInputs([
+      {
+        id: 0,
+        name: "buildingName",
+        type: "text",
+        placeholder: "Building Name",
+        value: getDataBuilding[0].buildingName,
+        required: true,
+      },
+      {
+        id: 1,
+        name: "complexName",
+        type: "select",
+        placeholder: "Complex Name",
+        //   options: complex_name,
+        value: getDataBuilding[0].complexName,
+        required: true,
+      },
+      {
+        id: 2,
+        name: "address",
+        type: "text",
+        placeholder: "Address",
+        value: getDataBuilding[0].complexAdress,
+        required: true,
+      },
+  
+      {
+        id: 3,
+        name: "description",
+        type: "textarea",
+        placeholder: "Description",
+        value: getDataBuilding[0].description,
+        required: true,
+      },
+      ]);
+    
+  }
+
 
   //get complex
   const getAllComplex = async () => {
@@ -345,26 +378,6 @@ export default function UpdateBuilding(props) {
     }
   };
 
-  useEffect(() => {
-    const getAllComplexes = async () => {
-      const allComplex = await getAllComplex();
-      if (allComplex) {
-        setComplex(allComplex);
-        console.log(allComplex);
-      }
-    };
-    getAllComplexes();
-
-    const getAllCategories = async () => {
-      const allCategory = await getAllCategory();
-      if (allCategory) {
-        setCategoryNearby(allCategory);
-        console.log(allCategory);
-      }
-    };
-    getAllCategories();
-  }, []);
-
 
   return (
     <div className=" flex bg-secondary-blue h-screen">
@@ -378,7 +391,7 @@ export default function UpdateBuilding(props) {
             <FormWrap onSubmit={_handleUpdateBuilding}>
               <h3 className="text-2xl text-left font-bold">Update Building</h3>
               <p className="has-text-centered text-error-red">{msg}</p>
-              <div className="w-full grid grid-cols-2 gap-4">
+              <div className="w-full flex flex-col gap-4">
                 {inputs.map((input, inputIdx) =>
                   input.type !== "select" && input.type !== "textarea" ? (
                     <>
@@ -412,7 +425,6 @@ export default function UpdateBuilding(props) {
                     </>
                   ) : input.type === "textarea" ? (
                     <>
-                      <div className="col-start-1 col-end-3">
                         <FormTextArea
                           key={inputIdx}
                           {...input}
@@ -422,7 +434,6 @@ export default function UpdateBuilding(props) {
                             _handleChange(e.target.value, inputIdx)
                           }
                         />
-                      </div>
                     </>
                   ) : (
                     ""
@@ -508,6 +519,7 @@ export default function UpdateBuilding(props) {
                   <Button
                     className="font-bold bg-secondary-softblue text-primary-blue w-1/2 uppercase px-6 py-3 text-sm rounded shadow mr-1 mb-1"
                     type="button"
+                    onClick={_handleClose}
                   >
                     Close
                   </Button>

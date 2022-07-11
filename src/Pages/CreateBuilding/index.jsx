@@ -16,9 +16,12 @@ import Sidebar from "../../Components/Sidebar";
 import Navbar from "../../Components/Navbar";
 import ListNearbyFacility from "../../Components/ListNearbyFacility";
 import FormNearbyFacilities from "../../Components/FormNearbyFacility";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateBuilding(props) {
   //   const { createBuilding, complex } = props;
+  const navigate = useNavigate();
   const [complex, setComplex] = useState([]);
   console.log(complex);
 
@@ -26,9 +29,9 @@ export default function CreateBuilding(props) {
     buildingName: "",
     complexName: "",
     address: "",
-    jumlahRoom: "",
     description: "",
     picture: "",
+    nearby:[],
   });
 
   // const [nearby, setNearby] = useState({
@@ -55,9 +58,10 @@ export default function CreateBuilding(props) {
     },
     {
       id: 1,
-      name: "jumlahRoom",
-      type: "number",
-      placeholder: "Jumlah Room",
+      name: "complexName",
+      type: "select",
+      placeholder: "Complex Name",
+      //   options: complex_name,
       value: "",
       required: true,
     },
@@ -71,16 +75,6 @@ export default function CreateBuilding(props) {
     },
     {
       id: 3,
-      name: "complexName",
-      type: "select",
-      placeholder: "Complex Name",
-      //   options: complex_name,
-      value: "",
-      required: true,
-    },
-
-    {
-      id: 4,
       name: "description",
       type: "textarea",
       placeholder: "Description",
@@ -249,18 +243,24 @@ export default function CreateBuilding(props) {
       inputs[0].value &&
       inputs[1].value &&
       inputs[2].value &&
-      inputs[3].value &&
-      inputs[4].value
+      inputs[3].value
     ) {
       createBuilding({
-        buildingName: inputs[0].value,
-        numOfRooms: inputs[1].value,
-        complexAddress: inputs[2].value,
-        complexName: inputs[3].value,
-        description: inputs[4].value,
+        name: inputs[0].value,
+        idComplex: inputs[1].value,
+        address: inputs[2].value,
+        description: inputs[3].value,
+        nearby: [],
         building_image: imageBuilding,
       });
 
+      Swal.fire({
+        title: "Success",
+        text: "Complex has been created",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+      navigate("/building");
       e.preventDefault();
 
       setInputs([
@@ -274,9 +274,10 @@ export default function CreateBuilding(props) {
         },
         {
           id: 1,
-          name: "jumlahRoom",
-          type: "number",
-          placeholder: "Jumlah Room",
+          name: "complexName",
+          type: "select",
+          placeholder: "Complex Name",
+          //   options: complex_name,
           value: "",
           required: true,
         },
@@ -290,16 +291,6 @@ export default function CreateBuilding(props) {
         },
         {
           id: 3,
-          name: "complexName",
-          type: "select",
-          placeholder: "Complex Name",
-          //   options: complex_name,
-          value: "",
-          required: true,
-        },
-
-        {
-          id: 4,
           name: "description",
           type: "textarea",
           placeholder: "Description",
@@ -310,6 +301,45 @@ export default function CreateBuilding(props) {
     } else {
       setMsg("Please fill out all fields");
     }
+  };
+
+  const _handleClose = () => {
+    navigate("/building");
+    setInputs([
+      {
+        id: 0,
+        name: "buildingName",
+        type: "text",
+        placeholder: "Building Name",
+        value: "",
+        required: true,
+      },
+      {
+        id: 1,
+        name: "complexName",
+        type: "select",
+        placeholder: "Complex Name",
+        //   options: complex_name,
+        value: "",
+        required: true,
+      },
+      {
+        id: 2,
+        name: "address",
+        type: "text",
+        placeholder: "Address",
+        value: "",
+        required: true,
+      },
+      {
+        id: 3,
+        name: "description",
+        type: "textarea",
+        placeholder: "Description",
+        value: "",
+        required: true,
+      },
+    ]);
   };
 
   //get complex
@@ -323,6 +353,10 @@ export default function CreateBuilding(props) {
     }
   };
 
+  useEffect(() => {
+    getAllComplex();
+  }, []);
+
   // //get category facility
   // const getAllCategory = async () => {
   //   try {
@@ -334,38 +368,17 @@ export default function CreateBuilding(props) {
   //   }
   // };
 
-  useEffect(() => {
-    const getAllComplexes = async () => {
-      const allComplex = await getAllComplex();
-      if (allComplex) {
-        setComplex(allComplex);
-        console.log(allComplex);
-      }
-    };
-    getAllComplexes();
-
-    // const getAllCategories = async () => {
-    //   const allCategory = await getAllCategory();
-    //   if (allCategory) {
-    //     setCategoryNearby(allCategory);
-    //     console.log(allCategory);
-    //   }
-    // };
-    // getAllCategories();
-  }, []);
-
   return (
     <div className=" flex bg-secondary-blue h-screen">
       <Sidebar />
       <Navbar />
       <div className="basis-5/6">
         <div className="px-4 py-4 mt-20">
-
           <div className="flex items-center justify-between mb-6">
             <FormWrap onSubmit={_handleCreateBuilding}>
               <h3 className="text-2xl text-left font-bold">Create Building</h3>
               <p className="has-text-centered text-error-red">{msg}</p>
-              <div className="w-full grid grid-cols-2 gap-4">
+              <div className="flex flex-col gap-4 w-full">
                 {inputs.map((input, inputIdx) =>
                   input.type !== "select" && input.type !== "textarea" ? (
                     <>
@@ -399,17 +412,17 @@ export default function CreateBuilding(props) {
                     </>
                   ) : input.type === "textarea" ? (
                     <>
-                      <div className="col-start-1 col-end-3">
-                        <FormTextArea
-                          key={inputIdx}
-                          {...input}
-                          value={input.value}
-                          type={input.type}
-                          onChange={(e) =>
-                            _handleChange(e.target.value, inputIdx)
-                          }
-                        />
-                      </div>
+                      {/* <div className="col-start-1 col-end-3"> */}
+                      <FormTextArea
+                        key={inputIdx}
+                        {...input}
+                        value={input.value}
+                        type={input.type}
+                        onChange={(e) =>
+                          _handleChange(e.target.value, inputIdx)
+                        }
+                      />
+                      {/* </div> */}
                     </>
                   ) : (
                     ""
@@ -498,6 +511,7 @@ export default function CreateBuilding(props) {
                   <Button
                     className="font-bold bg-secondary-softblue text-primary-blue w-1/2 uppercase px-6 py-3 text-sm rounded shadow mr-1 mb-1"
                     type="button"
+                    onClick={_handleClose}
                   >
                     Close
                   </Button>

@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "universal-cookie";
 
-const BASE_URL = "http://3.88.14.239:80/api/auth/";
+const BASE_URL = "http://3.80.97.57/api/auth/";
 const config = {
   headers: {
     "Content-Type": "application/json",

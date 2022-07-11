@@ -15,26 +15,26 @@ export default function Pagination() {
   const [data, setData] = useState([]);
   const [value, setValue] = useState("");
 
-  const getDataComplex = async () => {
-    try {
-      await getComplex().then((res) => {
-        setData(res);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getDataComplex = async () => {
+  //   try {
+  //     await getComplex().then((res) => {
+  //       setData(res);
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    const getAllComplexes = async () => {
-      const allComplex = await getDataComplex();
-      if (allComplex) {
-        setData(allComplex);
-        console.log(allComplex);
-      }
-    };
-    getAllComplexes();
-  }, []);
+  // useEffect(() => {
+  //   const getAllComplexes = async () => {
+  //     const allComplex = await getDataComplex();
+  //     if (allComplex) {
+  //       setData(allComplex);
+  //       console.log(allComplex);
+  //     }
+  //   };
+  //   getAllComplexes();
+  // }, []);
 
   function _handlePageClick({ selected: selectedPage }) {
     console.log("selectedPage ", selectedPage);

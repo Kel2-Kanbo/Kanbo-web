@@ -20,6 +20,8 @@ export default function Building() {
   const [building, setBuilding] = useState([]);
   console.log(building);
 
+  const [tabelHeader, setTabelHeader] = useState(["No", "Picture", "Building Name", "Complex Name", "Address", "Room", "Description", "Actions"]);
+
   const [showModal, setShowModal] = useState(false);
 
   const _handleOpenModal = () => {
@@ -214,6 +216,7 @@ export default function Building() {
             building={building}
             removeBuilding={removeBuilding}
             updateBuilding={updateBuilding}
+            tabelHeader={tabelHeader}
           />
         </div>
       </div>

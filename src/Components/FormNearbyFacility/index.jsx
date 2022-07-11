@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
-  getComplex,
-  createBuilding,
-  createNearby,
   getCategoryNearby,
 } from "../../API/ApiFetch";
 
@@ -12,17 +9,20 @@ import SelectWrap from "../SelectWrap";
 import FormWrap from "../FormWrap";
 import Button from "../Button";
 import ListNearbyFacility from "../ListNearbyFacility";
+import Swal from "sweetalert2";
 
 export default function FormNearbyFacilities(props) {
   const [msg, setMsg] = useState("");
 
-  const [nearby, setNearby] = useState({
-    id: "",
-    facility: "",
-    category: "",
-    distance: "",
-    time: "",
-  });
+  const [nearby, setNearby] = useState([
+    {
+      id: "",
+      facility: "",
+      category: "",
+      distance: "",
+      time: "",
+    }
+  ]);
   console.log(nearby);
   const [categoryNearby, setCategoryNearby] = useState([]);
   console.log(categoryNearby);
@@ -41,9 +41,8 @@ export default function FormNearbyFacilities(props) {
       name: "category",
       type: "select",
       placeholder: "Category",
-      options: ["Hospital", "Bank", "Mall"],
       value: "",
-      // required: true,
+      required: true,
     },
     {
       id: 2,
@@ -55,11 +54,11 @@ export default function FormNearbyFacilities(props) {
     },
     {
       id: 3,
-      name: "time",
-      type: "time",
-      placeholder: "Time",
+      name: "duration",
+      type: "duration",
+      placeholder: "Duration",
       value: "",
-      // required: true,
+      required: true,
     },
   ]);
 
@@ -88,15 +87,22 @@ export default function FormNearbyFacilities(props) {
       inputNearby[2].value &&
       inputNearby[3].value
     ) {
-      createNearby({
-        // building_id: data.id,
-        name: inputNearby[0].value,
-        category: inputNearby[1].value,
-        description: inputNearby[2].value,
-        time: inputNearby[3].value,
+
+      setNearby({
+        facility_name: inputNearby[0].value,
+        facility_category_id: inputNearby[1].value,
+        distance: inputNearby[2].value,
+        duation: inputNearby[3].value,
       });
 
       e.preventDefault();
+
+      Swal.fire({
+        title: "Success",
+        text: "Nearby Facility added",
+        icon: "success",
+        confirmButtonText: "OK",
+      }); 
 
       setInputNearby([
         {
@@ -112,25 +118,24 @@ export default function FormNearbyFacilities(props) {
           name: "category",
           type: "select",
           placeholder: "Category",
-          options: ["Hospital", "Bank", "Mall"],
           value: "",
-          // required: true,
+          required: true,
         },
         {
           id: 2,
           name: "distance",
-          type: "text",
-          placeholder: "Distance",
+          type: "number",
+          placeholder: "Distance km",
           value: "",
           required: true,
         },
         {
           id: 3,
-          name: "time",
-          type: "time",
-          placeholder: "Time",
+          name: "duration",
+          type: "duration",
+          placeholder: "Duration",
           value: "",
-          // required: true,
+          required: true,
         },
       ]);
     } else {
@@ -191,7 +196,7 @@ export default function FormNearbyFacilities(props) {
                 <option value="">Category</option>
                 {categoryNearby.map((categoryNearby, categoryNearbyIdx) => (
                   <option key={categoryNearbyIdx} value={categoryNearby.id}>
-                    {categoryNearby.category_name}
+                    {categoryNearby.name}
                   </option>
                 ))}
               </SelectWrap>

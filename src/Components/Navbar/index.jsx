@@ -8,18 +8,19 @@ import "./NavbarStyle.css";
 import SearchNavbar from "../SearchNavbar";
 
 const NAVBAR_TEXTS = [
-  { pages: "Dashboard", link: "/dashboard" },
-  { pages: "Room", link: "/room" },
-  { pages: "Building", link: "/building" },
-  { pages: "Create Building", link: "/create-building" },
-  { pages: "Update Building", link: "/update-building" },
-  { pages: "Complex", link: "/complex" },
-  { pages: "Create Complex", link: "/create-complex" },
-  { pages: "Update Complex", link: "/update-complex" },
-  { pages: "Customer", link: "/customer" },
-  { pages: "Manage Review", link: "/review" },
-  { pages: "Chat", link: "/chat" },
-  { pages: "Manage Booking", link: "/booking" },
+  { pages: "Dashboard", path: "/dashboard" },
+  { pages: "Room", path: "/room" },
+  { pages: "Building", path: "/building" },
+  { pages: "Create Building", path: "/create-building" },
+  { pages: "Update Building", path: "/update-building/:id" },
+  { pages: "Complex", path: "/complex" },
+  { pages: "Create Complex", path: "/create-complex" },
+  { pages: "Update Complex", path: "/update-complex/1" },
+
+  { pages: "Customer", path: "/customer" },
+  { pages: "Manage Review", path: "/review" },
+  { pages: "Chat", path: "/chat" },
+  { pages: "Manage Booking", path: "/booking" },
 
 ];
 
@@ -28,8 +29,10 @@ export default function Navbar({ fixed }) {
 
   const location = useLocation();
   const textToShow = NAVBAR_TEXTS.find(
-    (text) => text.link === location.pathname
+    (text) => text.path === location.pathname
   );
+
+  // console.log(textToShow);
 
   return (
     <>
