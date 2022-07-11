@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "universal-cookie";
 
-const BASE_URL = "http://3.80.97.57/api/page/admin/";
+const BASE_URL = "page/admin/";
 
 const cookie = new Cookies();
 const token = cookie.get("Bearer");
