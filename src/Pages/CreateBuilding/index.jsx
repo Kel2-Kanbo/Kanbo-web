@@ -503,7 +503,7 @@ export default function CreateBuilding(props) {
                 <hr className="text-secondary-softblue" />
                 <FormNearbyFacilities />
 
-                <ListNearbyFacility />
+                {/* <ListNearbyFacility /> */}
               </div>
 
               <div className="w-full flex justify-end">
