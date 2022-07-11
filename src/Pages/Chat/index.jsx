@@ -3,6 +3,7 @@ import NavBar from '../../Components/Navbar';
 import Sidebar from '../../Components/Sidebar';
 import pic1 from "../../Assets/User3.png"
 import pic2 from "../../Assets/User2.png"
+import { GET_CHATS } from '../../GraphQL/chat/queries';
 import { FaSignOutAlt, FaChartLine } from "react-icons/fa";
 import { useState } from 'react';
 const Chat = () => {
@@ -21,7 +22,7 @@ const Chat = () => {
                       Search
                     </div>
                     <div className='flex flex-col'>
-                      <div className='chat flex p-4 bg-secondary-softblue'>
+                      <div className='chat flex p-4'>
                         <img src={pic2} alt="room" className='rounded-full mr-2 h-14' />
                         <div className='container flex-col self-center'>
                           <div className='flex justify-between'>
@@ -61,11 +62,10 @@ const Chat = () => {
                         </div>
                       </div>
 
-
                     </div>
                   </div>
                 </div>
-                <div className='basis-2/3'>
+                <div className='basis-2/3 relative'>
                   <div className='border-b-2'>
                     <div className='m-6 flex'>
                       <img src={pic1} alt="room" className='rounded-full mr-2 h-14' />
@@ -75,18 +75,39 @@ const Chat = () => {
                       </div>
                     </div>
                   </div>
-                  <div className='container flex-col'>
-                    <div className='my-8 container justify-center'>
+                  <div style={{ height: "540px" }} className='container flex-col overflow-auto pb-8'>
+                    {/* <div className='my-8 container justify-center'>
                       <span className='text-center py-1 px-3 border-2 rounded-full'>
                         Fri, 18 Jun
                       </span>
-                    </div>
+                    </div> */}
                     <div className='container p-4 flex-col'>
                       <div className='flex'>
                         <div className='max-w-xl p-4 bg-secondary-softblue rounded'>
                           <span>
                             <b>Samantha Rachel</b>
                           </span>
+                          <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                          </p>
+                        </div>
+                      </div>
+                      <div className='flex mt-8 justify-end'>
+                        <div className='max-w-xl p-4 bg-secondary-softblue rounded'>
+                          <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                          </p>
+                        </div>
+                      </div>
+                      <div className='flex mt-8 justify-end'>
+                        <div className='max-w-xl p-4 bg-secondary-softblue rounded'>
+                          <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                          </p>
+                        </div>
+                      </div>
+                      <div className='flex mt-8 justify-end'>
+                        <div className='max-w-xl p-4 bg-secondary-softblue rounded'>
                           <p>
                             Lorem ipsum dolor sit amet consectetur adipisicing elit.
                           </p>
@@ -111,6 +132,14 @@ const Chat = () => {
                       </div>
                     </div>
                   </div>
+                  <form className="container absolute bottom-0 left-0 right-0 bg-primary-blue py-3 px-4">
+                    <input className=' bg-secondary-softblue w-full py-1 px-4 rounded' type="text" placeholder='123' />
+                    <div className='ml-4' >
+                      <button className='py-1 px-4 rounded ' style={{ background: "white" }}>
+                        Send
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
