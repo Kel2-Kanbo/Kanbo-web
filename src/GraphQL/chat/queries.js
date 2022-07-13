@@ -1,29 +1,33 @@
 import { gql } from "@apollo/client";
 
-export const GET_CHATS = gql`
-subscription MySubscription($from: String) {
-  kanbo_chat_chat(where: {from: {_eq: $from}}) {
+export const GET_ALL_CHATS = gql`
+subscription MySubscription {
+  kanbo_chat_chat {
     created_at
-    from
     id_chat
+    id_room
     msg
-    to
+    user
   }
 }
 `;
 
-export const INSERT_ROOM_CHAT = gql`
-mutation MyMutation($user1: String, $user2: String) {
-  insert_kanbo_chat_roomChat(objects: {user1: $user1, user2: $user2}) {
+export const INSERT_CHAT = gql`
+mutation MyMutation($id_room: Int, $msg: String, $user: String) {
+  insert_kanbo_chat_chat(objects: {id_room: $id_room, msg: $msg, user: $user}) {
     returning {
+      user
+      msg
       id_room
+      id_chat
+      created_at
     }
   }
 }
 `;
 
 export const GET_ROOM_CHAT = gql`
-query MyQuery {
+subscription MySubscription {
   kanbo_chat_roomChat {
     id_room
     user1
