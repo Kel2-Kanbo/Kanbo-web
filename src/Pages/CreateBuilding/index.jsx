@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 import {
   getComplex,
   createBuilding,
-  createNearby,
   getCategoryNearby,
 } from "../../API/ApiFetch";
 
@@ -15,12 +15,8 @@ import FormTextArea from "../../Components/FormTextArea";
 import Sidebar from "../../Components/Sidebar";
 import Navbar from "../../Components/Navbar";
 import ListNearbyFacility from "../../Components/ListNearbyFacility";
-import FormNearbyFacilities from "../../Components/FormNearbyFacility";
-import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 
-export default function CreateBuilding(props) {
-  //   const { createBuilding, complex } = props;
+export default function CreateBuilding() {
   const navigate = useNavigate();
   const [complex, setComplex] = useState([]);
   console.log(complex);
@@ -39,7 +35,7 @@ export default function CreateBuilding(props) {
     facility_name: "",
     facility_category_id: "",
     distance: 0,
-    duation: 0,
+    duration: 0,
   });
 
   console.log(nearby);
@@ -113,7 +109,7 @@ export default function CreateBuilding(props) {
     },
     {
       id: 3,
-      name: "duation",
+      name: "duration",
       type: "number",
       placeholder: "Duration minute",
       value: "",
@@ -161,7 +157,7 @@ export default function CreateBuilding(props) {
         facility_name: inputNearby[0].value,
         facility_category_id: inputNearby[1].value,
         distance: inputNearby[2].value,
-        duation: inputNearby[3].value,
+        duration: inputNearby[3].value,
       });
 
       setNearby([...nearby, nearbyFacility]);
@@ -202,7 +198,7 @@ export default function CreateBuilding(props) {
         },
         {
           id: 3,
-          name: "duation",
+          name: "duration",
           type: "number",
           placeholder: "Duration minute",
           value: "",
@@ -232,6 +228,7 @@ export default function CreateBuilding(props) {
     });
   };
 
+  // upload image with base64
   const [imageBuilding, setImageBuilding] = useState("");
 
   const uploadImageBuilding = async (e) => {
@@ -274,7 +271,7 @@ export default function CreateBuilding(props) {
 
       Swal.fire({
         title: "Success",
-        text: "Complex has been created",
+        text: "Building has been created",
         icon: "success",
         confirmButtonText: "OK",
       });
@@ -295,7 +292,6 @@ export default function CreateBuilding(props) {
           name: "complexName",
           type: "select",
           placeholder: "Complex Name",
-          //   options: complex_name,
           value: "",
           required: true,
         },
@@ -337,7 +333,6 @@ export default function CreateBuilding(props) {
         name: "complexName",
         type: "select",
         placeholder: "Complex Name",
-        //   options: complex_name,
         value: "",
         required: true,
       },
@@ -431,7 +426,6 @@ export default function CreateBuilding(props) {
                     </>
                   ) : input.type === "textarea" ? (
                     <>
-                      {/* <div className="col-start-1 col-end-3"> */}
                       <FormTextArea
                         key={inputIdx}
                         {...input}
@@ -441,7 +435,6 @@ export default function CreateBuilding(props) {
                           _handleChange(e.target.value, inputIdx)
                         }
                       />
-                      {/* </div> */}
                     </>
                   ) : (
                     ""

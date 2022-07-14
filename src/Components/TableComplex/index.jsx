@@ -48,6 +48,9 @@ export default function TableComplex(props) {
                       {complex.address}
                     </td>
                     <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
+                      {complex.province_name}
+                    </td>
+                    <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
                       {complex.city_name}
                     </td>
                     <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">

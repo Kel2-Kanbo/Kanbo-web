@@ -102,14 +102,6 @@ export default function UpdateComplex(props) {
     },
     {
       id: 2,
-      name: "building",
-      type: "number",
-      placeholder: "Building",
-      value: getDataComplex[0].numOfBuilding,
-      required: true,
-    },
-    {
-      id: 3,
       name: "province",
       type: "select",
       placeholder: "Province",
@@ -119,7 +111,7 @@ export default function UpdateComplex(props) {
       required: true,
     },
     {
-      id: 4,
+      id: 3,
       name: "city",
       type: "select",
       placeholder: "City",
@@ -130,7 +122,7 @@ export default function UpdateComplex(props) {
       required: true,
     },
     {
-      id: 5,
+      id: 4,
       name: "district",
       type: "select",
       placeholder: "District",
@@ -145,31 +137,33 @@ export default function UpdateComplex(props) {
   //   editComplex(data);
   // }
 
-  const _handleUpdateComplex = async (id, data) => {
+  const _handleUpdateComplex = async (e) => {
     if (
       inputs[0].value &&
       inputs[1].value &&
       inputs[2].value &&
       inputs[3].value &&
-      inputs[4].value &&
-      inputs[5].value
+      inputs[4].value 
     ) {
-      editComplex(id, data).then((response) => {
-        console.log(response);
-        if (response.message === 200) {
-          Swal.fire({
-            title: "Update Building Success",
-            confirmButtonColor: "#4C35E0",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              setComplex(
-                complex.map((item) => (item.id === data.id ? data : item))
-              );
-            }
-          });
-        }
+      editComplex(
+        getDataComplex[0].id,
+        {
+        complex_name: inputs[0].value,
+        street: inputs[1].value,
+        province_id: inputs[2].value,
+        city_id: inputs[3].value,
+        district_id: inputs[4].value,
       });
-      navigate("/complex");
+
+
+      Swal.fire({
+        title: "Success",
+        text: "Complex has been updated",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+    navigate("/complex");
+    e.preventDefault();
 
       setInputs([
         {

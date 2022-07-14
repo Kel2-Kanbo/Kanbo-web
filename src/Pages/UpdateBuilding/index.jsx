@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import {
   getComplex,
-  createBuilding,
+  editBuilding,
   getCategoryNearby,
 } from "../../API/ApiFetch";
-import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import FormInput from "../../Components/FormInput";
 import SelectWrap from "../../Components/SelectWrap";
@@ -15,10 +15,8 @@ import FormTextArea from "../../Components/FormTextArea";
 import Sidebar from "../../Components/Sidebar";
 import Navbar from "../../Components/Navbar";
 import ListNearbyFacility from "../../Components/ListNearbyFacility";
-import Swal from "sweetalert2";
 
-export default function CreateBuilding(props) {
-  //   const { createBuilding, complex } = props;
+export default function UpdateBuilding() {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state;
@@ -30,7 +28,6 @@ export default function CreateBuilding(props) {
     return item;
   });
   console.log(getDataBuilding);
-  // console.log(getDataBuilding[0].id);
 
   const [complex, setComplex] = useState([]);
   console.log(complex);
@@ -44,12 +41,12 @@ export default function CreateBuilding(props) {
     nearby: [],
   });
 
-  const [nearby, setNearby] = useState(getDataBuilding[0].facilities);
+  const [nearby, setNearby] = useState(getDataBuilding[0].facilityResponseList);
   const [nearbyFacility, setNearbyFacility] = useState({
-    facility_name: "",
-    facility_category_id: "",
+    name: "",
+    categoryId: "",
     distance: 0,
-    duation: 0,
+    duration: 0,
   });
 
   console.log(nearby);
@@ -98,7 +95,7 @@ export default function CreateBuilding(props) {
   const [inputNearby, setInputNearby] = useState([
     {
       id: 0,
-      name: "facility_name",
+      name: "name",
       type: "text",
       placeholder: "Facility",
       value: "",
@@ -106,7 +103,7 @@ export default function CreateBuilding(props) {
     },
     {
       id: 1,
-      name: "facility_category_id",
+      name: "categoryId",
       type: "select",
       placeholder: "Category",
       value: "",
@@ -122,7 +119,7 @@ export default function CreateBuilding(props) {
     },
     {
       id: 3,
-      name: "duation",
+      name: "duration",
       type: "number",
       placeholder: "Duration minute",
       value: "",
@@ -156,7 +153,7 @@ export default function CreateBuilding(props) {
       confirmButtonText: "Ok",
     });
 
-    setNearby(nearby.filter((nearby) => nearby.facility_name !== name));
+    setNearby(nearby.filter((nearby) => nearby.name !== name));
   };
 
   const _handleCreateNearby = (e) => {
@@ -167,10 +164,10 @@ export default function CreateBuilding(props) {
       inputNearby[3].value
     ) {
       setNearbyFacility({
-        facility_name: inputNearby[0].value,
-        facility_category_id: inputNearby[1].value,
+        name: inputNearby[0].value,
+        categoryId: inputNearby[1].value,
         distance: inputNearby[2].value,
-        duation: inputNearby[3].value,
+        duration: inputNearby[3].value,
       });
 
       setNearby([...nearby, nearbyFacility]);
@@ -187,7 +184,7 @@ export default function CreateBuilding(props) {
       setInputNearby([
         {
           id: 0,
-          name: "facility_name",
+          name: "name",
           type: "text",
           placeholder: "Facility",
           value: "",
@@ -195,7 +192,7 @@ export default function CreateBuilding(props) {
         },
         {
           id: 1,
-          name: "facility_category_id",
+          name: "categoryId",
           type: "select",
           placeholder: "Category",
           value: "",
@@ -211,7 +208,7 @@ export default function CreateBuilding(props) {
         },
         {
           id: 3,
-          name: "duation",
+          name: "duration",
           type: "number",
           placeholder: "Duration minute",
           value: "",
@@ -241,6 +238,7 @@ export default function CreateBuilding(props) {
     });
   };
 
+  //convert image with base64
   const [imageBuilding, setImageBuilding] = useState("");
 
   const uploadImageBuilding = async (e) => {
@@ -265,14 +263,16 @@ export default function CreateBuilding(props) {
     });
   };
 
-  const _handleCreateBuilding = (e) => {
+  const _handleUpdateBuilding = (e) => {
     if (
       inputs[0].value &&
       inputs[1].value &&
       inputs[2].value &&
       inputs[3].value
     ) {
-      createBuilding({
+      editBuilding(
+        getDataBuilding[0].id,
+        {
         name: inputs[0].value,
         idComplex: inputs[1].value,
         address: inputs[2].value,
@@ -281,9 +281,10 @@ export default function CreateBuilding(props) {
         buildingImage: imageBuilding,
       });
 
+
       Swal.fire({
         title: "Success",
-        text: "Complex has been created",
+        text: "Building has been updated",
         icon: "success",
         confirmButtonText: "OK",
       });
@@ -401,8 +402,8 @@ export default function CreateBuilding(props) {
       <div className="basis-5/6">
         <div className="px-4 py-4 mt-20">
           <div className="flex items-center justify-between mb-6">
-            <FormWrap onSubmit={_handleCreateBuilding}>
-              <h3 className="text-2xl text-left font-bold">Create Building</h3>
+            <FormWrap onSubmit={_handleUpdateBuilding}>
+              <h3 className="text-2xl text-left font-bold">Update Building</h3>
               <p className="has-text-centered text-error-red">{msg}</p>
               <div className="flex flex-col gap-4 w-full">
                 {inputs.map((input, inputIdx) =>
@@ -428,7 +429,7 @@ export default function CreateBuilding(props) {
                         }
                         value={input.value}
                       >
-                        <option value="">Complex</option>
+                        <option value="">{input.value}</option>
                         {complex.map((complex, complexIdx) => (
                           <option key={complexIdx} value={complex.id}>
                             {complex.complex_name}
@@ -438,7 +439,6 @@ export default function CreateBuilding(props) {
                     </>
                   ) : input.type === "textarea" ? (
                     <>
-                      {/* <div className="col-start-1 col-end-3"> */}
                       <FormTextArea
                         key={inputIdx}
                         {...input}
@@ -448,7 +448,6 @@ export default function CreateBuilding(props) {
                           _handleChange(e.target.value, inputIdx)
                         }
                       />
-                      {/* </div> */}
                     </>
                   ) : (
                     ""
@@ -471,7 +470,7 @@ export default function CreateBuilding(props) {
                 </h4>
                 <div className="grid grid-cols-3 gap-4 justify-items-start">
                   {inputNearby.map((inputNearby, inputNearbyIdx) =>
-                    inputNearby.name === "facility_name" ? (
+                    inputNearby.name === "name" ? (
                       <>
                         <FormInput
                           className="w-full col-start-1 col-end-3"
@@ -548,9 +547,9 @@ export default function CreateBuilding(props) {
                   <Button
                     className="bg-primary-blue w-1/2 text-primary-white font-bold uppercase text-sm px-6 py-3 rounded shadow mr-1 mb-1"
                     type="button"
-                    onClick={_handleCreateBuilding}
+                    onClick={_handleUpdateBuilding}
                   >
-                    Create Building
+                    Update Building
                   </Button>
                 </div>
               </div>

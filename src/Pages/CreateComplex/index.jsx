@@ -6,7 +6,7 @@ import {
   createComplex,
   getProvince,
 } from "../../API/ApiFetch";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import FormInput from "../../Components/FormInput";
 import SelectWrap from "../../Components/SelectWrap";
@@ -16,8 +16,7 @@ import Sidebar from "../../Components/Sidebar";
 import Navbar from "../../Components/Navbar";
 import Swal from "sweetalert2";
 
-export default function CreateComplex(props) {
-  // const { handleClose, addComplex, city, district } = props;
+export default function CreateComplex() {
   const navigate = useNavigate();
 
   const [data, setData] = useState({
@@ -31,9 +30,6 @@ export default function CreateComplex(props) {
   const [province, setProvince] = useState([]);
   const [city, setCity] = useState([]);
   const [district, setDistrict] = useState([]);
-
-  console.log(province);
-  console.log(city);
 
   const [inputs, setInputs] = useState([
     {
@@ -57,8 +53,6 @@ export default function CreateComplex(props) {
       name: "province",
       type: "select",
       placeholder: "Province",
-      // options: province,
-      // options: dataProvince,
       value: "",
       required: true,
     },
@@ -67,8 +61,6 @@ export default function CreateComplex(props) {
       name: "city",
       type: "select",
       placeholder: "City",
-      // options: city_name,
-      // options: city,
       value: "",
       required: true,
     },
@@ -77,12 +69,10 @@ export default function CreateComplex(props) {
       name: "district",
       type: "select",
       placeholder: "District",
-      // options: district,
       value: "",
       required: true,
     },
   ]);
-  console.log(inputs);
 
   const _handleChange = (value, index) => {
     setInputs(
@@ -141,12 +131,11 @@ export default function CreateComplex(props) {
       inputs[4].value
     ) {
       createComplex({
-        //   id: uuidv4(),
-        complexName: inputs[0].value,
-        complexAddress: inputs[1].value,
-        province: inputs[2].value,
-        city: inputs[3].value,
-        district: inputs[4].value,
+        complex_name: inputs[0].value,
+        street: inputs[1].value,
+        province_id: inputs[2].value,
+        city_id: inputs[3].value,
+        district_id: inputs[4].value,
       });
       Swal.fire({
         title: "Success",
@@ -179,8 +168,6 @@ export default function CreateComplex(props) {
           name: "province",
           type: "select",
           placeholder: "Province",
-          // options: city_name,
-          options: province,
           value: "",
           required: true,
         },
@@ -189,9 +176,6 @@ export default function CreateComplex(props) {
           name: "city",
           type: "select",
           placeholder: "City",
-          // options: city_name,
-          options: city,
-
           value: "",
           required: true,
         },
@@ -200,20 +184,10 @@ export default function CreateComplex(props) {
           name: "district",
           type: "select",
           placeholder: "District",
-          options: district,
-          value: "",
-          required: true,
-        },
-        {
-          id: 5,
-          name: "building",
-          type: "number",
-          placeholder: "Building",
           value: "",
           required: true,
         },
       ]);
-      // handleClose();
     } else {
       setMsg("Please fill out all fields");
     }
@@ -243,8 +217,6 @@ export default function CreateComplex(props) {
         name: "province",
         type: "select",
         placeholder: "Province",
-        // options: city_name,
-        options: province,
         value: "",
         required: true,
       },
@@ -253,9 +225,6 @@ export default function CreateComplex(props) {
         name: "city",
         type: "select",
         placeholder: "City",
-        // options: city_name,
-        options: city,
-
         value: "",
         required: true,
       },
@@ -264,13 +233,13 @@ export default function CreateComplex(props) {
         name: "district",
         type: "select",
         placeholder: "District",
-        options: district,
         value: "",
         required: true,
       },
     ]);
   };
 
+  // get province by api
   const getProvinces = async () => {
     try {
       await getProvince().then((response) => {
@@ -302,6 +271,7 @@ export default function CreateComplex(props) {
     }
   };
 
+  //get district ny city id
   const getDistricts = async (cityId) => {
     console.log(cityId);
     try {
@@ -315,13 +285,7 @@ export default function CreateComplex(props) {
   };
 
   useEffect(() => {
-    const getAllProvince = async () => {
-      const allProvince = await getProvinces();
-      if (allProvince) {
-        setProvince(allProvince);
-      }
-    };
-    getAllProvince();
+    getProvinces();
   }, []);
 
   return (
@@ -334,7 +298,6 @@ export default function CreateComplex(props) {
             <FormWrap onSubmit={_handleCreateComplex}>
               <h3 className="text-2xl text-center font-bold">Create Complex</h3>
               <p className="has-text-centered text-error-red">{msg}</p>
-              {/* <div className="w-full grid grid-cols-1 gap-4"> */}
               {inputs.map((input, inputIdx) =>
                 input.type !== "select" ? (
                   <>
@@ -353,7 +316,6 @@ export default function CreateComplex(props) {
                   <>
                     <SelectWrap
                       type={input.type}
-                      // onChange={input.onChange}
                       onChange={(e) => {
                         console.log(e.target.value);
                         _handleChangeSelect(e.target.value, inputIdx);
@@ -373,7 +335,10 @@ export default function CreateComplex(props) {
                             </option>
                           ))
                         : district.map((district, districtIdx) => (
-                            <option key={districtIdx} value={district.district_id}>
+                            <option
+                              key={districtIdx}
+                              value={district.district_id}
+                            >
                               {district.name}
                             </option>
                           ))}
@@ -382,7 +347,6 @@ export default function CreateComplex(props) {
                 )
               )}
 
-              {/* </div> */}
               <div className="w-full flex justify-end">
                 <div className="flex w-2/4 items-center gap-4">
                   <Button

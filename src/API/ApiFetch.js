@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "universal-cookie";
 
-const BASE_URL = "api/page/admin/";
+const BASE_URL = "/api/page/admin/";
 
 const cookie = new Cookies();
 const token = cookie.get("Bearer");
@@ -28,8 +28,8 @@ export const deleteBuilding = async (id) => {
   return response.data;
 };
 
-export const editBuilding = async (id, data) => {
-  const response = await axios.put(BASE_URL + "building/" + id, data, config);
+export const editBuilding = async (id, param) => {
+  const response = await axios.put(BASE_URL + "building/" + id, param, config);
   return response.data;
 };
 
