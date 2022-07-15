@@ -25,11 +25,15 @@ export default function CreateComplex() {
     city: "",
     district: "",
   });
-  const [msg, setMsg] = useState("");
 
   const [province, setProvince] = useState([]);
   const [city, setCity] = useState([]);
   const [district, setDistrict] = useState([]);
+
+  const [msg, setMsg] = useState("");
+
+  const [isEmptyInput, setIsEmptyInput] = useState(false);
+  const [isEmptySelect, setIsEmptySelect] = useState(false);
 
   const [inputs, setInputs] = useState([
     {
@@ -38,6 +42,7 @@ export default function CreateComplex() {
       type: "text",
       placeholder: "Complex Name",
       value: "",
+      err: "Complex Name must be filled",
       required: true,
     },
     {
@@ -46,6 +51,7 @@ export default function CreateComplex() {
       type: "text",
       placeholder: "Complex Address",
       value: "",
+      err: "Complex Address must be filled",
       required: true,
     },
     {
@@ -54,6 +60,7 @@ export default function CreateComplex() {
       type: "select",
       placeholder: "Province",
       value: "",
+      err: "Province must be selected",
       required: true,
     },
     {
@@ -62,6 +69,7 @@ export default function CreateComplex() {
       type: "select",
       placeholder: "City",
       value: "",
+      err: "City must be selected",
       required: true,
     },
     {
@@ -70,6 +78,7 @@ export default function CreateComplex() {
       type: "select",
       placeholder: "District",
       value: "",
+      err: "District must be selected",
       required: true,
     },
   ]);
@@ -153,6 +162,7 @@ export default function CreateComplex() {
           type: "text",
           placeholder: "Complex Name",
           value: "",
+          err: "Complex Name must be filled",
           required: true,
         },
         {
@@ -161,6 +171,7 @@ export default function CreateComplex() {
           type: "text",
           placeholder: "Complex Address",
           value: "",
+          err: "Complex Address must be filled",
           required: true,
         },
         {
@@ -169,6 +180,7 @@ export default function CreateComplex() {
           type: "select",
           placeholder: "Province",
           value: "",
+          err: "Province must be selected",
           required: true,
         },
         {
@@ -177,6 +189,7 @@ export default function CreateComplex() {
           type: "select",
           placeholder: "City",
           value: "",
+          err: "City must be selected",
           required: true,
         },
         {
@@ -185,11 +198,14 @@ export default function CreateComplex() {
           type: "select",
           placeholder: "District",
           value: "",
+          err: "District must be selected",
           required: true,
         },
       ]);
     } else {
       setMsg("Please fill out all fields");
+      setIsEmptyInput(true);
+      setIsEmptySelect(true);
     }
   };
 
@@ -202,6 +218,7 @@ export default function CreateComplex() {
         type: "text",
         placeholder: "Complex Name",
         value: "",
+        err: "Complex Name must be filled",
         required: true,
       },
       {
@@ -210,6 +227,7 @@ export default function CreateComplex() {
         type: "text",
         placeholder: "Complex Address",
         value: "",
+        err: "Complex Address must be filled",
         required: true,
       },
       {
@@ -218,6 +236,7 @@ export default function CreateComplex() {
         type: "select",
         placeholder: "Province",
         value: "",
+        err: "Province must be selected",
         required: true,
       },
       {
@@ -226,6 +245,7 @@ export default function CreateComplex() {
         type: "select",
         placeholder: "City",
         value: "",
+        err: "City must be selected",
         required: true,
       },
       {
@@ -234,6 +254,7 @@ export default function CreateComplex() {
         type: "select",
         placeholder: "District",
         value: "",
+        err: "District must be selected",
         required: true,
       },
     ]);
@@ -303,6 +324,11 @@ export default function CreateComplex() {
                   <>
                     <FormInput
                       key={inputIdx}
+                      className={`${
+                        isEmptyInput
+                          ? "peer-invalid:visible border-primary-red border-2"
+                          : "peer-valid:visible border-secondary-softblue border-2"
+                      }`}
                       {...input}
                       value={input.value}
                       type={input.type}
@@ -311,11 +337,30 @@ export default function CreateComplex() {
                         _handleChange(e.target.value, inputIdx);
                       }}
                     />
+
+                    {input.type !== "select" ? (
+                      <div className="w-full my-0 mx-0 text-left px-0 py-0">
+                        <p
+                          className={`top-0 ${
+                            isEmptyInput
+                              ? "peer-invalid:visible text-primary-red "
+                              : "invisible"
+                          }`}
+                        >
+                          {input.err}
+                        </p>
+                      </div>
+                    ) : null}
                   </>
                 ) : (
                   <>
                     <SelectWrap
                       type={input.type}
+                      className={`${
+                        isEmptySelect
+                          ? "peer-invalid:visible border-primary-red border-2"
+                          : "peer-valid:visible border-secondary-softblue border-2"
+                      }`}
                       onChange={(e) => {
                         console.log(e.target.value);
                         _handleChangeSelect(e.target.value, inputIdx);
@@ -343,6 +388,19 @@ export default function CreateComplex() {
                             </option>
                           ))}
                     </SelectWrap>
+                    {input.type === "select" ? (
+                      <div className="w-full my-0 mx-0 text-left px-0 py-0">
+                        <p
+                          className={`${
+                            isEmptySelect
+                              ? "peer-invalid:visible text-primary-red "
+                              : "invisible"
+                          }`}
+                        >
+                          {input.err}
+                        </p>
+                      </div>
+                    ) : null}
                   </>
                 )
               )}

@@ -59,10 +59,10 @@ export default function TableReview(props) {
                   <td className="px-6 py-4 whitespace-no-wrap">
                     {review.noOrder} 222
                   </td>
-                  <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
+                  <td className="text-base text-textColor-blackThin px-6 py-4 ">
                     {review.userName} anjelina12
                   </td>
-                  <td className="text-base text-textColor-blackThin py-4 whitespace-nowrap">
+                  <td className="text-base text-textColor-blackThin py-2">
                     {/* {review.roomBooked?.map((roomBooked) => ( */}
                     <div className="flex justify-between w-full items-center">
                       <img src={""} alt="" />
@@ -74,7 +74,7 @@ export default function TableReview(props) {
                     </div>
                     {/* ))} */}
                   </td>
-                  <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
+                  <td className="text-base text-textColor-blackThin px-6 py-4">
                     {/* {review.reviews?.map((reviewRoom) => ( */}
                       <div className="w-full">
                         <span class="flex items-center">

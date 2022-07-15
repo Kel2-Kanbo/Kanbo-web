@@ -9,21 +9,25 @@ const Dashboard = () => {
     {
       room: "Room A",
       customerName: "Dimas Seto",
+      total: "Rp. 1000000",
       status: "Paid",
     },
     {
       room: "Room A",
       customerName: "Dimas Seto",
+      total: "Rp. 1000000",
       status: "Unpaid",
     },
     {
       room: "Room A",
       customerName: "Dimas Seto",
+      total: "Rp. 1000000",
       status: "Paid",
     },
     {
       room: "Room A",
       customerName: "Dimas Seto",
+      total: "Rp. 1000000",
       status: "Unpaid",
     },
   ])
@@ -123,6 +127,7 @@ const Dashboard = () => {
                   <th>No</th>
                   <th>Data Room</th>
                   <th>Customer Name</th>
+                  <th>Total</th>
                   <th>Transaction Status</th>
                 </tr>
               </thead>
@@ -135,6 +140,7 @@ const Dashboard = () => {
                         <td>{tabIdx += 1}</td>
                         <td>{tab.room}</td>
                         <td>{tab.customerName}</td>
+                        <td>{tab.total}</td>
                         <td className={tab.status === "Paid" ? "text-primary-green" : "text-primary-red"}>{tab.status}</td>
                       </tr>
                     )
