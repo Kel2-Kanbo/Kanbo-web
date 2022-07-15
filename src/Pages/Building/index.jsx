@@ -174,22 +174,31 @@ export default function Building() {
     //     <div className="px-4 py-4 mt-20">
     //       <h1 className="text-3xl font-bold mb-1">Building</h1>
     //       <h4 className="text-md text-primary-gray">Manage Building</h4>
-    <div className=" flex bg-secondary-blue h-screen">
+    <div className=" flex bg-secondary-blue h-full">
       <Sidebar />
       <Navbar />
       <div className="basis-5/6">
         <div className="px-4 py-4 mt-20">
-          <div className="flex items-center justify-between mb-2">
-            <div className="text-sm">
-              <select className="text-textColor-blackThin whitespace-nowrap px-4 py-3 rounded border bg-primary-white">
+          <div className="flex items-center justify-end mb-2">
+            {/* <div className="text-sm">
+              <select
+              className="text-textColor-blackThin whitespace-nowrap px-4 py-3 rounded border bg-primary-white">
                 <option
                   value=""
                   className="bg-secondary-blue text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap"
                 >
-                  Building A
+                  {building?.map((item) => (
+                    <option
+                      key={item.id}
+                      value={item.id}
+                      className="bg-secondary-blue text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap"
+                    > 
+                      {item.buildingName}
+                      </option>
+                  ))}
                 </option>
               </select>
-            </div>
+            </div> */}
             <div className="flex justify-end">
               <div className="w-auto ">
                 <Link to="/create-building">

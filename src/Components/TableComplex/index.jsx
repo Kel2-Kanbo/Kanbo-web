@@ -41,22 +41,22 @@ export default function TableComplex(props) {
                     <td className="px-6 py-4 whitespace-no-wrap">
                       {(angka = angka + 1)}
                     </td>
-                    <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
+                    <td className="text-base text-textColor-blackThin px-6 py-4">
                       {complex.complex_name}
                     </td>
-                    <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
+                    <td className="text-base text-textColor-blackThin px-6 py-4">
                       {complex.address}
                     </td>
-                    <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
+                    <td className="text-base text-textColor-blackThin px-6 py-4">
                       {complex.province_name}
                     </td>
-                    <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
+                    <td className="text-base text-textColor-blackThin px-6 py-4">
                       {complex.city_name}
                     </td>
-                    <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
+                    <td className="text-base text-textColor-blackThin px-6 py-4">
                       {complex.district_name}
                     </td>
-                    <td className="text-base text-textColor-blackThin  px-6 py-4 whitespace-nowrap">
+                    <td className="text-base text-textColor-blackThin  px-6 py-4">
                       {complex.numOfBuilding}
                     </td>
                     <td className="flex justify-center gap-8 px-6 py-4 whitespace-nowrap">

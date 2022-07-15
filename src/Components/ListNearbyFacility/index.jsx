@@ -11,7 +11,7 @@ export default function ListNearbyFacility(props) {
         {nearby?.map((nearby, nearbyIdx) => (
           <div className="flex items-center justify-center gap-32 p-4 w-full">
             <div className="flex flex-col">
-              <h4>{nearby.facility_name}</h4>
+              <h4>{nearby.facility_name ? nearby.facility_name : nearby.name}</h4>
               <p className=" text-textColor-blackThin">
                 {nearby.duration} min - {nearby.distance} km
               </p>

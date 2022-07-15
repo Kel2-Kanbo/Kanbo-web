@@ -39,7 +39,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/chat" element={<Chat />} />
 
-          {/* <Route element={<PrivateRoute />}> */}
+          <Route element={<PrivateRoute />}>
           <Route path="/complex" element={<Complex />} />
             <Route path="/create-complex" element={<CreateComplex />} />
             <Route path="/building" element={<Building />} />
@@ -51,13 +51,10 @@ function App() {
             <Route path="/update-room/:id" element={<UpdateRoom />} />
             
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/update-room" element={<UpdateRoom />} />
             <Route path="/customer" element={<Customer />} />
             <Route path="/booking" element={<Booking/>} />
             <Route path="/review" element={<Review />} />
-
-          <Route path="/createRoom" element={<CreateUpdateRoom />} />
-          {/* </Route> */}
+          </Route>
  
           <Route path="*" element={<NotFound />} />
         </Routes>
