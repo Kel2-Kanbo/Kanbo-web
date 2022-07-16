@@ -15,7 +15,7 @@ const NAVBAR_TEXTS = [
   { pages: "Update Building", path: "/update-building/:id" },
   { pages: "Complex", path: "/complex" },
   { pages: "Create Complex", path: "/create-complex" },
-  { pages: "Update Complex", path: "/update-complex/1" },
+  { pages: "Update Complex", path: "/update-complex/:id" },
 
   { pages: "Customer", path: "/customer" },
   { pages: "Manage Review", path: "/review" },
@@ -37,7 +37,7 @@ export default function Navbar({ fixed }) {
   return (
     <>
       <div className="flex flex-wrap fixed justify-end md:w-10/12 w-8/12 bg-primary-white right-0 rounded-l">
-        <div className="">
+        <div className="w-full">
           <nav className=" flex flex-wrap right-0 items-center justify-between px-2 py-3 bg-primary-white rounded-l-lg">
             <div className="container px-6 mx-auto flex flex-wrap items-center justify-between">
               <div className="w-full relative flex left-8 justify-end lg:w-auto lg:static lg:block ">

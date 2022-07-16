@@ -21,7 +21,16 @@ export default function Building() {
   const [building, setBuilding] = useState([]);
   console.log(building);
 
-  const [tabelHeader, setTabelHeader] = useState(["No", "Picture", "Building Name", "Complex Name", "Address", "Room", "Description", "Actions"]);
+  const [tabelHeader, setTabelHeader] = useState([
+    "No",
+    "Picture",
+    "Building Name",
+    "Complex Name",
+    "Address",
+    "Room",
+    "Description",
+    "Actions",
+  ]);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -83,29 +92,29 @@ export default function Building() {
   const removeBuilding = async (id) => {
     try {
       await deleteBuilding(id).then((response) => {
-        Swal.fire({
-          title: "Do You Want To Delete This Building?",
-          text: `All data will be lost `,
-          confirmButtonColor: "#4C35E0",
-          confirmButtonText: "Delete",
-          showCancelButton: true,
-          cancelButtonText: "Cancel",
-          cancelButtonColor: "#4C35E0",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            setBuilding(building.filter((item) => item.id !== id));
-          }
-        });
+        // if (response) {
+          Swal.fire({
+            title: "Do You Want To Delete This Building?",
+            text: `All data will be lost `,
+            confirmButtonColor: "#4C35E0",
+            confirmButtonText: "Delete",
+            showCancelButton: true,
+            cancelButtonText: "Cancel",
+            cancelButtonColor: "#4C35E0",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              setBuilding(building.filter((building) => building.id !== id));
+            }
+          });
+        // }
       });
     } catch (error) {
-      if (error.response) {
-        Swal.fire({
-          title: "Error Can't Delete Building",
-          text: error.response.message,
-          confirmButtonColor: "#4C35E0",
-          confirmButtonText: "Ok!",
-        });
-      }
+      Swal.fire({
+        title: "Error Can't Delete Building",
+        text: error.response.message,
+        confirmButtonColor: "#4C35E0",
+        confirmButtonText: "Ok!",
+      });
     }
   };
 
@@ -144,14 +153,7 @@ export default function Building() {
   };
 
   useEffect(() => {
-    const getAllBuildings = async () => {
-      const allBuilding = await getAllBuilding();
-      if (allBuilding) {
-        setBuilding(allBuilding);
-        console.log(allBuilding);
-      }
-    };
-    getAllBuildings();
+    getAllBuilding();
   }, []);
 
   // useEffect(() => {
@@ -166,22 +168,43 @@ export default function Building() {
   // }, []);
 
   return (
-
     <div className="flex bg-secondary-blue h-screen">
       <Sidebar />
       <Navbar />
       <div className="basis-5/6">
         <div className="px-4 py-4 mt-20">
-          <div className="flex items-center justify-between mb-2">
-            <div className="text-sm">
-              <select className="text-textColor-blackThin whitespace-nowrap px-4 py-3 rounded border bg-primary-white">
+          <div className="flex items-center justify-end mb-2">
+            {/* <div className="text-sm">
+              <select
+              className="text-textColor-blackThin whitespace-nowrap px-4 py-3 rounded border bg-primary-white">
                 <option
                   value=""
                   className="bg-secondary-blue text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap"
                 >
-                  Building A
+                  {building?.map((item) => (
+                    <option
+                      key={item.id}
+                      value={item.id}
+                      className="bg-secondary-blue text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap"
+                    > 
+                      {item.buildingName}
+                      </option>
+                  ))}
                 </option>
               </select>
+            </div> */}
+            <div className="flex justify-end">
+              <div className="w-auto ">
+                <Link to="/create-building">
+                  <Button
+                    type="button"
+                    className="bg-primary-blue text-primary-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                    onClick={_handleOpenModal}
+                  >
+                    Create Building
+                  </Button>
+                </Link>
+              </div>
             </div>
           <div className="flex" style={{marginRight:"8rem"}}>
             <div className="w-auto ">

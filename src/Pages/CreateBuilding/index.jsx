@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 import {
   getComplex,
   createBuilding,
-  createNearby,
   getCategoryNearby,
 } from "../../API/ApiFetch";
 
@@ -15,12 +15,8 @@ import FormTextArea from "../../Components/FormTextArea";
 import Sidebar from "../../Components/Sidebar";
 import Navbar from "../../Components/Navbar";
 import ListNearbyFacility from "../../Components/ListNearbyFacility";
-import FormNearbyFacilities from "../../Components/FormNearbyFacility";
-import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 
-export default function CreateBuilding(props) {
-  //   const { createBuilding, complex } = props;
+export default function CreateBuilding() {
   const navigate = useNavigate();
   const [complex, setComplex] = useState([]);
   console.log(complex);
@@ -31,19 +27,21 @@ export default function CreateBuilding(props) {
     address: "",
     description: "",
     picture: "",
-    nearby:[],
+    nearby: [],
   });
 
-  // const [nearby, setNearby] = useState({
-  //   id: "",
-  //   facility: "",
-  //   category: "",
-  //   distance: "",
-  //   time: "",
-  // });
-  // console.log(nearby);
-  // const [categoryNearby, setCategoryNearby] = useState([]);
-  // console.log(categoryNearby);
+  const [nearby, setNearby] = useState([]);
+  const [nearbyFacility, setNearbyFacility] = useState({
+    facility_name: "",
+    facility_category_id: "",
+    distance: 0,
+    duration: 0,
+  });
+
+  console.log(nearby);
+  console.log(nearbyFacility);
+  const [categoryNearby, setCategoryNearby] = useState([]);
+  console.log(categoryNearby);
 
   const [msg, setMsg] = useState("");
 
@@ -61,7 +59,6 @@ export default function CreateBuilding(props) {
       name: "complexName",
       type: "select",
       placeholder: "Complex Name",
-      //   options: complex_name,
       value: "",
       required: true,
     },
@@ -85,41 +82,133 @@ export default function CreateBuilding(props) {
 
   console.log(inputs);
 
-  // const [inputNearby, setInputNearby] = useState([
-  //   {
-  //     id: 0,
-  //     name: "facility",
-  //     type: "text",
-  //     placeholder: "Facility",
-  //     value: "",
-  //     required: true,
-  //   },
-  //   {
-  //     id: 1,
-  //     name: "category",
-  //     type: "select",
-  //     placeholder: "Category",
-  //     options: ["Hospital", "Bank", "Mall"],
-  //     value: "",
-  //     // required: true,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "distance",
-  //     type: "number",
-  //     placeholder: "Distance km",
-  //     value: "",
-  //     required: true,
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "time",
-  //     type: "time",
-  //     placeholder: "Time",
-  //     value: "",
-  //     // required: true,
-  //   },
-  // ]);
+  const [inputNearby, setInputNearby] = useState([
+    {
+      id: 0,
+      name: "facility_name",
+      type: "text",
+      placeholder: "Facility",
+      value: "",
+      required: true,
+    },
+    {
+      id: 1,
+      name: "facility_category_id",
+      type: "select",
+      placeholder: "Category",
+      value: "",
+      required: true,
+    },
+    {
+      id: 2,
+      name: "distance",
+      type: "number",
+      placeholder: "Distance km",
+      value: "",
+      required: true,
+    },
+    {
+      id: 3,
+      name: "duration",
+      type: "number",
+      placeholder: "Duration minute",
+      value: "",
+      required: true,
+    },
+  ]);
+
+  const _handleChangeNearby = (value, index) => {
+    setInputNearby(
+      inputNearby.map((input) => {
+        if (input.id === index) {
+          return {
+            ...input,
+            value,
+          };
+        }
+        return input;
+      })
+    );
+
+    setNearbyFacility({
+      ...nearbyFacility,
+      [inputNearby[index].name]: value,
+    });
+  };
+
+  const _handleDeleteNearby = (name) => {
+    Swal.fire({
+      title: "Nearby Facility has been deleted",
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "Ok",
+    });
+
+    setNearby(nearby.filter((nearby) => nearby.facility_name !== name));
+  };
+
+  const _handleCreateNearby = (e) => {
+    if (
+      inputNearby[0].value &&
+      inputNearby[1].value &&
+      inputNearby[2].value &&
+      inputNearby[3].value
+    ) {
+      setNearbyFacility({
+        facility_name: inputNearby[0].value,
+        facility_category_id: inputNearby[1].value,
+        distance: inputNearby[2].value,
+        duration: inputNearby[3].value,
+      });
+
+      setNearby([...nearby, nearbyFacility]);
+
+      e.preventDefault();
+
+      Swal.fire({
+        title: "Success",
+        text: "Nearby Facility added",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+
+      setInputNearby([
+        {
+          id: 0,
+          name: "facility_name",
+          type: "text",
+          placeholder: "Facility",
+          value: "",
+          required: true,
+        },
+        {
+          id: 1,
+          name: "facility_category_id",
+          type: "select",
+          placeholder: "Category",
+          value: "",
+          required: true,
+        },
+        {
+          id: 2,
+          name: "distance",
+          type: "number",
+          placeholder: "Distance km",
+          value: "",
+          required: true,
+        },
+        {
+          id: 3,
+          name: "duration",
+          type: "number",
+          placeholder: "Duration minute",
+          value: "",
+          required: true,
+        },
+      ]);
+    } else {
+      setMsg("Please fill out all fields");
+    }
+  };
 
   const _handleChange = (value, index) => {
     setInputs(
@@ -139,81 +228,7 @@ export default function CreateBuilding(props) {
     });
   };
 
-  // const _handleChangeNearby = (value, index) => {
-  //   setInputNearby(
-  //     inputNearby.map((input) => {
-  //       if (input.id === index) {
-  //         return {
-  //           ...input,
-  //           value,
-  //         };
-  //       }
-  //       return input;
-  //     })
-  //   );
-  //   setNearby({
-  //     ...nearby,
-  //     [inputNearby[index].name]: value,
-  //   });
-  // };
-
-  // const _handleCreateNearby = (e) => {
-  //   if (
-  //     inputNearby[0].value &&
-  //     inputNearby[1].value &&
-  //     inputNearby[2].value &&
-  //     inputNearby[3].value
-  //   ) {
-  //     createNearby({
-  //       building_id: data.id,
-  //       name: inputNearby[0].value,
-  //       category: inputNearby[1].value,
-  //       description: inputNearby[2].value,
-  //       time: inputNearby[3].value,
-  //     });
-
-  //     e.preventDefault();
-
-  //     setInputNearby([
-  //       {
-  //         id: 0,
-  //         name: "facility",
-  //         type: "text",
-  //         placeholder: "Facility",
-  //         value: "",
-  //         required: true,
-  //       },
-  //       {
-  //         id: 1,
-  //         name: "category",
-  //         type: "select",
-  //         placeholder: "Category",
-  //         options: ["Hospital", "Bank", "Mall"],
-  //         value: "",
-  //         // required: true,
-  //       },
-  //       {
-  //         id: 2,
-  //         name: "distance",
-  //         type: "text",
-  //         placeholder: "Distance",
-  //         value: "",
-  //         required: true,
-  //       },
-  //       {
-  //         id: 3,
-  //         name: "time",
-  //         type: "time",
-  //         placeholder: "Time",
-  //         value: "",
-  //         // required: true,
-  //       },
-  //     ]);
-  //   } else {
-  //     setMsg("Please fill out all fields");
-  //   }
-  // };
-
+  // upload image with base64
   const [imageBuilding, setImageBuilding] = useState("");
 
   const uploadImageBuilding = async (e) => {
@@ -250,13 +265,13 @@ export default function CreateBuilding(props) {
         idComplex: inputs[1].value,
         address: inputs[2].value,
         description: inputs[3].value,
-        nearby: [],
-        building_image: imageBuilding,
+        facilities: nearby,
+        buildingImage: imageBuilding,
       });
 
       Swal.fire({
         title: "Success",
-        text: "Complex has been created",
+        text: "Building has been created",
         icon: "success",
         confirmButtonText: "OK",
       });
@@ -277,7 +292,6 @@ export default function CreateBuilding(props) {
           name: "complexName",
           type: "select",
           placeholder: "Complex Name",
-          //   options: complex_name,
           value: "",
           required: true,
         },
@@ -319,7 +333,6 @@ export default function CreateBuilding(props) {
         name: "complexName",
         type: "select",
         placeholder: "Complex Name",
-        //   options: complex_name,
         value: "",
         required: true,
       },
@@ -353,20 +366,21 @@ export default function CreateBuilding(props) {
     }
   };
 
+  //get category facility
+  const getAllCategory = async () => {
+    try {
+      await getCategoryNearby().then((response) => {
+        setCategoryNearby(response);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
+    getAllCategory();
     getAllComplex();
   }, []);
-
-  // //get category facility
-  // const getAllCategory = async () => {
-  //   try {
-  //     await getCategoryNearby().then((response) => {
-  //       setCategoryNearby(response);
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   return (
     <div className=" flex bg-secondary-blue h-screen">
@@ -412,7 +426,6 @@ export default function CreateBuilding(props) {
                     </>
                   ) : input.type === "textarea" ? (
                     <>
-                      {/* <div className="col-start-1 col-end-3"> */}
                       <FormTextArea
                         key={inputIdx}
                         {...input}
@@ -422,7 +435,6 @@ export default function CreateBuilding(props) {
                           _handleChange(e.target.value, inputIdx)
                         }
                       />
-                      {/* </div> */}
                     </>
                   ) : (
                     ""
@@ -438,72 +450,76 @@ export default function CreateBuilding(props) {
                 </div>
               </div>
 
-              {/* <h4 className="text-lg text-left font-bold">Nearby facilities</h4>
-              <div className="grid grid-cols-3 gap-4 justify-items-start">
-                {inputNearby.map((inputNearby, inputNearbyIdx) =>
-                  inputNearby.name === "facility" ? (
-                    <>
-                      <FormInput
-                        className="w-full col-start-1 col-end-3"
-                        key={inputNearbyIdx}
-                        {...inputNearby}
-                        value={inputNearby.value}
-                        type={inputNearby.type}
-                        onChange={(e) =>
-                          _handleChangeNearby(e.target.value, inputNearbyIdx)
-                        }
-                      />
-                    </>
-                  ) : inputNearby.type === "select" ? (
-                    <>
-                      <SelectWrap
-                        key={inputNearbyIdx}
-                        type={inputNearby.type}
-                        onChange={(e) =>
-                          _handleChangeNearby(e.target.value, inputNearbyIdx)
-                        }
-                        value={inputNearby.value}
-                      >
-                        <option value="">Category</option>
-                        {categoryNearby.map(
-                          (categoryNearby, categoryNearbyIdx) => (
-                            <option
-                              key={categoryNearbyIdx}
-                              value={categoryNearby.id}
-                            >
-                              {categoryNearby.category_name}
-                            </option>
-                          )
-                        )}
-                      </SelectWrap>
-                    </>
-                  ) : (
-                    <>
-                      <FormInput
-                        key={inputNearbyIdx}
-                        {...inputNearby}
-                        value={inputNearby.value}
-                        type={inputNearby.type}
-                        onChange={(e) =>
-                          _handleChangeNearby(e.target.value, inputNearbyIdx)
-                        }
-                      />
-                    </>
-                  )
-                )}
-                <Button
-                  className="bg-primary-gray text-primary-white font-bold uppercase text-sm px-6 py-3 rounded shadow mr-1 mb-1"
-                  type="button"
-                  onClick={_handleCreateNearby}
-                >
-                  Add Nearby Facility
-                </Button>
-              </div> */}
               <div className="mt-2 w-full flex flex-col gap-4">
                 <hr className="text-secondary-softblue" />
-                <FormNearbyFacilities />
+                <h4 className="text-lg text-left font-bold mb-4">
+                  Nearby facilities
+                </h4>
+                <div className="grid grid-cols-3 gap-4 justify-items-start">
+                  {inputNearby.map((inputNearby, inputNearbyIdx) =>
+                    inputNearby.name === "facility_name" ? (
+                      <>
+                        <FormInput
+                          className="w-full col-start-1 col-end-3"
+                          key={inputNearbyIdx}
+                          {...inputNearby}
+                          value={inputNearby.value}
+                          type={inputNearby.type}
+                          onChange={(e) =>
+                            _handleChangeNearby(e.target.value, inputNearbyIdx)
+                          }
+                        />
+                      </>
+                    ) : inputNearby.type === "select" ? (
+                      <>
+                        <SelectWrap
+                          key={inputNearbyIdx}
+                          type={inputNearby.type}
+                          onChange={(e) =>
+                            _handleChangeNearby(e.target.value, inputNearbyIdx)
+                          }
+                          value={inputNearby.value}
+                        >
+                          <option value="">Category</option>
+                          {categoryNearby.map(
+                            (categoryNearby, categoryNearbyIdx) => (
+                              <option
+                                key={categoryNearbyIdx}
+                                value={categoryNearby.id}
+                              >
+                                {categoryNearby.name}
+                              </option>
+                            )
+                          )}
+                        </SelectWrap>
+                      </>
+                    ) : (
+                      <>
+                        <FormInput
+                          key={inputNearbyIdx}
+                          {...inputNearby}
+                          value={inputNearby.value}
+                          type={inputNearby.type}
+                          onChange={(e) =>
+                            _handleChangeNearby(e.target.value, inputNearbyIdx)
+                          }
+                        />
+                      </>
+                    )
+                  )}
+                  <Button
+                    className="bg-primary-gray text-primary-white font-bold uppercase text-sm px-6 py-3 rounded shadow mr-1 mb-1"
+                    type="button"
+                    onClick={_handleCreateNearby}
+                  >
+                    Add Nearby Facility
+                  </Button>
+                </div>
 
-                {/* <ListNearbyFacility /> */}
+                <ListNearbyFacility
+                  nearby={nearby}
+                  _handleDeleteNearby={_handleDeleteNearby}
+                />
               </div>
 
               <div className="w-full flex justify-end">

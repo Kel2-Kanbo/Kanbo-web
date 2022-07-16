@@ -14,8 +14,8 @@ import { AuthLogin } from "../../API/APIAuth";
 export default function Login() {
   const navigate = useNavigate();
 
-  const [isEmptyEmail, setIsEmptyEmail] = useState(true);
-  const [isEmptyPassword, setIsEmptyPassword] = useState(true);
+  const [isEmptyEmail, setIsEmptyEmail] = useState(false);
+  const [isEmptyPassword, setIsEmptyPassword] = useState(false);
   const [inputs, setInputs] = useState([
     {
       id: 0,
@@ -54,6 +54,8 @@ export default function Login() {
         password: inputs[1].value,
         email: inputs[0].value,
       };
+      setIsEmptyEmail(false);
+      setIsEmptyPassword(false);
       try {
         await AuthLogin(data).then((response) => {
           if (response) {
@@ -84,19 +86,17 @@ export default function Login() {
     backgroundImage: `url(${Background})`,
     backgroundSize: "100% 100%",
   };
+
   useEffect(() => {
-    if (!inputs[0].value) {
+    if (inputs[0].value.match(inputs[0].pattern)) {
       setIsEmptyEmail(false);
-    } else {
-      setIsEmptyEmail(true);
     }
-    if (!inputs[1].value) {
+    if (inputs[1].value.match(inputs[1].pattern)) {
       setIsEmptyPassword(false);
-    } else {
-      setIsEmptyPassword(true);
     }
   }, [inputs]);
-  // console.log(isEmptyEmail);
+  console.log(isEmptyEmail);
+  console.log(isEmptyPassword);
 
   return (
     <LoginWrap style={backgroundImage}>
@@ -123,7 +123,11 @@ export default function Login() {
             {inputs.map((input, inputIdx) => (
               <div key={inputIdx}>
                 <FormInput
-                  className="peer"
+                  className={`my-0 ${
+                    isEmptyEmail || isEmptyPassword
+                      ? "peer-invalid:visible border-primary-red border-2"
+                      : "peer-valid:visible border-secondary-softblue border-2"
+                  }`}
                   {...input}
                   value={input.value}
                   type={
@@ -148,22 +152,22 @@ export default function Login() {
 
                 {input.type === "email" ? (
                   <p
-                    className={`my-2 ${
+                    className={`${
                       isEmptyEmail
-                        ? "peer-invalid:visible text-primary-red invisible"
+                        ? "peer-invalid:visible text-primary-red "
                         : "invisible"
-                    }  text-sm`}
+                    }`}
                   >
                     {input.err}
                   </p>
                 ) : null}
                 {input.type === "password" ? (
                   <p
-                    className={`my-2 ${
+                    className={`${
                       isEmptyPassword
-                        ? "peer-invalid:visible text-primary-red invisible"
+                        ? "peer-invalid:visible text-primary-red "
                         : "invisible"
-                    } text-sm`}
+                    }`}
                   >
                     {input.err}
                   </p>
@@ -185,7 +189,8 @@ export default function Login() {
                                 w-full
                                 border-1
                                 bg-primary-blue text-secondary-softblue"
-              type="submit"
+              type="button"
+              onClick={onLogin}
             >
               Login
             </Button>

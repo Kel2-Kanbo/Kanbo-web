@@ -15,7 +15,6 @@ export default function TableBuilding(props) {
 
   return (
     <div>
-
       <div className="flex flex-col ">
         <div className="inline-block p-2" style={{width:'100%'}}>
           <div className="overflow-hidden">
@@ -36,7 +35,7 @@ export default function TableBuilding(props) {
                 {building?.map((building, buildingIdx) => (
                   <tr
                     key={buildingIdx}
-                    className="odd:bg-secondary-softblue text-primary-gray"
+                    className="odd:bg-secondary-softblue text-primary-gray "
                   >
                     <td className="text-base text-textColor-blackThin whitespace-nowrap">
                       {(angka += 1)}
