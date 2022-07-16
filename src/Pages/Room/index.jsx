@@ -77,16 +77,15 @@ export default function Room() {
       <Sidebar />
       <Navbar />
       <div className="basis-5/6 pl-6">
-        <div className="px-4 py-4 mt-16">
-
-          <div className="flex items-center justify-between mb-2">
-            <div className="text-sm">
+        <div className="px-4 py-4 mt-20">
+          <div className="flex items-center justify-end mb-2">
+            {/* <div className="text-sm">
               <select className="text-textColor-blackThin whitespace-nowrap px-4 py-3 rounded border bg-primary-white">
                 <option value="">Select Building</option>
                 <option value="">Building 1</option>
                 <option value="">Building 2</option>
               </select>
-            </div>
+            </div> */}
             <div className="w-auto">
               <Link to="/create-room">
               <Button

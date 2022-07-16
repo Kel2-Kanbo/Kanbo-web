@@ -17,7 +17,6 @@ const Complex = () => {
     "No",
     "Complex Name",
     "Address",
-    "province",
     "City",
     "District",
     "Building",
@@ -78,7 +77,7 @@ const Complex = () => {
       <Sidebar />
       <Navbar />
       <div className="basis-5/6">
-        <div className="px-4 py-4 mt-16">
+        <div className="px-4 py-4 mt-20">
           <div className="flex justify-end">
             <div className="w-auto">
               <Link to="/create-complex">
@@ -91,8 +90,10 @@ const Complex = () => {
               </Link>
             </div>
           </div>
-          <Pagination />
-          <div className="bg-primary-white items-center rounded mt-4">
+          <div className="ml-6 mt-2">
+            <Pagination />
+          </div>
+          <div className="bg-primary-white items-center rounded mt-4 ml-6">
             <TableComplex
               complex={complex}
               removeComplex={removeComplex}

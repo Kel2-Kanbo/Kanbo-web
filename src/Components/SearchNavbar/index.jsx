@@ -3,9 +3,9 @@ import React from 'react'
 function SearchNavbar() {
   return (
     <>
-      <div className=" mt-2 row justify-start">
+      <div className="ml-2 mt-2 row justify-start">
         <div className="xl:w-96 ">
-          <div className="input-group relative flex items-stretch w-full mb-4 bg-primary-white rounded-md p-2">
+          <div className="input-group relative flex items-stretch w-full mb-4 bg-primary-white border border-solid hover:border-primary-blue border-primary-gray3 rounded-lg p-2">
             <input type="search" className="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-primary-gray bg-primary-white bg-clip-padding rounded-md transition ease-in-out m-0 focus:text-primary-gray focus:bg-primary-white focus:border-primary-white focus:outline-none" placeholder="Search" aria-label="Search" aria-describedby="button-addon3" />
             <button className="relative btn inline-block px-4 py-2 hover:text-primary-blue text-primary-gray font-medium text-xs leading-tight uppercase rounded-r-md border-secondary-white hover:bg-secondary-white hover:bg-opacity-3 focus:outline-none focus:ring-0 transition duration-150 ease-in-out" type="button" id="button-addon3">
               <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" className="w-4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">

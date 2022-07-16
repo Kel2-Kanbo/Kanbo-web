@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
+import Pagination from "../../Components/Pagination";
 import Button from "../../Components/Button";
 import Sidebar from "../../Components/Sidebar";
 import Navbar from "../../Components/Navbar";
 import CreateBuilding from "../../Components/CreateBuilding";
-// import CreateBuilding from "./CreateBuilding";
 import TableBuilding from "../../Components/TableBuilding";
 import {
   getBuilding,
@@ -167,19 +167,12 @@ export default function Building() {
   // }, []);
 
   return (
-    // <div className='flex h-screen bg-secondary-softblue'>
-    //     <Sidebar />
-    //     <Navbar />
-    //   <div className='basis-5/6 pl-6'>
-    //     <div className="px-4 py-4 mt-20">
-    //       <h1 className="text-3xl font-bold mb-1">Building</h1>
-    //       <h4 className="text-md text-primary-gray">Manage Building</h4>
-    <div className=" flex bg-secondary-blue h-full">
+    <div className="flex bg-secondary-blue h-full">
       <Sidebar />
       <Navbar />
       <div className="basis-5/6">
         <div className="px-4 py-4 mt-20">
-          <div className="flex items-center justify-end mb-2">
+          <div className="flex items-center justify-end">
             {/* <div className="text-sm">
               <select
               className="text-textColor-blackThin whitespace-nowrap px-4 py-3 rounded border bg-primary-white">
@@ -222,7 +215,7 @@ export default function Building() {
             ) : null} */}
           </div>
         </div>
-        <div className="bg-primary-white items-center m-4">
+        <div className="bg-primary-white items-center mt-4 ml-9 rounded">
           <TableBuilding
             building={building}
             removeBuilding={removeBuilding}
