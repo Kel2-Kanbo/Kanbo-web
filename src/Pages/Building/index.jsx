@@ -15,6 +15,7 @@ import {
   editBuilding,
   getComplex,
 } from "../../API/ApiFetch";
+import Pagination from "../../Components/Pagination"; 
 
 export default function Building() {
   const [building, setBuilding] = useState([]);
@@ -165,14 +166,8 @@ export default function Building() {
   // }, []);
 
   return (
-    // <div className='flex h-screen bg-secondary-softblue'>
-    //     <Sidebar />
-    //     <Navbar />
-    //   <div className='basis-5/6 pl-6'>
-    //     <div className="px-4 py-4 mt-20">
-    //       <h1 className="text-3xl font-bold mb-1">Building</h1>
-    //       <h4 className="text-md text-primary-gray">Manage Building</h4>
-    <div className=" flex bg-secondary-blue h-screen">
+
+    <div className="flex bg-secondary-blue h-screen">
       <Sidebar />
       <Navbar />
       <div className="basis-5/6">
@@ -188,12 +183,12 @@ export default function Building() {
                 </option>
               </select>
             </div>
-          <div className="flex justify-end">
+          <div className="flex" style={{marginRight:"8rem"}}>
             <div className="w-auto ">
               <Link to="/create-building">
                 <Button
                   type="button"
-                  className="bg-primary-blue text-primary-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                  className="hover:bg-primary-blue2 bg-primary-blue text-primary-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg focus:bg-primary-blue focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-blue active:shadow-lg transition duration-150 ease-in-out"
                   onClick={_handleOpenModal}
                 >
                   Create Building
@@ -211,6 +206,7 @@ export default function Building() {
             ) : null} */}
           </div>
         </div>
+        {/* <Pagination/> */}
         <div className="bg-primary-white items-center m-4">
           <TableBuilding
             building={building}

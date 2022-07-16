@@ -37,7 +37,7 @@ th,td{
 .sidebar{
   background: #FFFFFF;
   color: #4C35E0;
-  height: 100vh;
+  height: 150vh;
   width: 200px;
   /* border-top-right-radius: 2rem; */
   transition: all 0.5s;

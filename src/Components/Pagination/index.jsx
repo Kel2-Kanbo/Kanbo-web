@@ -1,45 +1,67 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect , useState } from "react";
 import ReactPaginate from "react-paginate";
 import { getComplex } from "../../API/ApiFetch";
+import { Link } from "react-router-dom";
 
 import "./style.css";
 
 import SearchNavbar from "../SearchNavbar";
 
-const PER_PAGE = 10;
 
 export default function Pagination() {
+  const PER_PAGE = 10;
   const [currentPage, setCurrentPage] = useState(0);
   const [data, setData] = useState([]);
   const [value, setValue] = useState("");
 
-  // const getDataComplex = async () => {
-  //   try {
-  //     await getComplex().then((res) => {
-  //       setData(res);
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const [items, setItems] = useState([]);
 
-  // useEffect(() => {
-  //   const getAllComplexes = async () => {
-  //     const allComplex = await getDataComplex();
-  //     if (allComplex) {
-  //       setData(allComplex);
-  //       console.log(allComplex);
-  //     }
-  //   };
-  //   getAllComplexes();
-  // }, []);
+  const [pageCount, setpageCount] = useState(0);
 
-  function _handlePageClick({ selected: selectedPage }) {
-    console.log("selectedPage ", selectedPage);
-    setCurrentPage(selectedPage);
-  }
+  let limit = 10;
+
+  useEffect(() => {
+    const getComments = async () => {
+      const res = await fetch(
+        `http://3.80.97.57/v2`
+        // `https://jsonplaceholder.typicode.com/comments?_page=1&_limit=${limit}`
+      );
+      const data = await res.json();
+      const total = res.headers.get("x-total-count");
+      setpageCount(Math.ceil(total / limit));
+      // console.log(Math.ceil(total/12));
+      setItems(data);
+    };
+
+    getComments();
+  }, [limit]);
+
+  const fetchComments = async (currentPage) => {
+    const res = await fetch(
+      `http://3.80.97.57/v2`
+      // `https://jsonplaceholder.typicode.com/comments?_page=${currentPage}&_limit=${limit}`
+    );
+    const data = await res.json();
+    return data;
+  };
+
+  const handlePageClick = async (data) => {
+    console.log(data.selected);
+
+    let currentPage = data.selected + 1;
+
+    const commentsFormServer = await fetchComments(currentPage);
+
+    setItems(commentsFormServer);
+    // scroll to the top
+    //window.scrollTo(0, 0)
+  };
+
+
+  // function handlePageClick({ selected: selectedPage }) {
+  //   console.log("selectedPage ", selectedPage);
+  //   setCurrentPage(selectedPage);
+  // }
 
   const offset = currentPage * PER_PAGE;
   console.log("offset ", offset);
@@ -49,7 +71,7 @@ export default function Pagination() {
   });
   console.log("currentPageData", currentPageData);
 
-  const pageCount = Math.ceil(data.length / PER_PAGE);
+  // const pageCount = Math.ceil(data.length / PER_PAGE);
 
   const _handleSearch = async (e) => {
     e.preventDefault();
@@ -71,19 +93,28 @@ export default function Pagination() {
       </div>
 
       <div className="flex gap-2 items-center">
-        <p className="text-primary-gray2">{`${offset + 1} - ${
-          offset + PER_PAGE
-        } of ${data.length}`}</p>
+        <p className="text-primary-gray2">
+          {`${offset + 1} - ${ offset + PER_PAGE} of ${data.length}`}
+        </p>
+
         <ReactPaginate
-          previousLabel="<"
-          nextLabel=">"
+          previousLabel={"< previous"}
+          nextLabel={"next >"}
+          breakLabel={"..."}
           pageCount={pageCount}
-          onPageChange={_handlePageClick}
-          containerClassName="pagination"
-          previousLinkClassName="pagination__link"
-          nextLinkClassName="pagination__link"
-          disabledClassName="pagination__link--disabled"
-          activeClassName="pagination__link--active"
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination justify-content-center"}
+          pageClassName={"page-item"}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          activeClassName={"active"}
         />
       </div>
     </div>
