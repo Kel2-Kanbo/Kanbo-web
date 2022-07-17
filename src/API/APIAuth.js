@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://3.80.97.57/api/auth/";
+const BASE_URL = "/api/auth/";
 const config = {
   headers: {
     "Content-Type": "application/json",
