@@ -15,13 +15,12 @@ const NAVBAR_TEXTS = [
   { pages: "Update Building", path: "/update-building/:id" },
   { pages: "Complex", path: "/complex" },
   { pages: "Create Complex", path: "/create-complex" },
-  { pages: "Update Complex", path: "/update-complex/:id" },
+  { pages: "Update Complex", path: `/update-complex/:id` },
 
   { pages: "Customer", path: "/customer" },
   { pages: "Manage Review", path: "/review" },
   { pages: "Chat", path: "/chat" },
   { pages: "Manage Booking", path: "/booking" },
-
 ];
 
 export default function Navbar({ fixed }) {
@@ -36,7 +35,7 @@ export default function Navbar({ fixed }) {
 
   return (
     <>
-      <div className="flex flex-wrap fixed justify-end md:w-10/12 w-8/12 bg-primary-white right-0 rounded-l">
+      <div className="flex flex-wrap fixed justify-end md:w-10/12 w-3/12 bg-primary-white right-0 rounded-l">
         <div className="w-full">
           <nav className=" flex flex-wrap right-0 items-center justify-between px-2 py-3 bg-primary-white rounded-l-lg">
             <div className="container px-6 mx-auto flex flex-wrap items-center justify-between">
@@ -56,9 +55,7 @@ export default function Navbar({ fixed }) {
                 }
                 id="example-navbar-info"
               >
-
                 <h1 className="font-bold text-2xl">{textToShow.pages}</h1>
-                {/* <SearchNavbar /> */}
 
                 <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
                   <li className="nav-item">
@@ -86,5 +83,3 @@ export default function Navbar({ fixed }) {
     </>
   );
 }
-
-// export default Navbar;

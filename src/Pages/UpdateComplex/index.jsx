@@ -39,7 +39,14 @@ export default function UpdateComplex(props) {
   const [province, setProvince] = useState([]);
   const [city, setCity] = useState([]);
   const [district, setDistrict] = useState([]);
+
   const [msg, setMsg] = useState("");
+  const [isEmptyName, setIsEmptyName] = useState(false);
+  const [isEmptyAddress, setIsEmptyAddress] = useState(false);
+  const [isEmptyProvince, setIsEmptyProvince] = useState(false);
+  const [isEmptyCity, setIsEmptyCity] = useState(false);
+  const [isEmptyDistrict, setIsEmptyDistrict] = useState(false);
+
 
   const [inputs, setInputs] = useState([
     {
@@ -48,6 +55,7 @@ export default function UpdateComplex(props) {
       type: "text",
       placeholder: "Complex Name",
       value: getDataComplex[0].complex_name,
+      err: "Complex Name must be filled",
       required: true,
     },
     {
@@ -56,6 +64,7 @@ export default function UpdateComplex(props) {
       type: "text",
       placeholder: "Complex Address",
       value: getDataComplex[0].address,
+      err: "Complex Address must be filled",
       required: true,
     },
     {
@@ -64,8 +73,8 @@ export default function UpdateComplex(props) {
       type: "select",
       placeholder: "Province",
       options: province,
-      // options: complexProvince,
       value: getDataComplex[0].province_name,
+      err: "Province must be selected",
       required: true,
     },
     {
@@ -73,10 +82,9 @@ export default function UpdateComplex(props) {
       name: "city",
       type: "select",
       placeholder: "City",
-      // options: city_name,
       options: city,
-
       value: getDataComplex[0].city_name,
+      err: "City must be selected",
       required: true,
     },
     {
@@ -86,6 +94,7 @@ export default function UpdateComplex(props) {
       placeholder: "District",
       options: district,
       value: getDataComplex[0].district_name,
+      err: "District must be selected",
       required: true,
     },
   ]);
@@ -148,6 +157,12 @@ export default function UpdateComplex(props) {
       inputs[3].value &&
       inputs[4].value
     ) {
+      setIsEmptyName(false);
+      setIsEmptyAddress(false);
+      setIsEmptyProvince(false);
+      setIsEmptyCity(false);
+      setIsEmptyDistrict(false);
+
       editComplex(getDataComplex[0].id, {
         complex_name: inputs[0].value,
         street: inputs[1].value,
@@ -171,7 +186,8 @@ export default function UpdateComplex(props) {
           name: "complexName",
           type: "text",
           placeholder: "Complex Name",
-          value: getDataComplex[0].complex_name,
+          value: "",
+          err: "Complex Name must be filled",
           required: true,
         },
         {
@@ -179,50 +195,51 @@ export default function UpdateComplex(props) {
           name: "complexAddress",
           type: "text",
           placeholder: "Complex Address",
-          value: getDataComplex[0].address,
+          value: "",
+          err: "Complex Address must be filled",
           required: true,
         },
         {
           id: 2,
-          name: "building",
-          type: "number",
-          placeholder: "Building",
-          value: getDataComplex[0].numOfBuilding,
-          required: true,
-        },
-        {
-          id: 3,
           name: "province",
           type: "select",
           placeholder: "Province",
           options: province,
           // options: complexProvince,
-          value: getDataComplex[0].province_name,
+          value: "",
+          err: "Province must be selected",
           required: true,
         },
         {
-          id: 4,
+          id: 3,
           name: "city",
           type: "select",
           placeholder: "City",
           // options: city_name,
           options: city,
-
-          value: getDataComplex[0].city_name,
+          value: "",
+          err: "City must be selected",
           required: true,
         },
         {
-          id: 5,
+          id: 4,
           name: "district",
           type: "select",
           placeholder: "District",
           options: district,
-          value: getDataComplex[0].district_name,
+          value: "",
+          err: "District must be selected",
           required: true,
         },
+    
       ]);
     } else {
       setMsg("Please fill out all fields");
+      setIsEmptyName(true);
+      setIsEmptyAddress(true);
+      setIsEmptyProvince(true);
+      setIsEmptyCity(true);
+      setIsEmptyDistrict(true);
     }
   };
 
@@ -235,6 +252,7 @@ export default function UpdateComplex(props) {
         type: "text",
         placeholder: "Complex Name",
         value: getDataComplex[0].complex_name,
+        err: "Complex Name must be filled",
         required: true,
       },
       {
@@ -243,46 +261,42 @@ export default function UpdateComplex(props) {
         type: "text",
         placeholder: "Complex Address",
         value: getDataComplex[0].address,
+        err: "Complex Address must be filled",
         required: true,
       },
       {
         id: 2,
-        name: "building",
-        type: "number",
-        placeholder: "Building",
-        value: getDataComplex[0].numOfBuilding,
-        required: true,
-      },
-      {
-        id: 3,
         name: "province",
         type: "select",
         placeholder: "Province",
         options: province,
         // options: complexProvince,
         value: getDataComplex[0].province_name,
+        err: "Province must be selected",
         required: true,
       },
       {
-        id: 4,
+        id: 3,
         name: "city",
         type: "select",
         placeholder: "City",
         // options: city_name,
         options: city,
-
         value: getDataComplex[0].city_name,
+        err: "City must be selected",
         required: true,
       },
       {
-        id: 5,
+        id: 4,
         name: "district",
         type: "select",
         placeholder: "District",
         options: district,
         value: getDataComplex[0].district_name,
+        err: "District must be selected",
         required: true,
       },
+  
     ]);
   };
 
@@ -335,8 +349,26 @@ export default function UpdateComplex(props) {
     getProvinces();
   }, []);
 
+    useEffect(() => {
+    if (inputs[0]?.value.match(inputs[0]?.pattern)) {
+      setIsEmptyName(false);
+    }
+    if (inputs[1]?.value.match(inputs[1]?.pattern)) {
+      setIsEmptyAddress(false);
+    }
+    // if (inputs[2]?.value.match(inputs[2]?.pattern)) {
+    //   setIsEmptyProvince(false);
+    // }
+    if (inputs[3]?.value.match(inputs[3]?.pattern)) {
+      setIsEmptyCity(false);
+    }
+    if (inputs[4]?.value.match(inputs[4]?.pattern)) {
+      setIsEmptyDistrict(false);
+    }
+  }, [inputs]);
+
   return (
-    <div className=" flex bg-secondary-blue h-screen">
+    <div className=" flex bg-secondary-blue h-full">
       <Sidebar />
       {/* <Navbar /> */}
       <div className="basis-5/6">
@@ -353,19 +385,39 @@ export default function UpdateComplex(props) {
 
                     <FormInput
                       key={inputIdx}
-                      class="w-full px-4 py-2"
-    
+                      className={`${
+                        isEmptyName && isEmptyAddress
+                        ? "peer-invalid:visible border-primary-red border-2"
+                        : "peer-valid:visible border-secondary-softblue border-2"
+                      }`}
                       {...input}
                       value={input.value}
                       type={input.type}
                       onChange={(e) => _handleChange(e.target.value, inputIdx)}
                     />
-                   
+                    {input.type !== "select" ? (
+                      <div className="w-full my-0 mx-0 text-left px-0 py-0">
+                        <p
+                          className={`${
+                            isEmptyName && isEmptyAddress
+                              ? "peer-invalid:visible text-primary-red "
+                              : "invisible"
+                          }`}
+                        >
+                          {input.err}
+                        </p>
+                      </div>
+                    ) : null}                   
                   </>
                 ) : (
                   <>
                     <SelectWrap
                       type={input.type}
+                      className={`${
+                        isEmptyProvince && isEmptyCity && isEmptyDistrict
+                          ? "peer-invalid:visible border-primary-red border-2"
+                          : "peer-valid:visible border-secondary-softblue border-2"
+                      }`}
                       onChange={(e) => {
                         console.log(e.target.value);
                         _handleChangeSelect(e.target.value, inputIdx);
@@ -393,6 +445,19 @@ export default function UpdateComplex(props) {
                             </option>
                           ))}
                     </SelectWrap>
+                    {input.type === "select" ? (
+                      <div className="w-full my-0 mx-0 text-left px-0 py-0">
+                        <p
+                          className={`${
+                            isEmptyProvince && isEmptyCity && isEmptyDistrict
+                              ? "peer-invalid:visible text-primary-red "
+                              : "invisible"
+                          }`}
+                        >
+                          {input.err}
+                        </p>
+                      </div>
+                    ) : null}
                   </>
                 )
               )}

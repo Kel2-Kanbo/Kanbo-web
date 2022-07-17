@@ -383,7 +383,7 @@ export default function CreateBuilding() {
   }, []);
 
   return (
-    <div className=" flex bg-secondary-blue h-screen">
+    <div className=" flex bg-secondary-blue h-full">
       <Sidebar />
       <Navbar />
       <div className="basis-5/6">

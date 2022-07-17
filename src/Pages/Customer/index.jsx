@@ -10,6 +10,16 @@ const Customer = () => {
 
     const [customer, setCustomer] = useState([]);
 
+    const [tabelHeader ] = useState([
+      "Customer Name",
+      "Username",
+      "Email",
+      "Province",
+      "City",
+      "District",
+      "Actions",
+    ]);
+
     const removeCustomer = async (id) => {
         const response = await delete(`/customer/${id}`);
         if(response.data) {
@@ -19,7 +29,7 @@ const Customer = () => {
     };
 
     return (
-    <div className='flex h-screen bg-secondary-softblue'>
+    <div className='flex h-full bg-secondary-softblue'>
         <Sidebar />
         <Navbar />
       <div className='basis-5/6'>
@@ -31,6 +41,7 @@ const Customer = () => {
           <div className="bg-primary-white items-center rounded mt-4">
             <TableCust
             customer={customer}
+            tabelHeader={tabelHeader}
             removeCustomer={removeCustomer}
             />
           </div>
