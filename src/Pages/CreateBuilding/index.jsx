@@ -1,35 +1,24 @@
-import React, { useState, useEffect, useContext } from "react";
-// import { v4 as uuidv4 } from "uuid";
+import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 import {
-    getComplex,
-    createBuilding,
-    createNearby,
-    getCategoryNearby,
-} from "../../../API/ApiFetch";
-import { Link, useLocation } from "react-router-dom";
+  getComplex,
+  createBuilding,
+  createNearby,
+  getCategoryNearby,
+} from "../../API/ApiFetch";
 
-import FormInput from "../../../Components/FormInput";
-import SelectWrap from "../../../Components/SelectWrap";
-import FormWrap from "../../../Components/FormWrap";
-import FormTextArea from "../../../Components/FormTextArea";
-import Button from "../../../Components/Button";
-import Sidebar from "../../../Components/Sidebar";
-import Navbar from "../../../Components/Navbar";
-import ListNearbyFacility from "../CreateBuilding/ListNearbyFacility";
+import FormInput from "../../Components/FormInput";
+import SelectWrap from "../../Components/SelectWrap";
+import FormWrap from "../../Components/FormWrap";
+import Button from "../../Components/Button";
+import FormTextArea from "../../Components/FormTextArea";
+import Sidebar from "../../Components/Sidebar";
+import Navbar from "../../Components/Navbar";
+import ListNearbyFacility from "../../Components/ListNearbyFacility";
+import FormNearbyFacilities from "../../Components/FormNearbyFacility";
 
-export default function UpdateBuilding(props) {
-  const location = useLocation();
-  const state = location.state;
-  const [building, setBuilding] = useState(state);
-  console.log(building);
-  const value = Object.values(building);
-  console.log(value);
-  const getDataBuilding = value?.map((item) => {
-    return item;
-  });
-  console.log(getDataBuilding);
-  console.log(getDataBuilding[0].id);
-
+export default function CreateBuilding(props) {
+  //   const { createBuilding, complex } = props;
   const [complex, setComplex] = useState([]);
   console.log(complex);
 
@@ -42,16 +31,16 @@ export default function UpdateBuilding(props) {
     picture: "",
   });
 
-  const [nearby, setNearby] = useState({
-    id: "",
-    facility: "",
-    category: "",
-    distance: "",
-    time: "",
-  });
-  console.log(nearby);
-  const [categoryNearby, setCategoryNearby] = useState([]);
-  console.log(categoryNearby);
+  // const [nearby, setNearby] = useState({
+  //   id: "",
+  //   facility: "",
+  //   category: "",
+  //   distance: "",
+  //   time: "",
+  // });
+  // console.log(nearby);
+  // const [categoryNearby, setCategoryNearby] = useState([]);
+  // console.log(categoryNearby);
 
   const [msg, setMsg] = useState("");
 
@@ -61,7 +50,7 @@ export default function UpdateBuilding(props) {
       name: "buildingName",
       type: "text",
       placeholder: "Building Name",
-      value: getDataBuilding[0].buildingName,
+      value: "",
       required: true,
     },
     {
@@ -69,7 +58,7 @@ export default function UpdateBuilding(props) {
       name: "jumlahRoom",
       type: "number",
       placeholder: "Jumlah Room",
-      value: getDataBuilding[0].numOfRooms,
+      value: "",
       required: true,
     },
     {
@@ -77,7 +66,7 @@ export default function UpdateBuilding(props) {
       name: "address",
       type: "text",
       placeholder: "Address",
-      value: getDataBuilding[0].complexAdress,
+      value: "",
       required: true,
     },
     {
@@ -86,7 +75,7 @@ export default function UpdateBuilding(props) {
       type: "select",
       placeholder: "Complex Name",
       //   options: complex_name,
-      value: getDataBuilding[0].complexName,
+      value: "",
       required: true,
     },
 
@@ -95,48 +84,48 @@ export default function UpdateBuilding(props) {
       name: "description",
       type: "textarea",
       placeholder: "Description",
-      value: getDataBuilding[0].description,
+      value: "",
       required: true,
     },
   ]);
 
   console.log(inputs);
 
-  const [inputNearby, setInputNearby] = useState([
-    {
-      id: 0,
-      name: "facility",
-      type: "text",
-      placeholder: "Facility",
-      value: "",
-      required: true,
-    },
-    {
-      id: 1,
-      name: "category",
-      type: "select",
-      placeholder: "Category",
-      options: ["Hospital", "Bank", "Mall"],
-      value: "",
-      // required: true,
-    },
-    {
-      id: 2,
-      name: "distance",
-      type: "number",
-      placeholder: "Distance km",
-      value: "",
-      required: true,
-    },
-    {
-      id: 3,
-      name: "time",
-      type: "time",
-      placeholder: "Time",
-      value: "",
-      // required: true,
-    },
-  ]);
+  // const [inputNearby, setInputNearby] = useState([
+  //   {
+  //     id: 0,
+  //     name: "facility",
+  //     type: "text",
+  //     placeholder: "Facility",
+  //     value: "",
+  //     required: true,
+  //   },
+  //   {
+  //     id: 1,
+  //     name: "category",
+  //     type: "select",
+  //     placeholder: "Category",
+  //     options: ["Hospital", "Bank", "Mall"],
+  //     value: "",
+  //     // required: true,
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "distance",
+  //     type: "number",
+  //     placeholder: "Distance km",
+  //     value: "",
+  //     required: true,
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "time",
+  //     type: "time",
+  //     placeholder: "Time",
+  //     value: "",
+  //     // required: true,
+  //   },
+  // ]);
 
   const _handleChange = (value, index) => {
     setInputs(
@@ -156,80 +145,80 @@ export default function UpdateBuilding(props) {
     });
   };
 
-  const _handleChangeNearby = (value, index) => {
-    setInputNearby(
-      inputNearby.map((input) => {
-        if (input.id === index) {
-          return {
-            ...input,
-            value,
-          };
-        }
-        return input;
-      })
-    );
-    setNearby({
-      ...nearby,
-      [inputNearby[index].name]: value,
-    });
-  };
+  // const _handleChangeNearby = (value, index) => {
+  //   setInputNearby(
+  //     inputNearby.map((input) => {
+  //       if (input.id === index) {
+  //         return {
+  //           ...input,
+  //           value,
+  //         };
+  //       }
+  //       return input;
+  //     })
+  //   );
+  //   setNearby({
+  //     ...nearby,
+  //     [inputNearby[index].name]: value,
+  //   });
+  // };
 
-  const _handleCreateNearby = (e) => {
-    if (
-      inputNearby[0].value &&
-      inputNearby[1].value &&
-      inputNearby[2].value &&
-      inputNearby[3].value
-    ) {
-      createNearby({
-        building_id: data.id,
-        name: inputNearby[0].value,
-        category: inputNearby[1].value,
-        description: inputNearby[2].value,
-        time: inputNearby[3].value,
-      });
+  // const _handleCreateNearby = (e) => {
+  //   if (
+  //     inputNearby[0].value &&
+  //     inputNearby[1].value &&
+  //     inputNearby[2].value &&
+  //     inputNearby[3].value
+  //   ) {
+  //     createNearby({
+  //       building_id: data.id,
+  //       name: inputNearby[0].value,
+  //       category: inputNearby[1].value,
+  //       description: inputNearby[2].value,
+  //       time: inputNearby[3].value,
+  //     });
 
-      e.preventDefault();
+  //     e.preventDefault();
 
-      setInputNearby([
-        {
-          id: 0,
-          name: "facility",
-          type: "text",
-          placeholder: "Facility",
-          value: "",
-          required: true,
-        },
-        {
-          id: 1,
-          name: "category",
-          type: "select",
-          placeholder: "Category",
-          options: ["Hospital", "Bank", "Mall"],
-          value: "",
-          // required: true,
-        },
-        {
-          id: 2,
-          name: "distance",
-          type: "text",
-          placeholder: "Distance",
-          value: "",
-          required: true,
-        },
-        {
-          id: 3,
-          name: "time",
-          type: "time",
-          placeholder: "Time",
-          value: "",
-          // required: true,
-        },
-      ]);
-    } else {
-      setMsg("Please fill out all fields");
-    }
-  };
+  //     setInputNearby([
+  //       {
+  //         id: 0,
+  //         name: "facility",
+  //         type: "text",
+  //         placeholder: "Facility",
+  //         value: "",
+  //         required: true,
+  //       },
+  //       {
+  //         id: 1,
+  //         name: "category",
+  //         type: "select",
+  //         placeholder: "Category",
+  //         options: ["Hospital", "Bank", "Mall"],
+  //         value: "",
+  //         // required: true,
+  //       },
+  //       {
+  //         id: 2,
+  //         name: "distance",
+  //         type: "text",
+  //         placeholder: "Distance",
+  //         value: "",
+  //         required: true,
+  //       },
+  //       {
+  //         id: 3,
+  //         name: "time",
+  //         type: "time",
+  //         placeholder: "Time",
+  //         value: "",
+  //         // required: true,
+  //       },
+  //     ]);
+  //   } else {
+  //     setMsg("Please fill out all fields");
+  //   }
+  // };
 
   const [imageBuilding, setImageBuilding] = useState("");
 
@@ -255,7 +244,7 @@ export default function UpdateBuilding(props) {
     });
   };
 
-  const _handleUpdateBuilding = (e) => {
+  const _handleCreateBuilding = (e) => {
     if (
       inputs[0].value &&
       inputs[1].value &&
@@ -334,16 +323,16 @@ export default function UpdateBuilding(props) {
     }
   };
 
-  //get category facility
-  const getAllCategory = async () => {
-    try {
-      await getCategoryNearby().then((response) => {
-        setCategoryNearby(response);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // //get category facility
+  // const getAllCategory = async () => {
+  //   try {
+  //     await getCategoryNearby().then((response) => {
+  //       setCategoryNearby(response);
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
     const getAllComplexes = async () => {
@@ -355,16 +344,15 @@ export default function UpdateBuilding(props) {
     };
     getAllComplexes();
 
-    const getAllCategories = async () => {
-      const allCategory = await getAllCategory();
-      if (allCategory) {
-        setCategoryNearby(allCategory);
-        console.log(allCategory);
-      }
-    };
-    getAllCategories();
+    // const getAllCategories = async () => {
+    //   const allCategory = await getAllCategory();
+    //   if (allCategory) {
+    //     setCategoryNearby(allCategory);
+    //     console.log(allCategory);
+    //   }
+    // };
+    // getAllCategories();
   }, []);
-
 
   return (
     <div className=" flex bg-secondary-blue h-screen">
@@ -372,11 +360,10 @@ export default function UpdateBuilding(props) {
       <Navbar />
       <div className="basis-5/6">
         <div className="px-4 py-4 mt-20">
-          <h1 className="text-3xl font-bold mb-4">Building</h1>
 
           <div className="flex items-center justify-between mb-6">
-            <FormWrap onSubmit={_handleUpdateBuilding}>
-              <h3 className="text-2xl text-left font-bold">Update Building</h3>
+            <FormWrap onSubmit={_handleCreateBuilding}>
+              <h3 className="text-2xl text-left font-bold">Create Building</h3>
               <p className="has-text-centered text-error-red">{msg}</p>
               <div className="w-full grid grid-cols-2 gap-4">
                 {inputs.map((input, inputIdx) =>
@@ -402,7 +389,7 @@ export default function UpdateBuilding(props) {
                         }
                         value={input.value}
                       >
-                        <option value="">{input.value}</option>
+                        <option value="">Complex</option>
                         {complex.map((complex, complexIdx) => (
                           <option key={complexIdx} value={complex.id}>
                             {complex.complex_name}
@@ -438,7 +425,7 @@ export default function UpdateBuilding(props) {
                 </div>
               </div>
 
-              <h4 className="text-lg text-left font-bold">Nearby facilities</h4>
+              {/* <h4 className="text-lg text-left font-bold">Nearby facilities</h4>
               <div className="grid grid-cols-3 gap-4 justify-items-start">
                 {inputNearby.map((inputNearby, inputNearbyIdx) =>
                   inputNearby.name === "facility" ? (
@@ -498,11 +485,14 @@ export default function UpdateBuilding(props) {
                 >
                   Add Nearby Facility
                 </Button>
+              </div> */}
+              <div className="mt-2 w-full flex flex-col gap-4">
+                <hr className="text-secondary-softblue" />
+                <FormNearbyFacilities />
+
+                <ListNearbyFacility />
               </div>
 
-              <ListNearbyFacility nearby={nearby} />
-
-          
               <div className="w-full flex justify-end">
                 <div className="flex w-2/4 items-center gap-4">
                   <Button
@@ -514,9 +504,9 @@ export default function UpdateBuilding(props) {
                   <Button
                     className="bg-primary-blue w-1/2 text-primary-white font-bold uppercase text-sm px-6 py-3 rounded shadow mr-1 mb-1"
                     type="button"
-                    onClick={_handleUpdateBuilding}
+                    onClick={_handleCreateBuilding}
                   >
-                    Update Complex
+                    Create Building
                   </Button>
                 </div>
               </div>
