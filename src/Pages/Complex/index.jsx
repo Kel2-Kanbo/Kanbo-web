@@ -181,10 +181,10 @@ const Complex = () => {
   // }, []);
 
   return (
-    <div className="flex h-screen bg-secondary-softblue">
+    <div className='flex h-screen bg-secondary-softblue'>
       <Sidebar />
       <Navbar />
-      <div className="basis-5/6">
+      <div className='basis-5/6 ml-6'>
         <div className="px-4 py-4 mt-20">
           {/* <h1 className="text-3xl font-bold mb-1">Complex</h1>
           <h4 className="text-md text-primary-gray">Manage complex</h4> */}

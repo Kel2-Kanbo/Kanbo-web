@@ -173,8 +173,6 @@ export default function Building() {
     <div className=" flex bg-secondary-blue h-screen">
       <Sidebar />
       <Navbar />
-      <div className="basis-5/6">
-        <div className="px-4 py-4 mt-20">
           <div className="flex items-center justify-between mb-6">
             <div className="text-sm">
               <select className="text-textColor-blackThin whitespace-nowrap px-4 py-3 rounded border bg-primary-white">
