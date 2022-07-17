@@ -97,6 +97,7 @@ th,td{
   justify-content: flex-start;
   list-style: none;
   cursor: pointer;
+  column-gap: 8px;
 }
 
 .pagination a {

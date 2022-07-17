@@ -21,7 +21,6 @@ const NAVBAR_TEXTS = [
   { pages: "Manage Review", path: "/review" },
   { pages: "Chat", path: "/chat" },
   { pages: "Manage Booking", path: "/booking" },
-
 ];
 
 export default function Navbar({ fixed }) {
@@ -56,9 +55,7 @@ export default function Navbar({ fixed }) {
                 }
                 id="example-navbar-info"
               >
-
                 <h1 className="font-bold text-2xl">{textToShow.pages}</h1>
-                {/* <SearchNavbar /> */}
 
                 <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
                   <li className="nav-item">
