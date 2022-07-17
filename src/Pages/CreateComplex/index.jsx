@@ -5,8 +5,8 @@ import {
   getDistrict,
   createComplex,
   getProvince,
-} from "../../API/ApiFetch"
-import { Link, useNavigate } from "react-router-dom";
+} from "../../API/ApiFetch";
+import { useNavigate } from "react-router-dom";
 
 import FormInput from "../../Components/FormInput";
 import SelectWrap from "../../Components/SelectWrap";
@@ -16,55 +16,27 @@ import Sidebar from "../../Components/Sidebar";
 import Navbar from "../../Components/Navbar";
 import Swal from "sweetalert2";
 
-export default function CreateComplex(props) {
-  // const { handleClose, addComplex, city, district } = props;
-  const navigate = useNavigate();
+export default function CreateComplex() {
+  const navigate = useNavigate(); 
 
   const [data, setData] = useState({
     complexName: "",
     complexAddress: "",
     city: "",
     district: "",
-    building: "",
   });
-  const [msg, setMsg] = useState("");
 
-  const [province, setProvince] = useState([
-    {
-      id: 0,
-      name: "",
-    },
-  ]);
+  const [province, setProvince] = useState([]);
   const [city, setCity] = useState([]);
   const [district, setDistrict] = useState([]);
 
-  console.log(province);
-  console.log(city);
+  const [msg, setMsg] = useState("");
 
-  // const dataProvince = province?.map((item) => {
-  //   return {
-  //     id: item.id,
-  //   };
-  // }
-  // );
-  // console.log(dataProvince);
-
-  const [provinceId, setProvinceId] = useState(0);
-  const [cityId, setCityId] = useState(0);
-
-  // console.log(city);
-  // const cityName = city?.map((item) => {
-  //   return {
-  //     value: item.name,
-  //     id: item.id,
-  //   };
-  // });
-  // const city_name = new Array(cityName.length);
-  // for (let i = 0; i < cityName.length; i++) {
-  //   city_name[i] = cityName[i].value;
-  // }
-
-  // console.log(city_name);
+  const [isEmptyName, setIsEmptyName] = useState(false);
+  const [isEmptyAddress, setIsEmptyAddress] = useState(false);
+  const [isEmptyProvince, setIsEmptyProvince] = useState(false);
+  const [isEmptyCity, setIsEmptyCity] = useState(false);
+  const [isEmptyDistrict, setIsEmptyDistrict] = useState(false);
 
   const [inputs, setInputs] = useState([
     {
@@ -73,6 +45,7 @@ export default function CreateComplex(props) {
       type: "text",
       placeholder: "Complex Name",
       value: "",
+      err: "Complex Name must be filled",
       required: true,
     },
     {
@@ -81,6 +54,7 @@ export default function CreateComplex(props) {
       type: "text",
       placeholder: "Complex Address",
       value: "",
+      err: "Complex Address must be filled",
       required: true,
     },
     {
@@ -88,9 +62,8 @@ export default function CreateComplex(props) {
       name: "province",
       type: "select",
       placeholder: "Province",
-      options: province,
-      // options: dataProvince,
       value: "",
+      err: "Province must be selected",
       required: true,
     },
     {
@@ -98,10 +71,8 @@ export default function CreateComplex(props) {
       name: "city",
       type: "select",
       placeholder: "City",
-      // options: city_name,
-      options: city,
-
       value: "",
+      err: "City must be selected",
       required: true,
     },
     {
@@ -109,20 +80,11 @@ export default function CreateComplex(props) {
       name: "district",
       type: "select",
       placeholder: "District",
-      options: district,
       value: "",
-      required: true,
-    },
-    {
-      id: 5,
-      name: "building",
-      type: "number",
-      placeholder: "Building",
-      value: "",
+      err: "District must be selected",
       required: true,
     },
   ]);
-  console.log(inputs);
 
   const _handleChange = (value, index) => {
     setInputs(
@@ -143,23 +105,55 @@ export default function CreateComplex(props) {
     });
   };
 
+  const _handleChangeSelect = (value, index) => {
+    setInputs(
+      inputs.map((input) => {
+        if (input.id === index) {
+          return {
+            ...input,
+            value,
+          };
+        }
+        return input;
+      })
+    );
+
+    setData({
+      ...data,
+      [inputs[index].value]: value,
+    });
+
+    if (inputs[index].name === "province") {
+      getCities(value);
+    }
+    if (inputs[index].name === "city") {
+      getDistricts(value);
+    }
+    if (inputs[index].name === "district") {
+      inputs[index].value = value;
+    }
+  };
+
   const _handleCreateComplex = (e) => {
     if (
       inputs[0].value &&
       inputs[1].value &&
       inputs[2].value &&
       inputs[3].value &&
-      inputs[4].value &&
-      inputs[5].value
+      inputs[4].value
     ) {
+      setIsEmptyName(false);
+      setIsEmptyAddress(false);
+      setIsEmptyProvince(false);
+      setIsEmptyCity(false);
+      setIsEmptyDistrict(false);
+
       createComplex({
-        //   id: uuidv4(),
-        complexName: inputs[0].value,
-        complexAddress: inputs[1].value,
-        province: inputs[2].value,
-        city: inputs[3].value,
-        district: inputs[4].value,
-        building: inputs[5].value,
+        complex_name: inputs[0].value,
+        street: inputs[1].value,
+        province_id: inputs[2].value,
+        city_id: inputs[3].value,
+        district_id: inputs[4].value,
       });
       Swal.fire({
         title: "Success",
@@ -177,6 +171,7 @@ export default function CreateComplex(props) {
           type: "text",
           placeholder: "Complex Name",
           value: "",
+          err: "Complex Name must be filled",
           required: true,
         },
         {
@@ -185,6 +180,7 @@ export default function CreateComplex(props) {
           type: "text",
           placeholder: "Complex Address",
           value: "",
+          err: "Complex Address must be filled",
           required: true,
         },
         {
@@ -192,9 +188,8 @@ export default function CreateComplex(props) {
           name: "province",
           type: "select",
           placeholder: "Province",
-          // options: city_name,
-          options: province,
           value: "",
+          err: "Province must be selected",
           required: true,
         },
         {
@@ -202,10 +197,8 @@ export default function CreateComplex(props) {
           name: "city",
           type: "select",
           placeholder: "City",
-          // options: city_name,
-          options: city,
-
           value: "",
+          err: "City must be selected",
           required: true,
         },
         {
@@ -213,22 +206,18 @@ export default function CreateComplex(props) {
           name: "district",
           type: "select",
           placeholder: "District",
-          options: district,
           value: "",
-          required: true,
-        },
-        {
-          id: 5,
-          name: "building",
-          type: "number",
-          placeholder: "Building",
-          value: "",
+          err: "District must be selected",
           required: true,
         },
       ]);
-      // handleClose();
     } else {
       setMsg("Please fill out all fields");
+      setIsEmptyName(true);
+      setIsEmptyAddress(true);
+      setIsEmptyProvince(true);
+      setIsEmptyCity(true);
+      setIsEmptyDistrict(true);
     }
   };
 
@@ -241,6 +230,7 @@ export default function CreateComplex(props) {
         type: "text",
         placeholder: "Complex Name",
         value: "",
+        err: "Complex Name must be filled",
         required: true,
       },
       {
@@ -249,6 +239,7 @@ export default function CreateComplex(props) {
         type: "text",
         placeholder: "Complex Address",
         value: "",
+        err: "Complex Address must be filled",
         required: true,
       },
       {
@@ -256,9 +247,8 @@ export default function CreateComplex(props) {
         name: "province",
         type: "select",
         placeholder: "Province",
-        // options: city_name,
-        options: province,
         value: "",
+        err: "Province must be selected",
         required: true,
       },
       {
@@ -266,10 +256,8 @@ export default function CreateComplex(props) {
         name: "city",
         type: "select",
         placeholder: "City",
-        // options: city_name,
-        options: city,
-
         value: "",
+        err: "City must be selected",
         required: true,
       },
       {
@@ -277,21 +265,14 @@ export default function CreateComplex(props) {
         name: "district",
         type: "select",
         placeholder: "District",
-        options: district,
         value: "",
-        required: true,
-      },
-      {
-        id: 5,
-        name: "building",
-        type: "number",
-        placeholder: "Building",
-        value: "",
+        err: "District must be selected",
         required: true,
       },
     ]);
   };
 
+  // get province by api
   const getProvinces = async () => {
     try {
       await getProvince().then((response) => {
@@ -303,19 +284,16 @@ export default function CreateComplex(props) {
     }
   };
 
-  // const getCities = async (provinceId) => {
-  //   try {
-  //     await getCity(provinceId).then((response) => {
-  //       setCity(response);
-  //       console.log(response);
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const [provinceId, setProvinceId] = useState(province);
+  console.log(provinceId);
+  const [cityId, setCityId] = useState(city);
+  console.log(cityId);
+  const [districtId, setDistrictId] = useState(district);
+  console.log(districtId);
 
   //get city by province id
   const getCities = async (provinceId) => {
+    console.log(provinceId);
     try {
       await getCity(provinceId).then((response) => {
         setCity(response);
@@ -325,20 +303,12 @@ export default function CreateComplex(props) {
       console.log(error);
     }
   };
-  // const getCities = async(id) => {
-  //   try {
-  //     await getCity(id).then((response) => {
-  //       setCity(response);
-  //       console.log(response);
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
 
-  const getDistricts = async (city) => {
+  //get district ny city id
+  const getDistricts = async (cityId) => {
+    console.log(cityId);
     try {
-      await getDistrict(city.id).then((response) => {
+      await getDistrict(cityId).then((response) => {
         setDistrict(response);
         console.log(response);
       });
@@ -347,46 +317,30 @@ export default function CreateComplex(props) {
     }
   };
 
-  //  const getDistricts = async () => {
-  //    try {
-  //      await getDistrict().then((response) => {
-  //        setDistrict(response);
-  //      });
-  //    } catch (error) {
-  //      console.log(error);
-  //    }
-  //  };
-
   useEffect(() => {
-    const getAllCity = async () => {
-      const allCity = await getCities();
-      if (allCity) {
-        setCity(allCity);
-      }
-    };
-    getAllCity();
-
-    // const getAllProvince = async () => {
-    //   const allProvince = await getProvinces();
-    //   if (allProvince) {
-    //     setProvince(allProvince);
-    //   }
-    // };
-    // getAllProvince();
+    getProvinces();
   }, []);
 
   useEffect(() => {
-    const getAllProvince = async () => {
-      const allProvince = await getProvinces();
-      if (allProvince) {
-        setProvince(allProvince);
-      }
-    };
-    getAllProvince();
-  }, []);
+    if (inputs[0].value.match(inputs[0].pattern)) {
+      setIsEmptyName(false);
+    }
+    if (inputs[1].value.match(inputs[1].pattern)) {
+      setIsEmptyAddress(false);
+    }
+    if (inputs[2].value.match(inputs[2].pattern)) {
+      setIsEmptyProvince(false);
+    }
+    if (inputs[3].value.match(inputs[3].pattern)) {
+      setIsEmptyCity(false);
+    }
+    if (inputs[4].value.match(inputs[4].pattern)) {
+      setIsEmptyDistrict(false);
+    }
+  }, [inputs]);
 
   return (
-    <div className=" flex bg-secondary-blue h-screen">
+    <div className=" flex bg-secondary-blue h-full">
       <Sidebar />
       <Navbar />
       <div className="basis-5/6">
@@ -395,57 +349,98 @@ export default function CreateComplex(props) {
             <FormWrap onSubmit={_handleCreateComplex}>
               <h3 className="text-2xl text-center font-bold">Create Complex</h3>
               <p className="has-text-centered text-error-red">{msg}</p>
-              {/* <div className="w-full grid grid-cols-1 gap-4"> */}
               {inputs.map((input, inputIdx) =>
                 input.type !== "select" ? (
                   <>
                     <FormInput
                       key={inputIdx}
+                      className={`${
+                        isEmptyName && isEmptyAddress
+                        ? "peer-invalid:visible border-primary-red border-2"
+                        : "peer-valid:visible border-secondary-softblue border-2"
+                      }`}
                       {...input}
                       value={input.value}
                       type={input.type}
-                      onChange={(e) => _handleChange(e.target.value, inputIdx)}
+                      onChange={(e) => {
+                        console.log(e);
+                        _handleChange(e.target.value, inputIdx);
+                      }}
                     />
+
+                    {input.type !== "select" ? (
+                      <div className="w-full my-0 mx-0 text-left px-0 py-0">
+                        <p
+                          className={`${
+                            isEmptyName && isEmptyAddress
+                              ? "peer-invalid:visible text-primary-red "
+                              : "invisible"
+                          }`}
+                        >
+                          {input.err}
+                        </p>
+                      </div>
+                    ) : null}
                   </>
                 ) : (
                   <>
                     <SelectWrap
                       type={input.type}
-                      onChange={(e) => _handleChange(e.target.value, inputIdx)}
+                      className={`${
+                        isEmptyProvince && isEmptyCity && isEmptyDistrict
+                          ? "peer-invalid:visible border-primary-red border-2"
+                          : "peer-valid:visible border-secondary-softblue border-2"
+                      }`}
+                      onChange={(e) => {
+                        console.log(e.target.value);
+                        _handleChangeSelect(e.target.value, inputIdx);
+                      }}
                     >
                       <option value="">{input.placeholder}</option>
-                      {/* {input.options.map((option, optionIdx) => (
-                          <option key={optionIdx} value={option}>
-                            {option}
-                          </option>
-                        ))} */}
                       {input.name === "province"
-                        ? province.map((option, optionIdx) => (
-                            <option key={optionIdx} value={option.id}>
-                              {option.name}
+                        ? province.map((province, provinceIdx) => (
+                            <option key={provinceIdx} value={province.id}>
+                              {province.name}
                             </option>
                           ))
                         : input.name === "city"
-                        ? city.map((option, optionIdx) => (
-                            <option key={optionIdx} value={option.id}>
-                              {option.name}
+                        ? city.map((city, cityIdx) => (
+                            <option key={cityIdx} value={city.id}>
+                              {city.name}
                             </option>
                           ))
-                        : district.map((option, optionIdx) => (
-                            <option key={optionIdx} value={option.id}>
-                              {option.name}
+                        : district.map((district, districtIdx) => (
+                            <option
+                              key={districtIdx}
+                              value={district.district_id}
+                            >
+                              {district.name}
                             </option>
                           ))}
                     </SelectWrap>
+                    {input.type === "select" ? (
+                      <div className="w-full my-0 mx-0 text-left px-0 py-0">
+                        <p
+                          className={`${
+                            isEmptyProvince && isEmptyCity && isEmptyDistrict
+                              ? "peer-invalid:visible text-primary-red "
+                              : "invisible"
+                          }`}
+                        >
+                          {input.err}
+                        </p>
+                      </div>
+                    ) : null}
                   </>
                 )
               )}
-              {/* </div> */}
+
               <div className="w-full flex justify-end">
                 <div className="flex w-2/4 items-center gap-4">
                   <Button
                     className="font-bold bg-secondary-softblue text-primary-blue w-1/2 uppercase px-6 py-3 text-sm rounded shadow mr-1 mb-1"
-                    type="button" onClick={_handleClose}
+                    type="button"
+                    onClick={_handleClose}
                   >
                     Close
                   </Button>

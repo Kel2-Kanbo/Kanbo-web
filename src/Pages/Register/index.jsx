@@ -25,10 +25,10 @@ export default function Register() {
   // 	email: 'email must be valid',
   // 	password: 'Password must be at least 8 characters',
   // });
-  const [isEmptyName, setIsEmptyName] = useState(true);
-  const [isEmptyUsername, setIsEmptyUsername] = useState(true);
-  const [isEmptyEmail, setIsEmptyEmail] = useState(true);
-  const [isEmptyPassword, setIsEmptyPassword] = useState(true);
+  const [isEmptyName, setIsEmptyName] = useState(false);
+  const [isEmptyUsername, setIsEmptyUsername] = useState(false);
+  const [isEmptyEmail, setIsEmptyEmail] = useState(false);
+  const [isEmptyPassword, setIsEmptyPassword] = useState(false);
 
   const [inputs, setInputs] = useState([
     {
@@ -68,28 +68,7 @@ export default function Register() {
       err: "Must contain at least 6 or more characters",
     },
   ]);
-  useEffect(() => {
-    if (!inputs[0].value) {
-      setIsEmptyName(false);
-    } else {
-      setIsEmptyName(true);
-    }
-    if (!inputs[1].value) {
-      setIsEmptyUsername(false);
-    } else {
-      setIsEmptyUsername(true);
-    }
-    if (!inputs[2].value) {
-      setIsEmptyEmail(false);
-    } else {
-      setIsEmptyEmail(true);
-    }
-    if (!inputs[3].value) {
-      setIsEmptyPassword(false);
-    } else {
-      setIsEmptyPassword(true);
-    }
-  }, [inputs]);
+
   const _handleChange = (value, index) => {
     // value baru
     const newInputs = { ...inputs[index], value };
@@ -127,6 +106,10 @@ export default function Register() {
         password: inputs[3].value,
         role: ["admin"],
       };
+      setIsEmptyName(false);
+      setIsEmptyUsername(false);
+      setIsEmptyEmail(false);
+      setIsEmptyPassword(false);
       try {
         await AuthRegister(data).then((response) => {
           console.log(response);
@@ -161,12 +144,20 @@ export default function Register() {
       setIsEmptyPassword(true);
     }
   };
-  // useEffect(() => {
-  // 	if (inputs[0].value) {
-  // 		setIsEmpty(false);
-  // 	}
-  // 	setIsEmpty(true);
-  // });
+  useEffect(() => {
+    if (inputs[0].value.match(inputs[0].pattern)) {
+      setIsEmptyName(false);
+    }
+    if (inputs[1].value.match(inputs[1].pattern)) {
+      setIsEmptyUsername(false);
+    } 
+    if (inputs[2].value.match(inputs[2].pattern)) {
+      setIsEmptyEmail(false);
+    }
+    if (inputs[3].value.match(inputs[3].pattern)) {
+      setIsEmptyPassword(false);
+    }
+  }, [inputs]);
   const backgroundImage = {
     backgroundImage: `url(${background})`,
     backgroundSize: "100% 100%",
@@ -188,7 +179,11 @@ export default function Register() {
         {inputs.map((input, inputIdx) => (
           <div key={inputIdx}>
             <FormInput
-              className="peer m-0"
+              className={`peer m-0 ${
+                isEmptyEmail || isEmptyName || isEmptyPassword || isEmptyUsername
+                  ? "peer-invalid:visible border-primary-red border-2"
+                  : "peer-valid:visible border-secondary-softblue border-2"
+              }`}
               {...input}
               value={input.value}
               required
@@ -203,7 +198,7 @@ export default function Register() {
             />
             {input.name === "name" ? (
               <p
-                className={`my-2 ${
+                className={`pb-2 ${
                   isEmptyName
                     ? "peer-invalid:visible text-primary-red invisible"
                     : "invisible"
@@ -223,7 +218,7 @@ export default function Register() {
             )}
             {input.name === "username" ? (
               <p
-                className={`my-2 ${
+                className={`pb-2 ${
                   isEmptyUsername
                     ? "peer-invalid:visible text-primary-red invisible"
                     : "invisible"
@@ -234,7 +229,7 @@ export default function Register() {
             ) : null}
             {input.name === "email" ? (
               <p
-                className={`my-2 ${
+                className={`pb-2 ${
                   isEmptyEmail
                     ? "peer-invalid:visible text-primary-red invisible"
                     : "invisible"
@@ -246,7 +241,7 @@ export default function Register() {
 
             {input.name === "password" ? (
               <p
-                className={`my-2 ${
+                className={`pb-2 ${
                   isEmptyPassword
                     ? "peer-invalid:visible text-primary-red invisible"
                     : "invisible"
@@ -267,6 +262,7 @@ export default function Register() {
         {/* <span className="text-black">{error}</span> */}
 
         <Button
+        type="button"
           onClick={_handleRegister}
           className="bg-primary-blue text-secondary-softblue"
         >

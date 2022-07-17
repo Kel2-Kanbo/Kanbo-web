@@ -37,7 +37,7 @@ th,td{
 .sidebar{
   background: #FFFFFF;
   color: #4C35E0;
-  height: 100vh;
+  height: auto;
   width: 200px;
   /* border-top-right-radius: 2rem; */
   transition: all 0.5s;
@@ -76,7 +76,7 @@ th,td{
   border-bottom-left-radius: 1rem;
 }
 .active .icon svg{
-  fill: #4C35E0;
+  fill: #686677;
 }
 /* .icon, .link_text{
   font-size: 20px;
@@ -90,3 +90,32 @@ th,td{
   height: 30%;
 }
 /* end notfound */
+
+/* style pagination */
+.pagination {
+  display: flex;
+  justify-content: flex-start;
+  list-style: none;
+  cursor: pointer;
+}
+
+.pagination a {
+  padding: 10px;
+  border: 1px solid #686677;
+  border-radius: 10px;
+  color: #4C35E0;
+}
+
+.pagination__link {
+  font-weight: bold;
+}
+
+.pagination__link--active a {
+  color:#4C35E0;
+  background-color: #EDEAFF;
+}
+
+.pagination__link--disabled a {
+  color:#4C35E0;
+  background-color: #EDEAFF;
+}

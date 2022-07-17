@@ -10,8 +10,16 @@ const Review = () => {
 
     const [review, setReview] = useState([]);
 
+    const [tabelHeader ] = useState([
+      "No. Order",
+      "Username",
+      "Room Booked",
+      "Reviews",
+      "Reply Reviews",
+    ]);
+
     return (
-    <div className='flex h-screen bg-secondary-softblue'>
+    <div className='flex h-full bg-secondary-softblue'>
         <Sidebar />
         <Navbar />
       <div className='basis-5/6'>
@@ -22,6 +30,7 @@ const Review = () => {
           </div>
           <div className="bg-primary-white items-center rounded mt-4">
             <TableReview
+            tabelHeader={tabelHeader}
             review={review}
             />
           </div>

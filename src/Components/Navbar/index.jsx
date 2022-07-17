@@ -1,104 +1,88 @@
 import React, { useState } from "react";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
-import Logo from "../Logo";
+
 import NavItem from "../NavItem";
 
 import "./NavbarStyle.css";
 import SearchNavbar from "../SearchNavbar";
 
 const NAVBAR_TEXTS = [
-  { pages: "Dashboard", link: "/dashboard" },
-  { pages: "Room", link: "/room" },
-  { pages: "Building", link: "/building" },
-  { pages: "Create Building", link: "/create-building" },
-  { pages: "Update Building", link: "/update-building" },
-  { pages: "Complex", link: "/complex" },
-  { pages: "Create Complex", link: "/create-complex" },
-  { pages: "Update Complex", link: "/update-complex" },
-  { pages: "Customer", link: "/customer" },
-  { pages: "Manage Review", link: "/review" },
-  { pages: "Chat", link: "/chat" },
-  { pages: "Manage Order", link: "/order" },
+  { pages: "Dashboard", path: "/dashboard" },
+  { pages: "Room", path: "/room" },
+  { pages: "Building", path: "/building" },
+  { pages: "Create Building", path: "/create-building" },
+  { pages: "Update Building", path: "/update-building/:id" },
+  { pages: "Complex", path: "/complex" },
+  { pages: "Create Complex", path: "/create-complex" },
+  { pages: "Update Complex", path: `/update-complex/:id` },
+
+  { pages: "Customer", path: "/customer" },
+  { pages: "Manage Review", path: "/review" },
+  { pages: "Chat", path: "/chat" },
+  { pages: "Manage Booking", path: "/booking" },
 
 ];
 
 export default function Navbar({ fixed }) {
-  const [navbar, setNavbar] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-    return (
-        <nav className="md:w-10/12 w-4/12 right-0 fixed bg-primary-white shadow rounded-l">
-            <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
-                <div>
-                    <div className="flex items-center justify-between py-3 md:py-5 md:block">
-                        <a href="javascript:void(0)">
-                            <h2 className="text-l">
-                            </h2>
-                            <Logo/>
-                        </a>
-                        <div className="md:hidden">
-                            <button
-                                className="p-2 text-primary-gray rounded-md outline-none focus:border-gray-400 focus:border"
-                                onClick={() => setNavbar(!navbar)}
-                            >
-                                {navbar ? (
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="w-6 h-6"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                    >
-                                        <path
-                                            fillRule="evenodd"
-                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                            clipRule="evenodd"
-                                        />
-                                    </svg>
-                                ) : (
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="w-6 h-6"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                        strokeWidth={2}
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M4 6h16M4 12h16M4 18h16"
-                                        />
-                                    </svg>
-                                )}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div
-                        className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
-                            navbar ? "block" : "hidden"
-                        }`}
+  const location = useLocation();
+  const textToShow = NAVBAR_TEXTS.find(
+    (text) => text.path === location.pathname
+  );
+
+  // console.log(textToShow);
+
+  return (
+    <>
+      <div className="flex flex-wrap fixed justify-end md:w-10/12 w-3/12 bg-primary-white right-0 rounded-l">
+        <div className="w-full">
+          <nav className=" flex flex-wrap right-0 items-center justify-between px-2 py-3 bg-primary-white rounded-l-lg">
+            <div className="container px-6 mx-auto flex flex-wrap items-center justify-between">
+              <div className="w-full relative flex left-8 justify-end lg:w-auto lg:static lg:block ">
+                <button
+                  className="text-primary-blue cursor-pointer text-xl leading-none px-3 py-1 rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+                  type="button"
+                  onClick={() => setMenuOpen(!menuOpen)}
+                >
+                  <HiOutlineMenuAlt3 />
+                </button>
+              </div>
+              <div
+                className={
+                  "lg:flex flex-grow items-center" +
+                  (menuOpen ? " row" : " hidden")
+                }
+                id="example-navbar-info"
+              >
+
+                <h1 className="font-bold text-2xl">{textToShow.pages}</h1>
+                {/* <SearchNavbar /> */}
+
+                <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
+                  <li className="nav-item">
+                    <a
+                      className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-primary-blue hover:opacity-75"
+                      href="#pablo"
                     >
-                        <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
-                            <li className="text-gray-600 hover:text-blue-600">
-                                <a href="javascript:void(0)">Home</a>
-                            </li>
-                            <li className="text-gray-600 hover:text-blue-600">
-                                <a href="javascript:void(0)">Blog</a>
-                            </li>
-                            <li className="text-gray-600 hover:text-blue-600">
-                                <a href="javascript:void(0)">About US</a>
-                            </li>
-                            <li className="text-gray-600 hover:text-blue-600">
-                                <a href="javascript:void(0)">Contact US</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                      Profile
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a
+                      className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-primary-blue hover:opacity-75"
+                      href="#pablo"
+                    >
+                      Settings
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
-        </nav>
+          </nav>
+        </div>
+      </div>
+    </>
   );
 }
-
-// export default Navbar;

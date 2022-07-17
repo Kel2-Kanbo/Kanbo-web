@@ -2,32 +2,26 @@ import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
+import { getBuilding, deleteBuilding } from "../../API/ApiFetch";
 import Button from "../../Components/Button";
 import Sidebar from "../../Components/Sidebar";
 import Navbar from "../../Components/Navbar";
-import CreateBuilding from "../../Components/CreateBuilding";
-// import CreateBuilding from "./CreateBuilding";
 import TableBuilding from "../../Components/TableBuilding";
-import {
-  getBuilding,
-  createBuilding,
-  deleteBuilding,
-  editBuilding,
-  getComplex,
-} from "../../API/ApiFetch";
 
 export default function Building() {
   const [building, setBuilding] = useState([]);
   console.log(building);
 
-  const [showModal, setShowModal] = useState(false);
-
-  const _handleOpenModal = () => {
-    setShowModal(true);
-  };
-  const _handleCloseModal = () => {
-    setShowModal(false);
-  };
+  const [tabelHeader] = useState([
+    "No",
+    "Picture",
+    "Building Name",
+    "Complex Name",
+    "Address",
+    "Room",
+    "Description",
+    "Actions",
+  ]);
 
   //get building
   const getAllBuilding = async () => {
@@ -37,42 +31,6 @@ export default function Building() {
       });
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  // //get complex
-  // const getAllComplex = async () => {
-  //   try {
-  //     await getComplex().then((response) => {
-  //       setComplex(response);
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  //create building
-  const addBuilding = async (data) => {
-    try {
-      await createBuilding(data).then((response) => {
-        console.log(response);
-        setBuilding([...building, response.data]);
-      });
-    } catch (error) {
-      if (error.response) {
-        console.log(error.response.data.msg);
-      }
-    } finally {
-      Swal.fire({
-        title: "Create Building Success",
-        // text: `You `,
-        confirmButtonColor: "#4C35E0",
-        // confirmButtonText: "Ok!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          setBuilding([...building, data]);
-        }
-      });
     }
   };
 
@@ -90,128 +48,51 @@ export default function Building() {
           cancelButtonColor: "#4C35E0",
         }).then((result) => {
           if (result.isConfirmed) {
-            setBuilding(building.filter((item) => item.id !== id));
+            setBuilding(building.filter((building) => building.id !== id));
           }
         });
       });
     } catch (error) {
-      if (error.response) {
-        Swal.fire({
-          title: "Error Can't Delete Building",
-          text: error.response.message,
-          confirmButtonColor: "#4C35E0",
-          confirmButtonText: "Ok!",
-        });
-      }
-    }
-  };
-
-  //update building
-  const updateBuilding = async (data) => {
-    try {
-      await editBuilding(data).then((response) => {
-        console.log(response);
-        setBuilding(
-          building.map((item) => (item.id === data.id ? data : item))
-        );
-      });
-
-      // if (response.status === 200) {
-      //   const allBuilding = await getBuilding();
-      //   setBuilding(allBuilding);
-      // }
-    } catch (error) {
-      if (error.response) {
-        console.log(error.response.data.msg);
-      }
-    } finally {
       Swal.fire({
-        title: "Update Building Success",
-        // text: `You `,
+        title: "Error Can't Delete Building",
+        text: error.response.message,
         confirmButtonColor: "#4C35E0",
-        // confirmButtonText: "Ok!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          setBuilding(
-            building.map((item) => (item.id === data.id ? data : item))
-          );
-        }
+        confirmButtonText: "Ok!",
       });
     }
   };
 
   useEffect(() => {
-    const getAllBuildings = async () => {
-      const allBuilding = await getAllBuilding();
-      if (allBuilding) {
-        setBuilding(allBuilding);
-        console.log(allBuilding);
-      }
-    };
-    getAllBuildings();
+    getAllBuilding();
   }, []);
 
-  // useEffect(() => {
-  //   const getAllComplexes = async () => {
-  //     const allComplex = await getAllComplex();
-  //     if (allComplex) {
-  //       setComplex(allComplex);
-  //       console.log(allComplex);
-  //     }
-  //   };
-  //   getAllComplexes();
-  // }, []);
-
   return (
-    // <div className='flex h-screen bg-secondary-softblue'>
-    //     <Sidebar />
-    //     <Navbar />
-    //   <div className='basis-5/6 pl-6'>
-    //     <div className="px-4 py-4 mt-20">
-    //       <h1 className="text-3xl font-bold mb-1">Building</h1>
-    //       <h4 className="text-md text-primary-gray">Manage Building</h4>
-    <div className=" flex bg-secondary-blue h-screen">
+    <div className="flex bg-secondary-blue h-full">
       <Sidebar />
       <Navbar />
-          <div className="flex items-center justify-between mb-6">
-            <div className="text-sm">
-              <select className="text-textColor-blackThin whitespace-nowrap px-4 py-3 rounded border bg-primary-white">
-                <option
-                  value=""
-                  className="bg-secondary-blue text-textColor-blackThin font-light px-6 py-4 whitespace-nowrap"
-                >
-                  Building A
-                </option>
-              </select>
+      <div className="basis-5/6">
+        <div className="px-4 py-4 mt-20">
+          <div className="flex items-center justify-end">
+            <div className="flex justify-end">
+              <div className="w-auto ">
+                <Link to="/create-building">
+                  <Button
+                    type="button"
+                    className="bg-primary-blue text-primary-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                  >
+                    Create Building
+                  </Button>
+                </Link>
+              </div>
+
             </div>
-          </div>
-          <div className="flex justify-end">
-            <div className="w-auto ">
-              <Link to="/create-building">
-                <Button
-                  type="button"
-                  className="bg-primary-blue text-primary-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-                  onClick={_handleOpenModal}
-                >
-                  Create Building
-                </Button>
-              </Link>
-            </div>
-            {/* {showModal ? (
-              <CreateBuilding
-                handleClose={_handleCloseModal}
-                showModal={showModal}
-                addBuilding={addBuilding}
-                // complex={complex}
-              />
-            ) : null} */}
           </div>
         </div>
-        <div className="bg-primary-white items-center m-4">
+        <div className="bg-primary-white items-center mt-4 ml-9 rounded">
           <TableBuilding
             building={building}
             removeBuilding={removeBuilding}
-            updateBuilding={updateBuilding}
+            tabelHeader={tabelHeader}
           />
         </div>
       </div>
