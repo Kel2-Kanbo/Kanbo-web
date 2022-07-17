@@ -1,82 +1,88 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import ReactPaginate from "react-paginate";
+import { Link } from "react-router-dom";
+import Button from "../Button";
 
 import ButtonIconDelete from "../ButtonIconDelete";
 import ButtonIconEdit from "../ButtonIconEdit";
-import EditRoom from "../EditRoom";
+import SearchNavbar from "../SearchNavbar";
 
 export default function TableRoom(props) {
-  const { room, removeRoom, updateRoom } = props;
-  const [showModalEdit, setShowModalEdit] = useState(false);
-  const _handleCloseModalEdit = () => {
-    setShowModalEdit(false);
+  const { room, removeRoom, tabelHeader } = props;
+  const PER_PAGE = 5;
+  const setDataRoom = (room) => {
+    console.log(room);
   };
-  const _handleOpenModalEdit = () => {
-    setShowModalEdit(true);
-  };
-
   let angka = 0;
+
+  //search
+  const [searchValue, setSearchValue] = useState("");
+  const _handleSearch = (e) => {
+    setSearchValue(e.target.value);
+  };
+  console.log(searchValue);
+
+  //pagination
+  const [currentPage, setCurrentPage] = useState(0);
+  const [data, setData] = useState([]);
+
+  function handlePageClick({ selected: selectedPage }) {
+    console.log("selectedPage", selectedPage);
+    setCurrentPage(selectedPage);
+  }
+
+  const offset = currentPage * PER_PAGE;
+  console.log("offset", offset);
+
+  const pageCount = Math.ceil(data.length / PER_PAGE);
+  useEffect(() => {
+    setData(room);
+  }, [room]);
+  console.log(data);
+
 
   return (
     <div>
-      <div className="flex flex-col">
-        <div>
-          <div className="p-2 inline-block min-w-full">
-            <div className="overflow-hidden">
-              <table className="min-w-full">
-                <thead className="bg-white">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="text-base font-medium text-textColor-black  text-left"
-                    >
-                      No
+      <div className="flex flex-col mb-6">
+        <div className="inline-block min-w-fit p-2">
+          <div className="overflow-hidden">
+            <div className="flex flex-row justify-between">
+              <SearchNavbar _handleSearch={_handleSearch} />
+              <div className="flex gap-2 items-center">
+                <p className="text-primary-gray2">{`${offset + 1} - ${
+                  offset + PER_PAGE
+                } of ${room.length}`}</p>
+                <ReactPaginate
+                  previousLabel="<"
+                  nextLabel=">"
+                  pageCount={pageCount}
+                  onPageChange={handlePageClick}
+                  containerClassName="pagination"
+                  previousLinkClassName="pagination__link"
+                  nextLinkClassName="pagination__link"
+                  disabledClassName="pagination__link--disabled"
+                  activeClassName="pagination__link--active"
+                />
+              </div>
+            </div>
+            <table className="table-fixed min-w-fit">
+              <thead className="bg-white">
+                <tr>
+                  {tabelHeader.map((item) => (
+                    <th className="text-base font-medium text-textColor-black px-6 py-4 text-left">
+                      {item}
                     </th>
-                    <th
-                      scope="col"
-                      className="text-base font-medium text-textColor-black  text-left"
-                    >
-                      Picture
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-base font-medium text-textColor-black  text-left"
-                    >
-                      Room Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-base font-medium text-textColor-black  text-left"
-                    >
-                      Floor
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-base font-medium text-textColor-black  text-left"
-                    >
-                      Room Item
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-base font-medium text-textColor-black  text-left"
-                    >
-                      Rate per day
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-base font-medium text-textColor-black  text-left"
-                    >
-                      Status
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-base font-medium text-textColor-black  text-left"
-                    >
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
+                  ))}
+                </tr>
+              </thead>
                 <tbody>
-                  {room?.map((room) => (
+                  {room?.filter((item) => {
+                    return item.roomName
+                      .toLowerCase()
+                      .includes(searchValue.toLowerCase());
+                  })
+                  .slice(offset, offset + PER_PAGE)
+                  .map((room, roomIdx) => (
                     <tr className="odd:bg-secondary-softblue text-primary-gray">
                       <td className="text-base text-textColor-blackThin font-light  whitespace-nowrap">
                         {(angka += 1)}
@@ -110,18 +116,16 @@ export default function TableRoom(props) {
                         )}
                       </td>
                       <td className="flex justify-around whitespace-nowrap">
-                        <button onClick={_handleOpenModalEdit}
-                          className="px-2 py-4"
-                        >
-                          <ButtonIconEdit onClick={() => updateRoom(room)} />
-                          {showModalEdit ? (
-                            <EditRoom
-                              _handleCloseModalEdit={_handleCloseModalEdit}
-                              room={room}
-                              updateRoom={() => updateRoom(room)}
-                            />
-                          ) : null}
-                        </button>
+                      <Button>
+                          <Link
+                            to={`/update-room/${room.id}`}
+                            state={{ room }}
+                            key={roomIdx}
+                            onClick={() => setDataRoom(room)}
+                          >
+                            <ButtonIconEdit />
+                          </Link>
+                        </Button>
                         <button
                           onClick={() => removeRoom(room.id)}
                           className="px-2 py-4">
@@ -130,13 +134,11 @@ export default function TableRoom(props) {
                       </td>
                     </tr>
                   ))}
-                </tbody>
-              </table>
-            </div>
+               </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
   );
 }
-

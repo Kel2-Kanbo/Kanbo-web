@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import api from "../../API/Complex"
+// import api from "../../API/Complex"
 
 import Button from "../../Components/Button";
 import Navbar from "../../Components/Navbar";
@@ -10,8 +10,18 @@ const Customer = () => {
 
     const [customer, setCustomer] = useState([]);
 
+    const [tabelHeader ] = useState([
+      "Customer Name",
+      "Username",
+      "Email",
+      "Province",
+      "City",
+      "District",
+      "Actions",
+    ]);
+
     const removeCustomer = async (id) => {
-        const response = await api.delete(`/customer/${id}`);
+        const response = await delete(`/customer/${id}`);
         if(response.data) {
             alert("Customer has been delete");
             setCustomer(customer.filter((item) => item.id !== id));
@@ -19,12 +29,11 @@ const Customer = () => {
     };
 
     return (
-    <div className='flex h-screen bg-secondary-softblue'>
+    <div className='flex h-full bg-secondary-softblue'>
         <Sidebar />
         <Navbar />
       <div className='basis-5/6'>
         <div className="px-4 py-4 mt-20">
-          <h1 className="text-3xl font-bold mb-1">Customer</h1>
           <div className="flex justify-end">
             <div className="w-auto">
             </div>
@@ -32,6 +41,7 @@ const Customer = () => {
           <div className="bg-primary-white items-center rounded mt-4">
             <TableCust
             customer={customer}
+            tabelHeader={tabelHeader}
             removeCustomer={removeCustomer}
             />
           </div>

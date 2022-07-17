@@ -1,6 +1,7 @@
 import axios from "axios";
+import Cookies from "universal-cookie";
 
-const BASE_URL = "http://3.88.14.239:80/api/auth/";
+const BASE_URL = "http://3.80.97.57/api/auth/";
 const config = {
   headers: {
     "Content-Type": "application/json",
@@ -8,17 +9,28 @@ const config = {
   },
 };
 
+// const cookie = new Cookies();
+
 export const AuthLogin = async (data) => {
-  const response = await axios.post(BASE_URL + "signin", data, config, {
+  return await axios.post(BASE_URL + "signin", data, config, {
     withCredentials: true,
-  });
-  console.log(response.data);
-  console.log(response.data.token);
+  }).then((response) => {
+    if(response.data.token) {
+      localStorage.setItem("user", JSON.stringify(response.data));
+    }
+    return response.data;
+  })
+  // if (response.data.token) {
+  // }
 
-  localStorage.setItem("Bearer", response.data.token);
+  // cookie.set("Bearer", response.data.token);
+  // localStorage.setItem("Bearer", response.data.token);
 
-  return response.data;
 };
+
+export const logout = async () => {
+  localStorage.removeItem("user");
+}
 
 export const AuthRegister = async (data) => {
   const response = await axios.post(BASE_URL + "signup", data, config, {

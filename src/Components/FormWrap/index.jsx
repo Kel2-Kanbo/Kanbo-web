@@ -4,7 +4,7 @@ const FormWrap = styled.div`
   background-color: #fff;
   display: flex;
   flex-direction: column;
-  row-gap: 20px;
+  row-gap: 10px;
   align-items: center;
   padding: 24px;
   width: 100%;
