@@ -5,7 +5,8 @@ module.exports = {
     colors: {
       primary: {
         blue: "#4C35E0",
-        blue2: "rgb(37 99 235);",
+        blue2: "#4C34E9",
+        // blue2 : "#2563EB/rgb(37 99 235);"
         green: "#6EB762",
         mossgreen: "#4BAAA5",
         orange: "#FFCA42",

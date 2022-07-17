@@ -127,13 +127,6 @@ export default function TableComplex(props) {
                   ))}
               </tbody>
             </table>
-            {/* {showModalEdit ? (
-              <EditComplex
-                handleClose={_handleCloseModalEdit}
-                updateComplex={updateComplex}
-                complex={complex}
-              />
-            ) : null} */}
           </div>
         </div>
       </div>

@@ -1,13 +1,7 @@
 import axios from "axios";
-import Cookies from "universal-cookie";
 import APIAuthHeader from "./APIAuthHeader";
 
 const BASE_URL = "http://3.80.97.57/api/page/admin/";
-
-// const cookie = new Cookies();
-// const token = cookie.get("Bearer");
-// const token = localStorage.getItem("Bearer");
-
 
 export const getBuilding = async () => {
   const response = await axios.get(BASE_URL + "building", APIAuthHeader());
