@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 
-import "./NavbarStyle.css";
-import Logo from "../Logo";
 import NavItem from "../NavItem";
 
+import "./NavbarStyle.css";
+import SearchNavbar from "../SearchNavbar";
 
 const NAVBAR_TEXTS = [
   { pages: "Dashboard", path: "/dashboard" },
@@ -74,22 +74,11 @@ export default function Navbar({ fixed }) {
                       className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-primary-blue hover:opacity-75"
                       href="#pablo"
                     >
-                        <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
-                            <li className="text-gray-600 hover:text-blue-600">
-                                <a href="javascript:void(0)">Home</a>
-                            </li>
-                            <li className="text-gray-600 hover:text-blue-600">
-                                <a href="javascript:void(0)">Blog</a>
-                            </li>
-                            <li className="text-gray-600 hover:text-blue-600">
-                                <a href="javascript:void(0)">About US</a>
-                            </li>
-                            <li className="text-gray-600 hover:text-blue-600">
-                                <a href="javascript:void(0)">Contact US</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                      Settings
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </nav>
         </div>
@@ -97,5 +86,3 @@ export default function Navbar({ fixed }) {
     </>
   );
 }
-
-// export default Navbar;
