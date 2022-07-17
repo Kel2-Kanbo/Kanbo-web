@@ -17,7 +17,7 @@ import Navbar from "../../Components/Navbar";
 import Swal from "sweetalert2";
 
 export default function CreateComplex() {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
   const [data, setData] = useState({
     complexName: "",
@@ -32,8 +32,11 @@ export default function CreateComplex() {
 
   const [msg, setMsg] = useState("");
 
-  const [isEmptyInput, setIsEmptyInput] = useState(false);
-  const [isEmptySelect, setIsEmptySelect] = useState(false);
+  const [isEmptyName, setIsEmptyName] = useState(false);
+  const [isEmptyAddress, setIsEmptyAddress] = useState(false);
+  const [isEmptyProvince, setIsEmptyProvince] = useState(false);
+  const [isEmptyCity, setIsEmptyCity] = useState(false);
+  const [isEmptyDistrict, setIsEmptyDistrict] = useState(false);
 
   const [inputs, setInputs] = useState([
     {
@@ -139,6 +142,12 @@ export default function CreateComplex() {
       inputs[3].value &&
       inputs[4].value
     ) {
+      setIsEmptyName(false);
+      setIsEmptyAddress(false);
+      setIsEmptyProvince(false);
+      setIsEmptyCity(false);
+      setIsEmptyDistrict(false);
+
       createComplex({
         complex_name: inputs[0].value,
         street: inputs[1].value,
@@ -204,8 +213,11 @@ export default function CreateComplex() {
       ]);
     } else {
       setMsg("Please fill out all fields");
-      setIsEmptyInput(true);
-      setIsEmptySelect(true);
+      setIsEmptyName(true);
+      setIsEmptyAddress(true);
+      setIsEmptyProvince(true);
+      setIsEmptyCity(true);
+      setIsEmptyDistrict(true);
     }
   };
 
@@ -309,8 +321,26 @@ export default function CreateComplex() {
     getProvinces();
   }, []);
 
+  useEffect(() => {
+    if (inputs[0].value.match(inputs[0].pattern)) {
+      setIsEmptyName(false);
+    }
+    if (inputs[1].value.match(inputs[1].pattern)) {
+      setIsEmptyAddress(false);
+    }
+    if (inputs[2].value.match(inputs[2].pattern)) {
+      setIsEmptyProvince(false);
+    }
+    if (inputs[3].value.match(inputs[3].pattern)) {
+      setIsEmptyCity(false);
+    }
+    if (inputs[4].value.match(inputs[4].pattern)) {
+      setIsEmptyDistrict(false);
+    }
+  }, [inputs]);
+
   return (
-    <div className=" flex bg-secondary-blue h-screen">
+    <div className=" flex bg-secondary-blue h-full">
       <Sidebar />
       <Navbar />
       <div className="basis-5/6">
@@ -325,9 +355,9 @@ export default function CreateComplex() {
                     <FormInput
                       key={inputIdx}
                       className={`${
-                        isEmptyInput
-                          ? "peer-invalid:visible border-primary-red border-2"
-                          : "peer-valid:visible border-secondary-softblue border-2"
+                        isEmptyName && isEmptyAddress
+                        ? "peer-invalid:visible border-primary-red border-2"
+                        : "peer-valid:visible border-secondary-softblue border-2"
                       }`}
                       {...input}
                       value={input.value}
@@ -341,8 +371,8 @@ export default function CreateComplex() {
                     {input.type !== "select" ? (
                       <div className="w-full my-0 mx-0 text-left px-0 py-0">
                         <p
-                          className={`top-0 ${
-                            isEmptyInput
+                          className={`${
+                            isEmptyName && isEmptyAddress
                               ? "peer-invalid:visible text-primary-red "
                               : "invisible"
                           }`}
@@ -357,7 +387,7 @@ export default function CreateComplex() {
                     <SelectWrap
                       type={input.type}
                       className={`${
-                        isEmptySelect
+                        isEmptyProvince && isEmptyCity && isEmptyDistrict
                           ? "peer-invalid:visible border-primary-red border-2"
                           : "peer-valid:visible border-secondary-softblue border-2"
                       }`}
@@ -392,7 +422,7 @@ export default function CreateComplex() {
                       <div className="w-full my-0 mx-0 text-left px-0 py-0">
                         <p
                           className={`${
-                            isEmptySelect
+                            isEmptyProvince && isEmptyCity && isEmptyDistrict
                               ? "peer-invalid:visible text-primary-red "
                               : "invisible"
                           }`}

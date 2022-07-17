@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import { getComplex, deleteComplex } from "../../API/ApiFetch";
 import Button from "../../Components/Button";
 import Navbar from "../../Components/Navbar";
-import Pagination from "../../Components/Pagination";
 import Sidebar from "../../Components/Sidebar";
 import TableComplex from "../../Components/TableComplex";
 
@@ -13,7 +12,7 @@ const Complex = () => {
   const [complex, setComplex] = useState([]);
   console.log(complex);
 
-  const [tabelHeader, setTabelHeader] = useState([
+  const [tabelHeader ] = useState([
     "No",
     "Complex Name",
     "Address",
@@ -56,15 +55,13 @@ const Complex = () => {
         }
       });
     } catch (error) {
-      // if (error.response) {
-      // Swal.fire({
-      //   title: "Error Can't Delete Complex",
-      //   text: error.response.message,
-      //   confirmButtonColor: "#4C35E0",
-      //   confirmButtonText: "Ok!",
-      // });
+      Swal.fire({
+        title: "Error Can't Delete Building",
+        text: error.response.message,
+        confirmButtonColor: "#4C35E0",
+        confirmButtonText: "Ok!",
+      });
       console.log(error)
-      // }
     }
   };
 
@@ -73,7 +70,7 @@ const Complex = () => {
   }, []);
 
   return (
-    <div className="flex h-screen bg-secondary-softblue">
+    <div className="flex h-full bg-secondary-softblue">
       <Sidebar />
       <Navbar />
       <div className="basis-5/6">
@@ -90,9 +87,9 @@ const Complex = () => {
               </Link>
             </div>
           </div>
-          <div className="ml-6 mt-2">
+          {/* <div className="ml-6 mt-2">
             <Pagination />
-          </div>
+          </div> */}
           <div className="bg-primary-white items-center rounded mt-4 ml-6">
             <TableComplex
               complex={complex}

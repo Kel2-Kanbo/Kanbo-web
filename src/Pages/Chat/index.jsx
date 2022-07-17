@@ -7,7 +7,7 @@ import { FaSignOutAlt, FaChartLine } from "react-icons/fa";
 import { useState } from 'react';
 const Chat = () => {
   return (
-    <div className='flex h-screen'>
+    <div className='flex h-full'>
       <Sidebar />
       <NavBar />
       <div className='basis-5/6 pl-6'>
