@@ -13,7 +13,7 @@ export default function TableBooking(props) {
 
   const PER_PAGE = 5;
   const setDataBooking = (booking) => {
-    console.log('ini data booking di table booking',booking);
+    console.log('ini data booking di table booking', booking);
   }
 
   //search
@@ -83,14 +83,12 @@ export default function TableBooking(props) {
                   })
                   .slice(offset, offset + PER_PAGE)
                   .map((room, roomIdx) => ( */}
-                {booking
-                  ?.filter((item) => {
-                    return item.room_name
+                {booking?.filter((item) => {
+                    return item.user
                       .toLowerCase()
                       .includes(searchValue.toLowerCase());
                   })
-                  .slice(offset, offset + PER_PAGE)
-                  .map((booking, bookingIdx) => (
+                  .slice(offset, offset + PER_PAGE).map((booking, bookingIdx) => (
                   <tr className="odd:bg-secondary-softblue text-primary-gray" key={bookingIdx} data-key={booking.booking_id}>
                     <td className="px-6 py-4 whitespace-no-wrap">
                       {booking.booking_id}
@@ -99,9 +97,20 @@ export default function TableBooking(props) {
                       {booking.user}
                     </td>
                     <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
-                      {booking.room.room_name}
+                      {booking.room_name}
                     </td>
-                    
+                    <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
+                      {booking.total_price}
+                    </td>
+                    <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
+                      {booking.booking_start} - {booking.booking_end}
+                    </td>
+                    <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
+                      {booking.total_price}
+                    </td>
+                    <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
+                      {booking.status}
+                    </td>
                     <td className="flex justify-center gap-8 px-6 py-4 whitespace-nowrap">
                     {/* <Button>
                           <Link

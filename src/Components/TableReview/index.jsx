@@ -9,7 +9,7 @@ export default function TableReview(props) {
   
   const PER_PAGE = 5;
   const setDataReview = (review) => {
-    console.log(review);
+    console.log('ini data booking di table review',review);
   };
 
   //search
@@ -61,8 +61,8 @@ export default function TableReview(props) {
                 />
               </div>
             </div>
-            <table className="table-fixed min-w-fit">
-              <thead className="bg-white">
+            <table className="ml-4 table-fixed min-w-fit">
+              <thead className="">
                 <tr>
                   {tabelHeader.map((item) => (
                     <th className="text-base font-medium text-textColor-black px-6 py-4 text-left">
@@ -80,7 +80,7 @@ export default function TableReview(props) {
                   })
                   .slice(offset, offset + PER_PAGE)
                   .map((value, reviewIdx) => (
-                    <tr className="odd:bg-secondary-softblue text-primary-gray" key={reviewIdx} data-key={value.review_id} >
+                    <tr className=" odd:bg-secondary-softblue text-primary-gray" key={reviewIdx} data-key={value.review_id} >
                       <td className="text-base text-textColor-blackThin px-6 py-4 ">
                         {value.review_id}
                       </td>

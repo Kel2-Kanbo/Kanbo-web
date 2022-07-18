@@ -8,9 +8,8 @@ import { useQuery, useMutation } from "@apollo/client";
 import { GET_ALL_BOOKING } from "../../GraphQL/booking/queries";
 
 const Booking = () => {
-  const { data: dataBooking } = useQuery(GET_ALL_BOOKING, {
-    refetchQueries: [{ query: GET_ALL_BOOKING }],
-  });
+  const { data: dataBooking } = useQuery(GET_ALL_BOOKING);
+
   console.log('ini data booking di booking', dataBooking);
 
   const [booking, setBooking] = useState([]);

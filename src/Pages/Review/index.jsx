@@ -10,10 +10,8 @@ import { useQuery, useMutation } from "@apollo/client";
 import { GET_ALL_REVIEW } from "../../GraphQL/review/queries"; 
 
 const Review = () => {
-  const { data: dataReview } = useQuery(GET_ALL_REVIEW, {
-    refetchQueries: [{ query: GET_ALL_REVIEW }],
-  });
-  console.log(dataReview);
+  const { data: dataReview } = useQuery(GET_ALL_REVIEW, { refetchQueries: [{ query: GET_ALL_REVIEW }], });
+  console.log('ini data booking di review', dataReview);
 
   const [review, setReview] = useState([]);
 
@@ -41,7 +39,7 @@ const Review = () => {
             <div className="w-auto">
             </div>
           </div>
-          <div className="bg-primary-white items-center rounded mt-4">
+          <div className="bg-primary-white items-center rounded-lg mt-4 ml-6 w-10/12">
               <TableReview
               tabelHeader={tabelHeader}
               review={review}
