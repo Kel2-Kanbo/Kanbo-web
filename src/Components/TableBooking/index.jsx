@@ -8,11 +8,12 @@ import Button from "../Button";
 import SearchNavbar from "../SearchNavbar";
 
 export default function TableBooking(props) {
-  const { booking, editBooking, removeBooking, tabelHeader } = props;
+
+  const { booking, dataBooking, editBooking, removeBooking, tabelHeader } = props;
 
   const PER_PAGE = 5;
   const setDataBooking = (booking) => {
-    console.log(booking);
+    console.log('ini data booking di table booking',booking);
   }
 
   //search
@@ -24,7 +25,7 @@ export default function TableBooking(props) {
 
   //pagination
   const [currentPage, setCurrentPage] = useState(0);
-  const [data, setData] = useState([]);
+  const [dataPagination, setDataPagination] = useState([]);
 
   function handlePageClick({ selected: selectedPage }) {
     console.log("selectedPage", selectedPage);
@@ -34,11 +35,11 @@ export default function TableBooking(props) {
   const offset = currentPage * PER_PAGE;
   console.log("offset", offset);
 
-  const pageCount = Math.ceil(data.length / PER_PAGE);
+  const pageCount = Math.ceil(dataPagination.length / PER_PAGE);
   useEffect(() => {
-    setData(booking);
+    setDataPagination(booking);
   }, [booking]);
-  console.log(data);
+  console.log(dataPagination);
 
   return (
     <div>
@@ -75,37 +76,34 @@ export default function TableBooking(props) {
                 </tr>
               </thead>
               <tbody>
-                {booking?.filter((item) => {
-                    return item.name
+              {/* {room?.filter((item) => {
+                    return item.room_name
+                      .toLowerCase()
+                      .includes(searchValue.toLowerCase());
+                  })
+                  .slice(offset, offset + PER_PAGE)
+                  .map((room, roomIdx) => ( */}
+                {booking
+                  ?.filter((item) => {
+                    return item.room_name
                       .toLowerCase()
                       .includes(searchValue.toLowerCase());
                   })
                   .slice(offset, offset + PER_PAGE)
                   .map((booking, bookingIdx) => (
-                  <tr className="odd:bg-secondary-softblue text-primary-gray">
+                  <tr className="odd:bg-secondary-softblue text-primary-gray" key={bookingIdx} data-key={booking.booking_id}>
                     <td className="px-6 py-4 whitespace-no-wrap">
-                      {booking.idOrder}
+                      {booking.booking_id}
                     </td>
                     <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
-                      {booking.name}
+                      {booking.user}
                     </td>
                     <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
-                      {booking.roomBooked}
+                      {booking.room.room_name}
                     </td>
-                    <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
-                      {booking.payment}
-                    </td>
-                    <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
-                      {booking.date}
-                    </td>
-                    <td className="text-base text-textColor-blackThin  px-6 py-4 whitespace-nowrap">
-                      {booking.total}
-                    </td>
-                    <td className="text-base text-textColor-blackThin  px-6 py-4 whitespace-nowrap">
-                      {booking.status}
-                    </td>
+                    
                     <td className="flex justify-center gap-8 px-6 py-4 whitespace-nowrap">
-                    <Button>
+                    {/* <Button>
                           <Link
                             to={`/update-booking/${booking.id}`}
                             state={{ booking }}
@@ -117,7 +115,7 @@ export default function TableBooking(props) {
                         </Button>
                       <button onClick={() => removeBooking(booking.idOrder)}>
                         <ButtonIconDelete />
-                      </button>
+                      </button> */}
                     </td>
                   </tr>
                 ))}

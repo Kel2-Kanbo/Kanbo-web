@@ -1,39 +1,56 @@
 import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@apollo/client";
 
 import { getBuilding, createRoom } from "../../API/ApiFetch";
 import Button from "../../Components/Button";
 import FormInput from "../../Components/FormInput";
 import FormWrap from "../../Components/FormWrap";
 import FormTextArea from "../../Components/FormTextArea";
-import FormWrapModal from "../../Components/FormWrapModal";
 import SelectWrap from "../../Components/SelectWrap";
 import Sidebar from "../../Components/Sidebar";
 import Navbar from "../../Components/Navbar";
 import FormRoomItem from "../../Components/FormRoomItem";
 import ListRoomItem from "../../Components/ListRoomItem";
+import { GET_DATA_ROOM, INSERT_ROOM } from "../../GraphQL/room/queries";
+import Swal from "sweetalert2";
 
 export default function CreateRoom() {
   const navigate = useNavigate();
   const [data, setData] = useState({
-    picture: "",
-    roomName: "",
+    thumbnail: "",
+    room_name: "",
     floor: "",
-    description: "",
-    roomPrice: "",
+    room_description: "",
+    price_per_day: 0,
     status: false,
-    roomitem: [],
+    // roomitem: [],
   });
 
-  console.log(data);
+  console.log(data)
+  console.log(data.room_name)
+
   const [msg, setMsg] = useState("");
   const [building, setBuilding] = useState([]);
+
+  const [insertDataRoom] = useMutation(INSERT_ROOM, {
+    refetchQueries: [GET_DATA_ROOM],
+    onCompleted: (data) => {
+      console.log(data);
+      Swal.fire({
+        title: "Success",
+        text: "Create Room Success",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+      navigate("/room");
+    }
+  })
 
   const [inputs, setInputs] = useState([
     {
       id: 0,
-      name: "roomName",
+      name: "room_name",
       type: "text",
       placeholder: "Room Name",
       value: "",
@@ -41,7 +58,7 @@ export default function CreateRoom() {
     },
     {
       id: 1,
-      name: "buildingName",
+      name: "building_id",
       type: "select",
       placeholder: "Building",
       value: building,
@@ -53,11 +70,11 @@ export default function CreateRoom() {
       type: "text",
       placeholder: "Address",
       value: "",
-      required: true,
+      // required: true,
     },
     {
       id: 3,
-      name: "description",
+      name: "room_description",
       type: "textarea",
       placeholder: "Description",
       value: "",
@@ -65,8 +82,8 @@ export default function CreateRoom() {
     },
     {
       id: 4,
-      name: "roomPrice",
-      type: "text",
+      name: "price_per_day",
+      type: "number",
       placeholder: "Room Price",
       value: "",
       required: true,
@@ -77,12 +94,12 @@ export default function CreateRoom() {
       type: "number",
       placeholder: "e.g 10",
       value: "",
-      required: true,
+      // required: true,
     },
     {
       id: 6,
       name: "floor",
-      type: "number",
+      type: "text",
       placeholder: "e.g 10",
       value: "",
       required: true,
@@ -93,7 +110,7 @@ export default function CreateRoom() {
       type: "text",
       placeholder: "e.g office table",
       value: "",
-      required: true,
+      // required: true,
     },
     {
       id: 8,
@@ -101,7 +118,7 @@ export default function CreateRoom() {
       type: "text",
       placeholder: "e.g 10m",
       value: "",
-      required: true,
+      // required: true,
     },
   ]);
 
@@ -117,9 +134,14 @@ export default function CreateRoom() {
         return input;
       })
     );
+    setData({
+      ...data,
+      [inputs[index].name]: value,
+    });
   };
 
   const [imageRoom, setImageRoom] = useState("");
+  console.log(imageRoom)
 
   const uploadImageRoom = async (e) => {
     const file = e.target.files[0];
@@ -147,27 +169,44 @@ export default function CreateRoom() {
     if (
       inputs[0].value &&
       inputs[1].value &&
-      inputs[2].value &&
+      // inputs[2].value &&
       inputs[3].value &&
       inputs[4].value &&
-      inputs[5].value &&
-      inputs[6].value &&
-      inputs[7].value &&
-      inputs[8].value
+      // inputs[5].value &&
+      inputs[6].value
+      // inputs[7].value &&
+      // inputs[8].value
     ) {
-      createRoom({
-        // id: uuidv4(),
-        roomName: inputs[0].value,
-        buildingName: inputs[1].value,
-        address: inputs[2].value,
-        description: inputs[3].value,
-        roomPrice: inputs[4].value,
-        capacity: inputs[5].value,
-        floor: inputs[6].value,
-        table: inputs[7].value,
-        large: inputs[8].value,
-        picture: imageRoom,
-      });
+      // createRoom({
+      //   // id: uuidv4(),
+        // roomName: inputs[0].value,
+        // buildingName: inputs[1].value,
+        // address: inputs[2].value,
+        // description: inputs[3].value,
+        // roomPrice: inputs[4].value,
+        // capacity: inputs[5].value,
+        // floor: inputs[6].value,
+        // table: inputs[7].value,
+        // large: inputs[8].value,
+        // picture: imageRoom,
+      // });
+      insertDataRoom({
+        variables: {
+          // object: {
+            room_name: inputs[0].value,
+            building_id: inputs[1].value,
+            // address: inputs[2].value,
+            room_description: inputs[3].value,
+            price_per_day: inputs[4].value,
+            // capacity: inputs[5].value,
+            floor: inputs[6].value,
+            // table: inputs[7].value,
+            // large: inputs[8].value,
+            thumbnail: imageRoom,
+            status: false,
+          // }
+        }
+      })
       e.preventDefault();
       navigate("/room");
 
@@ -185,7 +224,7 @@ export default function CreateRoom() {
           name: "buildingName",
           type: "select",
           placeholder: "Building",
-          value: building,
+          value: parseInt(building),
           required: true,
         },
         {
@@ -194,7 +233,7 @@ export default function CreateRoom() {
           type: "text",
           placeholder: "Address",
           value: "",
-          required: true,
+          // required: true,
         },
         {
           id: 3,
@@ -207,7 +246,7 @@ export default function CreateRoom() {
         {
           id: 4,
           name: "roomPrice",
-          type: "text",
+          type: "number",
           placeholder: "Room Price",
           value: "",
           required: true,
@@ -218,12 +257,12 @@ export default function CreateRoom() {
           type: "number",
           placeholder: "e.g 10",
           value: "",
-          required: true,
+          // required: true,
         },
         {
           id: 6,
           name: "floor",
-          type: "number",
+          type: "text",
           placeholder: "e.g 10",
           value: "",
           required: true,
@@ -234,7 +273,7 @@ export default function CreateRoom() {
           type: "text",
           placeholder: "e.g office table",
           value: "",
-          required: true,
+          // required: true,
         },
         {
           id: 8,
@@ -242,7 +281,7 @@ export default function CreateRoom() {
           type: "text",
           placeholder: "e.g 10m",
           value: "",
-          required: true,
+          // required: true,
         },
       ]);
     } else {
@@ -275,7 +314,7 @@ export default function CreateRoom() {
         type: "text",
         placeholder: "Address",
         value: "",
-        required: true,
+        // required: true,
       },
       {
         id: 3,
@@ -288,7 +327,7 @@ export default function CreateRoom() {
       {
         id: 4,
         name: "roomPrice",
-        type: "text",
+        type: "number",
         placeholder: "Room Price",
         value: "",
         required: true,
@@ -299,12 +338,12 @@ export default function CreateRoom() {
         type: "number",
         placeholder: "e.g 10",
         value: "",
-        required: true,
+        // required: true,
       },
       {
         id: 6,
         name: "floor",
-        type: "number",
+        type: "text",
         placeholder: "e.g 10",
         value: "",
         required: true,
@@ -315,7 +354,7 @@ export default function CreateRoom() {
         type: "text",
         placeholder: "e.g office table",
         value: "",
-        required: true,
+        // required: true,
       },
       {
         id: 8,
@@ -323,7 +362,7 @@ export default function CreateRoom() {
         type: "text",
         placeholder: "e.g 10m",
         value: "",
-        required: true,
+        // required: true,
       },
     ]);
   };
@@ -453,8 +492,8 @@ export default function CreateRoom() {
                   </div>
 
                   <hr className="text-secondary-softblue" />
-                  <FormRoomItem />
-                  <ListRoomItem />
+                  {/* <FormRoomItem />
+                  <ListRoomItem /> */}
 
                   <div className="w-full flex justify-end">
                     <div className="flex w-2/4 items-center gap-4">

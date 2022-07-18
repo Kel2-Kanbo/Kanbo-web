@@ -73,7 +73,7 @@ export default function TableCust(props) {
               <tbody>
                 {customer
                   ?.filter((item) => {
-                    return item.customerName
+                    return item.nama_customer
                       .toLowerCase()
                       .includes(searchValue.toLowerCase());
                   })
@@ -81,25 +81,25 @@ export default function TableCust(props) {
                   .map((customer, customerIdx) => (
                     <tr className="odd:bg-secondary-softblue text-primary-gray">
                       <td className="px-6 py-4 whitespace-no-wrap">
-                        {customer.customerName}
+                        {customer.nama_customer}
                       </td>
                       <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
-                        {customer.userName}
+                        {customer.username}
                       </td>
                       <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
                         {customer.email}
                       </td>
                       <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
-                        {customer.province}
+                        {customer.province.province_name}
                       </td>
                       <td className="text-base text-textColor-blackThin px-6 py-4 whitespace-nowrap">
-                        {customer.city}
+                        {customer.city.city_name}
                       </td>
                       <td className="text-base text-textColor-blackThin  px-6 py-4 whitespace-nowrap">
-                        {customer.districs}
+                        {customer.district.district_name}
                       </td>
                       <td className="flex justify-center gap-8 px-6 py-4 whitespace-nowrap">
-                        <button onClick={() => removeCustomer(customer.id)}>
+                        <button onClick={() => removeCustomer(customer.id_customer)}>
                           <ButtonIconDelete />
                         </button>
                       </td>

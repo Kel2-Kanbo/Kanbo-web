@@ -6,15 +6,28 @@ import Navbar from "../../Components/Navbar";
 import Sidebar from "../../Components/Sidebar";
 import TableReview from "../../Components/TableReview";
 
-const Review = () => {
+import { useQuery, useMutation } from "@apollo/client";
+import { GET_ALL_REVIEW } from "../../GraphQL/review/queries"; 
 
-    const [review, setReview] = useState([]);
+const Review = () => {
+  const { data: dataReview } = useQuery(GET_ALL_REVIEW, {
+    refetchQueries: [{ query: GET_ALL_REVIEW }],
+  });
+  console.log(dataReview);
+
+  const [review, setReview] = useState([]);
+
+  useEffect(() => {
+    if (dataReview) {
+      setReview(dataReview?.kanbo_chat_review);
+    }
+  }, [dataReview]);
 
     const [tabelHeader ] = useState([
-      "No. Order",
+      "Id Review",
       "Username",
-      "Room Booked",
-      "Reviews",
+      "Room Name",
+      "Name Customer",
       "Reply Reviews",
     ]);
 
@@ -29,10 +42,10 @@ const Review = () => {
             </div>
           </div>
           <div className="bg-primary-white items-center rounded mt-4">
-            <TableReview
-            tabelHeader={tabelHeader}
-            review={review}
-            />
+              <TableReview
+              tabelHeader={tabelHeader}
+              review={review}
+              />
           </div>
         </div>
       </div>
