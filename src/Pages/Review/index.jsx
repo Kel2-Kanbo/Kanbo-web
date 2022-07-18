@@ -10,7 +10,6 @@ import { useQuery, useMutation } from "@apollo/client";
 import { GET_ALL_REVIEW } from "../../GraphQL/review/queries"; 
 
 const Review = () => {
-  // const { data, loading, error, refetch } = useQuery(GET_ALL_REVIEW);
   const { data: dataReview } = useQuery(GET_ALL_REVIEW, {
     refetchQueries: [{ query: GET_ALL_REVIEW }],
   });

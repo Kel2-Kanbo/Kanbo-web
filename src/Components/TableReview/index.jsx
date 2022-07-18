@@ -7,14 +7,6 @@ import SearchNavbar from "../SearchNavbar";
 export default function TableReview(props) {
   const { review, replyReviews, tabelHeader } = props;
   
-  const [showModal, setShowModal] = useState(false);
-  const _handleOpenModal = () => {
-    setShowModal(true);
-  };
-  const _handleCloseModal = () => {
-    setShowModal(false);
-  };
-  
   const PER_PAGE = 5;
   const setDataReview = (review) => {
     console.log(review);
@@ -109,13 +101,13 @@ export default function TableReview(props) {
               </tbody>
             </table>
           </div>
-          {showModal ? (
+          {/* {showModal ? (
             <ModalReplyReview
               showModal={showModal}
               handleClose={_handleCloseModal}
               review={review}
             />
-          ) : null}
+          ) : null} */}
         </div>
       </div>
     </div>
