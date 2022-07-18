@@ -10,6 +10,8 @@ import SearchNavbar from "../SearchNavbar";
 const NAVBAR_TEXTS = [
   { pages: "Dashboard", path: "/dashboard" },
   { pages: "Room", path: "/room" },
+  { pages: "Create Room", path: "/create-room" },
+  { pages: "Update Room", path: "/update-room/:id" },
   { pages: "Building", path: "/building" },
   { pages: "Create Building", path: "/create-building" },
   { pages: "Update Building", path: "/update-building/:id" },
