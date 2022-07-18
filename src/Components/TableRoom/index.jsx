@@ -77,7 +77,7 @@ export default function TableRoom(props) {
               </thead>
                 <tbody>
                   {room?.filter((item) => {
-                    return item.roomName
+                    return item.room_name
                       .toLowerCase()
                       .includes(searchValue.toLowerCase());
                   })
@@ -85,13 +85,14 @@ export default function TableRoom(props) {
                   .map((room, roomIdx) => (
                     <tr className="odd:bg-secondary-softblue text-primary-gray">
                       <td className="text-base text-textColor-blackThin font-light  whitespace-nowrap">
-                        {(angka += 1)}
+                        {/* {(angka += 1)} */}
+                        {room.room_id}
                       </td>
                       <td className="text-base text-textColor-blackThin font-light  whitespace-nowrap">
-                        <img src={room.picture} alt="room" width="72px" />
+                        <img src={room.thumbnail} alt="room" width="72px" />
                       </td>
                       <td className="text-base text-textColor-blackThin font-light  whitespace-nowrap">
-                        {room.roomName}
+                        {room.room_name}
                       </td>
                       <td className="text-base text-textColor-blackThin font-light  whitespace-nowrap">
                         {room.floor}
@@ -102,7 +103,7 @@ export default function TableRoom(props) {
                         ))}
                       </td>
                       <td className="text-base text-textColor-blackThin font-light  whitespace-nowrap">
-                        {room.roomPrice}
+                        {room.price_per_day}
                       </td>
                       <td className="text-base text-textColor-blackThin font-light  whitespace-nowrap">
                         {room.status ? (
@@ -118,7 +119,7 @@ export default function TableRoom(props) {
                       <td className="flex justify-around whitespace-nowrap">
                       <Button>
                           <Link
-                            to={`/update-room/${room.id}`}
+                            to={`/update-room/${room.room_id}`}
                             state={{ room }}
                             key={roomIdx}
                             onClick={() => setDataRoom(room)}
@@ -127,7 +128,7 @@ export default function TableRoom(props) {
                           </Link>
                         </Button>
                         <button
-                          onClick={() => removeRoom(room.id)}
+                          onClick={() => removeRoom(room.room_id)}
                           className="px-2 py-4">
                           <ButtonIconDelete />
                         </button>

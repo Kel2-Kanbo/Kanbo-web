@@ -13,8 +13,11 @@ import Sidebar from "../../Components/Sidebar";
 import Navbar from "../../Components/Navbar";
 import FormRoomItem from "../../Components/FormRoomItem";
 import ListRoomItem from "../../Components/ListRoomItem";
+import { useMutation } from "@apollo/client";
+import { GET_DATA_ROOM, UPDATE_ROOM } from "../../GraphQL/room/queries";
+import Swal from "sweetalert2";
 
-export default function CreateRoom() {
+export default function UpdateRoom() {
   const location = useLocation();
   const state = location.state;
   const [room, setRoom] = useState(state);
@@ -27,11 +30,11 @@ export default function CreateRoom() {
   console.log(getDataRoomm);
   const navigate = useNavigate();
   const [data, setData] = useState({
-    picture: "",
-    roomName: "",
+    thumbnail: "",
+    room_name: "",
     floor: "",
-    description: "",
-    roomPrice: "",
+    room_description: "",
+    price_per_day: 0,
     status: false,
     roomitem: [],
   });
@@ -40,27 +43,37 @@ export default function CreateRoom() {
   const [msg, setMsg] = useState("");
   const [building, setBuilding] = useState([]);
 
+  const [updateDataRoom] = useMutation(UPDATE_ROOM, {
+    refetchQueries: [GET_DATA_ROOM],
+    onCompleted: (data) => {
+      Swal.fire({
+        title: "Success",
+        text: "Update Room Success",
+        icon: "success",
+      });
+    },
+  });
 
   const [inputs, setInputs] = useState([
     {
       id: 0,
-      name: "roomName",
+      name: "room_name",
       type: "text",
       placeholder: "Room Name",
-      value: "",
+      value: getDataRoomm[0].room_name,
       required: true,
     },
     {
       id: 1,
-      name: "buildingName",
+      name: "building_id",
       type: "select",
       placeholder: "Building",
-      value: building,
+      value: getDataRoomm[0].building_id,
       required: true,
     },
     {
       id: 2,
-      name: "address",
+      name: "room_address",
       type: "text",
       placeholder: "Address",
       value: "",
@@ -68,18 +81,18 @@ export default function CreateRoom() {
     },
     {
       id: 3,
-      name: "description",
+      name: "room_description",
       type: "textarea",
       placeholder: "Description",
-      value: "",
+      value: getDataRoomm[0].room_description,
       required: true,
     },
     {
       id: 4,
-      name: "roomPrice",
+      name: "price_per_day",
       type: "text",
       placeholder: "Room Price",
-      value: "",
+      value: getDataRoomm[0].price_per_day,
       required: true,
     },
     {
@@ -95,7 +108,7 @@ export default function CreateRoom() {
       name: "floor",
       type: "number",
       placeholder: "e.g 10",
-      value: "",
+      value: getDataRoomm[0].floor,
       required: true,
     },
     {
@@ -114,6 +127,13 @@ export default function CreateRoom() {
       value: "",
       required: true,
     },
+    {
+      id: 9,
+      name: "status",
+      type: "select",
+      value: getDataRoomm[0].status,
+      // required: true,
+    },
   ]);
 
   const handleChange = (value, index) => {
@@ -128,9 +148,14 @@ export default function CreateRoom() {
         return input;
       })
     );
+    setData({
+      ...data,
+      [inputs[index].name]: value,
+    });
   };
 
   const [imageRoom, setImageRoom] = useState("");
+  console.log(imageRoom)
 
   const uploadImageRoom = async (e) => {
     const file = e.target.files[0];
@@ -154,30 +179,44 @@ export default function CreateRoom() {
     });
   };
 
-  const _handleCreateRoom = (e) => {
+
+  const _handleUpdateRoom = (e) => {
     if (
       inputs[0].value &&
       inputs[1].value &&
-      inputs[2].value &&
+      // inputs[2].value &&
       inputs[3].value &&
       inputs[4].value &&
-      inputs[5].value &&
-      inputs[6].value &&
-      inputs[7].value &&
-      inputs[8].value
+      // inputs[5].value &&
+      inputs[6].value
+      // inputs[7].value &&
+      // inputs[8].value
     ) {
-      createRoom({
-        // id: uuidv4(),
-        roomName: inputs[0].value,
-        buildingName: inputs[1].value,
-        address: inputs[2].value,
-        description: inputs[3].value,
-        roomPrice: inputs[4].value,
-        capacity: inputs[5].value,
-        floor: inputs[6].value,
-        table: inputs[7].value,
-        large: inputs[8].value,
-        picture: imageRoom,
+      // createRoom({
+      //   // id: uuidv4(),
+      //   roomName: inputs[0].value,
+      //   buildingName: inputs[1].value,
+      //   address: inputs[2].value,
+      //   description: inputs[3].value,
+      //   roomPrice: inputs[4].value,
+      //   capacity: inputs[5].value,
+      //   floor: inputs[6].value,
+      //   table: inputs[7].value,
+      //   large: inputs[8].value,
+      //   picture: imageRoom,
+      // });
+
+      updateDataRoom(getDataRoomm[0].room_id, {
+        variables: {
+          id: room.room_id,
+          room_name: inputs[0].value,
+          building_id: inputs[1].value,
+          room_description: inputs[3].value,
+          price_per_day: inputs[4].value,
+          floor: inputs[6].value,
+          thumbnail: imageRoom,
+          status: inputs[9].value,
+        },
       });
       e.preventDefault();
       navigate("/room");
@@ -254,6 +293,13 @@ export default function CreateRoom() {
           placeholder: "e.g 10m",
           value: "",
           required: true,
+        },
+        {
+          id: 9,
+          name: "status",
+          type: "select",
+          value: getDataRoomm[0].status,
+          // required: true,
         },
       ]);
     } else {
@@ -336,6 +382,13 @@ export default function CreateRoom() {
         value: "",
         required: true,
       },
+      {
+        id: 9,
+        name: "status",
+        type: "select",
+        value: getDataRoomm[0].status,
+        // required: true,
+      },
     ]);
   };
 
@@ -364,16 +417,12 @@ export default function CreateRoom() {
     <>
       <div className=" flex bg-secondary-blue h-full">
         <Sidebar />
-        <Navbar />
+        {/* <Navbar /> */}
         <div className="basis-5/6">
           <div className="px-4 py-4 mt-20">
-            <h1 className="text-3xl font-bold mb-4">Room</h1>
-
             <div className="flex items-center justify-between mb-6">
-              <FormWrap onSubmit={_handleCreateRoom}>
-                <h3 className="text-2xl text-left font-bold">
-                  Create Room
-                </h3>
+              <FormWrap onSubmit={_handleUpdateRoom}>
+                <h3 className="text-2xl text-left font-bold">Create Room</h3>
                 <p className="has-text-centered text-error-red">{msg}</p>
                 <div className="w-full grid grid-col gap-4">
                   {inputs.map((input, inputIdx) =>
@@ -422,12 +471,19 @@ export default function CreateRoom() {
                           }
                           value={input.value}
                         >
-                          <option value="">Select Building</option>
-                          {building.map((building, buildingIdx) => (
-                            <option key={buildingIdx} value={building.id}>
-                              {building.buildingName}
-                            </option>
-                          ))}
+                          <option value="">{input.value}</option>
+                          {input.name === "buildingName" ? (
+                            building.map((building, buildingIdx) => (
+                              <option key={buildingIdx} value={building.id}>
+                                {building.buildingName}
+                              </option>
+                            ))
+                          ) : (
+                            <>
+                              <option value={true}>Unavailable</option>
+                              <option value={false}>Available</option>
+                            </>
+                          )}
                         </SelectWrap>
                       </>
                     ) : (
@@ -445,16 +501,6 @@ export default function CreateRoom() {
                       </div>
                     )
                   )}
-                  {/* {inputs.map((specInput, specInputIdx) =>
-            specInput.name === "capacity" &&
-            specInput.name === "floor" &&
-            specInput.name === "table" &&
-            specInput.name === "large" ? (
-              
-            ) : (
-              ""
-            )
-          )} */}
                   <div className="flex items-start justify-start">
                     <FormInput
                       type="file"
@@ -479,9 +525,9 @@ export default function CreateRoom() {
                       <Button
                         className="bg-primary-blue w-1/2 text-primary-white font-bold uppercase text-sm px-6 py-3 rounded shadow mr-1 mb-1"
                         type="button"
-                        onClick={_handleCreateRoom}
+                        onClick={_handleUpdateRoom}
                       >
-                        Create Room
+                        Update Room
                       </Button>
                     </div>
                   </div>

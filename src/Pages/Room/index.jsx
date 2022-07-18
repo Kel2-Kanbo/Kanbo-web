@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useQuery, useMutation } from "@apollo/client";
 
-import { deleteRoom, getRoom } from "../../API/ApiFetch";
+import { DELETE_ROOM_BY_ID, GET_DATA_ROOM, UPDATE_ROOM } from "../../GraphQL/room/queries";
 import Button from "../../Components/Button";
 import TableRoom from "../../Components/TableRoom";
 import Sidebar from "../../Components/Sidebar";
@@ -13,7 +14,7 @@ export default function Room() {
   console.log(room);
 
   const [tabelHeader] = useState([
-    "No",
+    "ID Room",
     "Picture",
     "Room Name",
     "Floor",
@@ -24,47 +25,49 @@ export default function Room() {
   ]);
 
   //get room
-  const getAllRoom = async () => {
-    try {
-      await getRoom().then((response) => {
-        setRoom(response);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { data: dataRoom } = useQuery(GET_DATA_ROOM, {
+    refetchQueries: [{ query: GET_DATA_ROOM }],
+  });
 
-  //delete room
-  const removeRoom = async (id) => {
-    try {
-      await deleteRoom(id).then((response) => {
-        Swal.fire({
-          title: "Do You Want To Delete This Room?",
-          text: `All data will be lost `,
-          confirmButtonColor: "#4C35E0",
-          confirmButtonText: "Delete",
-          showCancelButton: true,
-          cancelButtonText: "Cancel",
-          cancelButtonColor: "#4C35E0",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            setRoom(room.filter((room) => room.id !== id));
-          }
-        });
-      });
-    } catch (error) {
-      Swal.fire({
-        title: "Error Can't Delete Room",
-        text: error.response.message,
-        confirmButtonColor: "#4C35E0",
-        confirmButtonText: "Ok!",
-      });
-    }
-  };
+  console.log(dataRoom);
 
   useEffect(() => {
-    getAllRoom();
-  }, []);
+    if (dataRoom) {
+      setRoom(dataRoom?.kanbo_chat_room);
+    }
+  }, [dataRoom]);
+
+  //delete room
+  const [deleteRoom] = useMutation(DELETE_ROOM_BY_ID, {
+    refetchQueries: [GET_DATA_ROOM],
+    onCompleted: (room) => {
+      console.log(room);
+      Swal.fire({
+        title: "Success",
+        text: "Delete Room Success",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+    },
+  });
+
+  const removeRoom = (room_id) => {
+    console.log(room_id);
+    Swal.fire({
+      title: "Do You Want To Delete This Room?",
+      text: `All data will be lost `,
+      confirmButtonColor: "#4C35E0",
+      confirmButtonText: "Delete",
+      showCancelButton: true,
+      cancelButtonText: "Cancel",
+      cancelButtonColor: "#4C35E0",
+    }).then((result) => {
+      console.log(result);
+      if (result.value) {
+        deleteRoom({ variables: { room_id: room_id } });
+      }
+    });
+  };
 
   return (
     <div className="flex h-full bg-secondary-softblue">
