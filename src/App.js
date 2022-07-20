@@ -15,13 +15,14 @@ import VerifyEmail from "./Components/VerifyEmail";
 import Building from "./Pages/Building";
 import ForgotPassword from "./Pages/ForgotPassword";
 import NewPassword from "./Pages/NewPassword";
-import PrivateRoute from "./PrivateRoute";
 import CreateComplex from "./Pages/CreateComplex";
 import CreateBuilding from "./Pages/CreateBuilding";
 import CreateRoom from "./Pages/CreateRoom";
 import UpdateComplex from "./Pages/UpdateComplex";
 import UpdateBuilding from "./Pages/UpdateBuilding";
 import UpdateRoom from "./Pages/UpdateRoom";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
+import PrivateRouteLogin from "./PrivateRoute/PrivateRouteLogin";
 
 function App() {
   return (
@@ -29,16 +30,16 @@ function App() {
       {/* <div className="App"> */}
       <Router>
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/forgot" element={<ForgotPassword />} />
-          <Route path="/new-pw" element={<NewPassword />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/verify" element={<VerifyEmail />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/chat" element={<Chat />} />
+          <Route element={<PrivateRouteLogin />}>
+            <Route path="/" element={<Login />} />
+            <Route path="/forgot" element={<ForgotPassword />} />
+            <Route path="/new-pw" element={<NewPassword />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/verify" element={<VerifyEmail />} />
+          </Route>
 
           <Route element={<PrivateRoute />}>
-          <Route path="/complex" element={<Complex />} />
+            <Route path="/complex" element={<Complex />} />
             <Route path="/create-complex" element={<CreateComplex />} />
             <Route path="/building" element={<Building />} />
             <Route path="/create-building" element={<CreateBuilding />} />
@@ -47,13 +48,14 @@ function App() {
             <Route path="/update-complex/:id" element={<UpdateComplex />} />
             <Route path="/update-building/:id" element={<UpdateBuilding />} />
             <Route path="/update-room/:id" element={<UpdateRoom />} />
-            
+
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/customer" element={<Customer />} />
-            <Route path="/booking" element={<Booking/>} />
+            <Route path="/booking" element={<Booking />} />
             <Route path="/review" element={<Review />} />
+            <Route path="/chat" element={<Chat />} />
           </Route>
- 
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
